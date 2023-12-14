@@ -33,7 +33,6 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
 
-
   public void setId(Integer id) {
     this.id = id;
   }
@@ -46,9 +45,9 @@ public class User implements UserDetails {
     this.email = email;
   }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

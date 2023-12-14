@@ -2,6 +2,7 @@ package com.advancedprogramming.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import com.advancedprogramming.api.models.UserRepository;
 
 @Controller
 @RequestMapping(path = "/demo")
+@CrossOrigin(origins = "*")
 public class MainController {
   @Autowired
   private UserRepository userRepository;
