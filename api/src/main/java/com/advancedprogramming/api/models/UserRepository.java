@@ -1,4 +1,4 @@
-package com.advancedprogramming.api;
+package com.advancedprogramming.api.models;
 
 import org.springframework.data.repository.CrudRepository;
 

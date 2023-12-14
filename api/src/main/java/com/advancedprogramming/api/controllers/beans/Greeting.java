@@ -1,4 +1,4 @@
-package com.advancedprogramming.api;
+package com.advancedprogramming.api.controllers.beans;
 
 public class Greeting {
 
