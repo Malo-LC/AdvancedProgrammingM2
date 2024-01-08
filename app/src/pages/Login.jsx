@@ -1,19 +1,21 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import api from "../utils/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
   const { register, handleSubmit, errors } = useForm({
     mode: "onBlur",
   });
 
   const onSubmit = (data) => {
-    console.log(data);
     api
-      .post("/auth/login", data)
+      .post("auth/authenticate", data)
       .then((res) => {
-        console.log(res);
+        api.setToken(res.access_token);
+        navigate("/home");
       })
       .catch((err) => {
         console.log(err);
