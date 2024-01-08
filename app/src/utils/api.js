@@ -1,6 +1,19 @@
 class CRUDApi {
-  constructor(baseUrl) {
-    this.baseUrl = baseUrl;
+  baseUrl;
+  token;
+
+  constructor() {
+    this.baseUrl = "http://localhost:8080";
+  }
+
+  setToken(token) {
+    this.token = token;
+    localStorage.setItem("token", token);
+  }
+
+  disconnect() {
+    localStorage.removeItem("token");
+    window.location.reload();
   }
 
   async post(resource, data) {
@@ -8,6 +21,7 @@ class CRUDApi {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
       },
       body: JSON.stringify(data),
     });
@@ -16,7 +30,13 @@ class CRUDApi {
   }
 
   async get(resource) {
-    const response = await fetch(`${this.baseUrl}/${resource}`);
+    const response = await fetch(`${this.baseUrl}/${resource}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
     return response.json();
   }
 
@@ -25,6 +45,7 @@ class CRUDApi {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
       },
       body: JSON.stringify(data),
     });
@@ -35,11 +56,15 @@ class CRUDApi {
   async delete(resource) {
     const response = await fetch(`${this.baseUrl}/${resource}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
     });
 
     return response.json();
   }
 }
 
-const api = new CRUDApi("http://localhost:8080");
+const api = new CRUDApi();
 export default api;
