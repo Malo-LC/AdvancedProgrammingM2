@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import { useEffect, useState } from "react";
 import api from "./utils/api";
 import RestrictedRoute from "./RestrictedRoute";
+import userService from "./services/userService";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -14,6 +15,7 @@ function App() {
     const token = localStorage.getItem("token");
     if (token) {
       api.setToken(token);
+      userService.getRole();
       navigate("/home");
     }
     setLoading(false);
