@@ -1,0 +1,41 @@
+.input {
+    @apply my-3;
+    @apply w-[300px] h-[40px];
+    @apply border border-gray-500 rounded-lg;
+}
+
+.login-page {
+    @apply flex;
+    @apply h-full w-full;
+    @apply bg-[url('../../assets/images/login_bg.png')] bg-right bg-cover;
+}
+
+.login-component {
+    @apply flex flex-col;
+    @apply px-10 py-4;
+    @apply rounded-xl ;
+    @apply backdrop-blur-md shadow-md;
+    @apply absolute top-1/2 right-0 transform -translate-y-1/2 -translate-x-[200px];
+}
+
+.button-container {
+    @apply flex flex-col items-center;
+    @apply space-y-2 py-2;
+}
+
+.logo {
+    @apply w-[160px] py-2;
+}
+
+.login-button {
+}
+
+.no-account {
+    @apply flex flex-row;
+    @apply space-x-1;
+    @apply text-white font-thin;
+}
+
+.register-link {
+    @apply font-normal underline;
+}
