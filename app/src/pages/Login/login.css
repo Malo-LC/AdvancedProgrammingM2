@@ -1,7 +1,8 @@
 .input {
     @apply my-3;
-    @apply w-[300px] h-[40px];
+    @apply w-[400px] h-[40px];
     @apply border border-gray-500 rounded-lg;
+    @apply indent-[40px];
 }
 
 .login-page {
@@ -24,7 +25,13 @@
 }
 
 .logo {
-    @apply w-[160px] py-2;
+    @apply w-[160px] pt-2 pb-8;
+}
+
+
+.input-icon {
+    @apply absolute left-2 top-1/2 transform -translate-y-1/2 h-6;
+
 }
 
 .login-button {
@@ -33,7 +40,7 @@
 .no-account {
     @apply flex flex-row;
     @apply space-x-1;
-    @apply text-white font-thin;
+    @apply text-white font-thin text-xs;
 }
 
 .register-link {

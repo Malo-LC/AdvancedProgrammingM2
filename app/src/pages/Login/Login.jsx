@@ -5,6 +5,8 @@ import "./login.css";
 
 //assets
 import logo_efrei from "../../assets/images/logo_efrei.png";
+import mail from "../../assets/images/icons/mail.png";
+import lock from "../../assets/images/icons/lock.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -31,11 +33,13 @@ function Login() {
         <div className="login-component">
           <img src={logo_efrei} alt="efrei_logo" className="logo" />
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
+            <div className="relative">
+              <img src={mail} alt="mail_icon" className="input-icon" />
               <input placeholder="Email" className="input" type="email" {...register("email", { required: true })} />
               {errors?.email && <span>Email is required</span>}
             </div>
-            <div>
+            <div className="relative">
+              <img src={lock} alt="lock_icon" className="input-icon" />
               <input placeholder="Password" className="input" type="password" {...register("password", { required: true })} />
               {errors?.password && <span>Password is required</span>}
             </div>
