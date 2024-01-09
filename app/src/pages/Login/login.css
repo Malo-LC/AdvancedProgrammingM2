@@ -1,8 +1,7 @@
 .input {
-    @apply my-3;
-    @apply w-[400px] h-[40px];
-    @apply border border-gray-500 rounded-lg;
-    @apply indent-[40px];
+    @apply my-3 px-10;
+    @apply lg:w-[400px] lg:h-[40px] md:w-[300px] sm:w-[150px];
+    @apply border border-gray-500 rounded-lg focus:outline-none;
 }
 
 .login-page {
@@ -16,7 +15,7 @@
     @apply px-10 py-4;
     @apply rounded-xl ;
     @apply backdrop-blur-md shadow-md;
-    @apply absolute top-1/2 right-0 transform -translate-y-1/2 -translate-x-[200px];
+    @apply lg:absolute lg:top-1/2 lg:right-0 lg:transform lg:-translate-y-1/2 lg:-translate-x-[200px];
 }
 
 .button-container {
@@ -29,12 +28,18 @@
 }
 
 
-.input-icon {
+.input-icon-left {
     @apply absolute left-2 top-1/2 transform -translate-y-1/2 h-6;
 
 }
 
+.input-icon-right {
+    @apply absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer h-6;
+}
+
 .login-button {
+    @apply bg-[#163767] text-white w-[280px] h-[50px] rounded-md mb-5 mt-10;
+    @apply hover:scale-105 hover:bg-[#0a3066] transition duration-100;
 }
 
 .no-account {

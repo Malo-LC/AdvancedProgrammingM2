@@ -7,6 +7,7 @@ import "./login.css";
 import logo_efrei from "../../assets/images/logo_efrei.png";
 import mail from "../../assets/images/icons/mail.png";
 import lock from "../../assets/images/icons/lock.png";
+import EyeOff from "../../assets/images/icons/EyeOff.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -27,6 +28,13 @@ function Login() {
       });
   };
 
+  function togglePasswordVisibility(e) {
+    const input = e.target.parentElement.previousElementSibling;
+    const type = input.type === "password" ? "text" : "password";
+
+    input.type = type;
+  }
+
   return (
     <div className="h-screen">
       <div className="login-page">
@@ -34,19 +42,20 @@ function Login() {
           <img src={logo_efrei} alt="efrei_logo" className="logo" />
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="relative">
-              <img src={mail} alt="mail_icon" className="input-icon" />
+              <img src={mail} alt="mail_icon" className="input-icon-left" />
               <input placeholder="Email" className="input" type="email" {...register("email", { required: true })} />
               {errors?.email && <span>Email is required</span>}
             </div>
             <div className="relative">
-              <img src={lock} alt="lock_icon" className="input-icon" />
+              <img src={lock} alt="lock_icon" className="input-icon-left" />
               <input placeholder="Password" className="input" type="password" {...register("password", { required: true })} />
               {errors?.password && <span>Password is required</span>}
+              <button type="button" onClick={(e) => togglePasswordVisibility(e)}>
+                <img src={EyeOff} alt="" className="input-icon-right" />
+              </button>
             </div>
             <div className="button-container">
-              <button type="submit" className="login-button">
-                Login
-              </button>
+              <button className="login-button">Login</button>
               <div className="no-account">
                 <p>No account?</p>
                 <Link to="/register" className="register-link ">
