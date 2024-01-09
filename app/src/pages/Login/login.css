@@ -1,0 +1,54 @@
+.input {
+    @apply my-3 px-10;
+    @apply lg:w-[400px] lg:h-[40px] md:w-[300px] sm:w-[150px];
+    @apply border border-gray-500 rounded-lg focus:outline-none;
+}
+
+.login-page {
+    @apply flex;
+    @apply h-full w-full;
+    @apply bg-[url('../../assets/images/login_bg.png')] bg-right bg-cover;
+}
+
+.login-component {
+    @apply flex flex-col;
+    @apply px-10 py-4;
+    @apply rounded-xl ;
+    @apply backdrop-blur-md shadow-md;
+    @apply lg:absolute lg:top-1/2 lg:right-0 lg:transform lg:-translate-y-1/2 lg:-translate-x-[200px];
+}
+
+.button-container {
+    @apply flex flex-col items-center;
+    @apply space-y-2 py-2;
+}
+
+.logo {
+    @apply w-[160px] pt-2 pb-8;
+}
+
+
+.input-icon-left {
+    @apply absolute left-2 top-1/2 transform -translate-y-1/2 h-6;
+
+}
+
+.input-icon-right {
+    @apply absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer h-6;
+    @apply hover:scale-105 transition duration-100
+}
+
+input[type="submit"] {
+    @apply bg-[#163767] text-white w-[280px] h-[50px] rounded-md mb-5 mt-10 cursor-pointer;
+    @apply hover:scale-105 hover:bg-[#0a3066] transition duration-100;
+}
+
+.no-account {
+    @apply flex flex-row;
+    @apply space-x-1;
+    @apply text-white font-thin text-xs;
+}
+
+.register-link {
+    @apply font-normal underline;
+}
