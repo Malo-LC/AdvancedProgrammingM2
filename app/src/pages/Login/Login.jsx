@@ -55,7 +55,7 @@ function Login() {
               </button>
             </div>
             <div className="button-container">
-              <button className="login-button">Login</button>
+              <input type="submit" value="Login"></input>
               <div className="no-account">
                 <p>No account?</p>
                 <Link to="/register" className="register-link ">

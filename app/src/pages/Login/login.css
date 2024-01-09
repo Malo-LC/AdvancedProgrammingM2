@@ -35,10 +35,11 @@
 
 .input-icon-right {
     @apply absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer h-6;
+    @apply hover:scale-105 transition duration-100
 }
 
-.login-button {
-    @apply bg-[#163767] text-white w-[280px] h-[50px] rounded-md mb-5 mt-10;
+input[type="submit"] {
+    @apply bg-[#163767] text-white w-[280px] h-[50px] rounded-md mb-5 mt-10 cursor-pointer;
     @apply hover:scale-105 hover:bg-[#0a3066] transition duration-100;
 }
 
