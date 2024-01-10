@@ -21,7 +21,7 @@ function Register() {
   const formSchema = Yup.object().shape({
     firstname: Yup.string().required(),
     lastname: Yup.string().required(),
-    mail: Yup.string().email("Invalid email format").required(),
+    email: Yup.string().email("Invalid email format").required(),
     password: Yup.string().required().min(4, "Password length should be at least 4 characters"),
     cpassword: Yup.string()
       .required()
@@ -39,8 +39,14 @@ function Register() {
   });
 
   const onSubmit = (data) => {
+    const finalData = {
+      firstname: data.firstname?.trim(),
+      lastname: data.lastname?.trim(),
+      email: data.email?.trim(),
+      password: data.password?.trim(),
+    };
     api
-      .post("auth/register", data)
+      .post("auth/register", finalData)
       .then((res) => {
         api.setToken(res.access_token);
         navigate("/home");
@@ -58,7 +64,7 @@ function Register() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input placeholder="Firstname" type="text" name="firstname" iconLeft={profile} errors={errors} register={register} />
             <Input placeholder="Lastname" type="text" name="lastname" iconLeft={profile} errors={errors} register={register} />
-            <Input placeholder="Mail" type="text" name="mail" iconLeft={mail} errors={errors} register={register} />
+            <Input placeholder="Mail" type="text" name="email" iconLeft={mail} errors={errors} register={register} />
             <Input placeholder="Password" type="password" name="password" iconLeft={lock} iconRight={EyeOff} errors={errors} register={register} />
             <Input
               placeholder="Password Confirmation"

@@ -16,9 +16,11 @@ export function Input({ type, name, placeholder, iconLeft, iconRight, errors, re
       <div className="relative">
         <img src={iconLeft} alt={iconLeft} className="input-icon-left" />
         <input placeholder={placeholder} type={inputType} className="input" name={name} {...register(name)} />
-        <button type="button" onClick={togglePasswordVisibility}>
-          <img src={iconRight === undefined ? "" : iconRight} alt={iconRight} className="input-icon-right" />
-        </button>
+        {iconRight && (
+          <button type="button" onClick={togglePasswordVisibility}>
+            <img src={iconRight} alt={iconRight} className="input-icon-right" />
+          </button>
+        )}
       </div>
       {errors && errors[name] && <span className="error-message">{errors[name].message}</span>}
     </div>
