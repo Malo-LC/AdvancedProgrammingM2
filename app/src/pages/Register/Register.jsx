@@ -48,8 +48,6 @@ function Register() {
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(data);
   };
 
   return (

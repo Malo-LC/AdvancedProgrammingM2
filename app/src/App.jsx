@@ -29,7 +29,15 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/home" element={<RestrictedRoute children={<Home />} />} />
+      <Route
+        path="/home"
+        element={
+          <Home />
+          // <RestrictedRoute>
+          //   <Home />
+          // </RestrictedRoute>
+        }
+      />
     </Routes>
   );
 }
