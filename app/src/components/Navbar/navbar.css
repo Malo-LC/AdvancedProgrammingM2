@@ -1,0 +1,7 @@
+.navbar {
+    @apply flex flex-row;
+}
+
+.logo {
+    @apply h-10;
+}
