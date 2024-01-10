@@ -1,0 +1,15 @@
+.input {
+    @apply my-3 px-10;
+    @apply w-[300px] h-[30px] sm:w-[400px] sm:h-[40px] md:w-[400px] md:h-[40px] lg:w-[400px] lg:h-[40px];
+    @apply border border-gray-500 rounded-lg focus:outline-none;
+}
+
+.input-icon-left {
+    @apply absolute left-2 top-1/2 transform -translate-y-1/2 h-6;
+
+}
+
+.input-icon-right {
+    @apply absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer h-6;
+    @apply hover:scale-105 transition duration-100
+}
