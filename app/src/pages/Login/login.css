@@ -1,18 +1,19 @@
 .input {
     @apply my-3 px-10;
-    @apply lg:w-[400px] lg:h-[40px] md:w-[300px] sm:w-[150px];
+    @apply w-[300px] h-[30px] sm:w-[400px] sm:h-[40px] md:w-[400px] md:h-[40px] lg:w-[400px] lg:h-[40px];
     @apply border border-gray-500 rounded-lg focus:outline-none;
 }
 
 .login-page {
     @apply flex;
     @apply h-full w-full;
+    @apply items-center justify-center;
     @apply bg-[url('../../assets/images/login_bg.png')] bg-right bg-cover;
 }
 
 .login-component {
     @apply flex flex-col;
-    @apply px-10 py-4;
+    @apply px-6 py-4 sm:px-10 sm:py-4 md:px-10 md:py-4 lg:px-10 lg:py-4;
     @apply rounded-xl ;
     @apply backdrop-blur-md shadow-md;
     @apply lg:absolute lg:top-1/2 lg:right-0 lg:transform lg:-translate-y-1/2 lg:-translate-x-[200px];
