@@ -21,8 +21,8 @@ function Register() {
   const formSchema = Yup.object().shape({
     firstname: Yup.string().required(),
     lastname: Yup.string().required(),
-    mail: Yup.string().required(),
-    password: Yup.string().required(),
+    mail: Yup.string().email("Invalid email format").required(),
+    password: Yup.string().required().min(4, "Password length should be at least 4 characters"),
     cpassword: Yup.string()
       .required()
       .min(4, "Password length should be at least 4 characters")
