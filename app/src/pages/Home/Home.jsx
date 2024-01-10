@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import api from "../utils/api";
+import { useEffect } from "react";
+import api from "../../utils/api";
 
 function Home() {
   useEffect(() => {
