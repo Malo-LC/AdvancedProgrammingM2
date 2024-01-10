@@ -1,6 +1,6 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
-import Register from "./pages/Register";
+import Register from "./pages/Register/Register";
 import Home from "./pages/Home";
 import { useEffect, useState } from "react";
 import api from "./utils/api";
@@ -29,7 +29,15 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/home" element={<RestrictedRoute children={<Home />} />} />
+      <Route
+        path="/home"
+        element={
+          <Home />
+          // <RestrictedRoute>
+          //   <Home />
+          // </RestrictedRoute>
+        }
+      />
     </Routes>
   );
 }
