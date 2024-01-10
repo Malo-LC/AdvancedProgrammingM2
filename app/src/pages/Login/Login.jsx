@@ -18,7 +18,7 @@ function Login() {
   const navigate = useNavigate();
 
   const formSchema = Yup.object().shape({
-    mail: Yup.string().required(),
+    email: Yup.string().required(),
     password: Yup.string().required(),
   });
 
@@ -32,8 +32,12 @@ function Login() {
   });
 
   const onSubmit = (data) => {
+    const finalData = {
+      email: data.email?.trim(),
+      password: data.password?.trim(),
+    };
     api
-      .post("auth/authenticate", data)
+      .post("auth/authenticate", finalData)
       .then((res) => {
         api.setToken(res.access_token);
         navigate("/home");
@@ -49,7 +53,7 @@ function Login() {
         <div className="login-component">
           <img src={logo_efrei} alt="efrei_logo" className="logo" />
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Input placeholder="Mail" type="text" name="mail" iconLeft={mail} errors={errors} register={register} />
+            <Input placeholder="Mail" type="text" name="email" iconLeft={mail} errors={errors} register={register} />
             <Input placeholder="Password" type="password" name="password" iconLeft={lock} iconRight={EyeOff} errors={errors} register={register} />
             <div className="button-container">
               <input type="submit" value="Login"></input>
