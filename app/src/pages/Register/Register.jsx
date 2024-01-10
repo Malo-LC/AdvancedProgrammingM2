@@ -1,19 +1,19 @@
-import { useForm } from "react-hook-form";
-import api from "../../utils/api";
-import { useNavigate, Link } from "react-router-dom";
-import { Input } from "../../components/Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { Input } from "../../components/Input/Input";
+import api from "../../utils/api";
 
 //styles
 import "./register.css";
 
 //assets
-import logo_efrei from "../../assets/images/logo_efrei.png";
-import mail from "../../assets/images/icons/mail.png";
-import lock from "../../assets/images/icons/lock.png";
-import profile from "../../assets/images/icons/profile.png";
 import EyeOff from "../../assets/images/icons/EyeOff.png";
+import lock from "../../assets/images/icons/lock.png";
+import mail from "../../assets/images/icons/mail.png";
+import profile from "../../assets/images/icons/profile.png";
+import logo_efrei from "../../assets/images/logo_efrei.png";
 
 function Register() {
   const navigate = useNavigate();
