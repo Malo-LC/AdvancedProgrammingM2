@@ -20,7 +20,7 @@ export function Input({ type, name, placeholder, iconLeft, iconRight, errors, re
           <img src={iconRight === undefined ? "" : iconRight} alt={iconRight} className="input-icon-right" />
         </button>
       </div>
-      {errors?.[type] && <span>{errors.type}</span>}
+      {errors && errors[name] && <span className="error-message">{errors[name].message}</span>}
     </div>
   );
 }

@@ -25,6 +25,7 @@ function Register() {
     password: Yup.string().required(),
     cpassword: Yup.string()
       .required()
+      .min(4, "Password length should be at least 4 characters")
       .oneOf([Yup.ref("password")], "Passwords do not match"),
   });
 

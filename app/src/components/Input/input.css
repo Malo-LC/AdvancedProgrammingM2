@@ -13,3 +13,7 @@
     @apply absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer h-6;
     @apply hover:scale-105 transition duration-100
 }
+
+.error-message {
+    @apply text-xs text-red-500;
+}
