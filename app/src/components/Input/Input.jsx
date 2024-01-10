@@ -1,30 +1,33 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 //styles
 import "./input.css";
 
-export function Input({ type, placeholder, iconLeft, iconRight, errors, register }) {
-  function togglePasswordVisibility(e) {
-    const input = e.target.parentElement.previousElementSibling;
-    const type = input.type === "password" ? "text" : "password";
+export function Input({ type, name, placeholder, iconLeft, iconRight, errors, register }) {
+  const [inputType, setInputType] = useState(type);
 
-    input.type = type;
-  }
+  const togglePasswordVisibility = () => {
+    setInputType((prevType) => (prevType === "password" ? "text" : "password"));
+  };
 
   return (
-    <div className="relative">
-      <img src={iconLeft} alt={iconLeft} className="input-icon-left" />
-      <input placeholder={placeholder} type={type} className="input" />
-      {errors?.[type] && <span>{type} is required</span>}
-      <button type="button" onClick={(e) => togglePasswordVisibility(e)}>
-        <img src={iconRight === undefined ? "" : iconRight} alt={iconRight} className="input-icon-right" {...register(type, { required: true })} />
-      </button>
+    <div className="flex flex-col">
+      <div className="relative">
+        <img src={iconLeft} alt={iconLeft} className="input-icon-left" />
+        <input placeholder={placeholder} type={inputType} className="input" name={name} {...register(name)} />
+        <button type="button" onClick={togglePasswordVisibility}>
+          <img src={iconRight === undefined ? "" : iconRight} alt={iconRight} className="input-icon-right" />
+        </button>
+      </div>
+      {errors?.[type] && <span>{errors.type}</span>}
     </div>
   );
 }
 
 Input.propTypes = {
   type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   iconLeft: PropTypes.string.isRequired,
   iconRight: PropTypes.string,

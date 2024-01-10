@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import api from "../../utils/api";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../components/Input/Input";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 //style
 import "./login.css";
@@ -15,8 +17,18 @@ import EyeOff from "../../assets/images/icons/EyeOff.png";
 function Login() {
   const navigate = useNavigate();
 
-  const { register, handleSubmit, errors } = useForm({
-    mode: "onBlur",
+  const formSchema = Yup.object().shape({
+    mail: Yup.string().required(),
+    password: Yup.string().required(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onTouched",
+    resolver: yupResolver(formSchema),
   });
 
   const onSubmit = (data) => {
@@ -29,6 +41,7 @@ function Login() {
       .catch((err) => {
         console.log(err);
       });
+    console.log(data);
   };
 
   return (
@@ -37,8 +50,8 @@ function Login() {
         <div className="login-component">
           <img src={logo_efrei} alt="efrei_logo" className="logo" />
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Input placeholder="Mail" type="email" iconLeft={mail} errors={errors} register={register} />
-            <Input placeholder="Password" type="password" iconLeft={lock} iconRight={EyeOff} errors={errors} register={register} />
+            <Input placeholder="Mail" type="text" name="mail" iconLeft={mail} errors={errors} register={register} />
+            <Input placeholder="Password" type="password" name="password" iconLeft={lock} iconRight={EyeOff} errors={errors} register={register} />
             <div className="button-container">
               <input type="submit" value="Login"></input>
               <div className="no-account">
