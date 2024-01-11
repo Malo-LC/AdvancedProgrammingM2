@@ -1,9 +1,13 @@
 package com.advancedprogramming.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +17,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,9 +36,13 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private String role;
+    private LocalDate birthDate;
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    @OneToMany(mappedBy = "user")
+    private List<Submit> submits;
 
     public void setId(Integer id) {
         this.id = id;
@@ -58,6 +67,18 @@ public class User implements UserDetails {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_internship",
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", table = "user"),
+        inverseJoinColumns = @JoinColumn(name = "internship_id", referencedColumnName = "id", table = "internship"))
+    @JsonIgnore
+    private List<Internship> internships;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
