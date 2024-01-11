@@ -1,17 +1,17 @@
-//style
-import "./profilenav.css";
 import PropTypes from "prop-types";
 import { Notification } from "../BasicComponents/Notification/Notification";
-import { Avatar } from "@mui/material";
+
+import { ProfileTooltip } from "./ProfileTooltip/ProfileTooltip";
+
+//style
+import "./profilenav.css";
 
 export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
   return (
     <div className="profile">
       {isMobile ? (
         <>
-          <button>
-            <Avatar alt={firstname} src={profilePicture} sx={{ width: 35, height: 35 }} />
-          </button>
+          <ProfileTooltip firstname={firstname} lastname={lastname} profilePicture={profilePicture} />
         </>
       ) : (
         <>
@@ -20,13 +20,7 @@ export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
             <p>{firstname}</p>
             <p>{lastname}</p>
           </div>
-          <button
-            onClick={() => {
-              console.log(isMobile);
-            }}
-          >
-            <Avatar alt={firstname} src={profilePicture} sx={{ width: 35, height: 35 }} />
-          </button>
+          <ProfileTooltip />
         </>
       )}
     </div>
