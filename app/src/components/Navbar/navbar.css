@@ -4,10 +4,6 @@
     @apply bg-[#163767];
 }
 
-.logo-navbar {
-    @apply h-[40px]
-}
-
 .nav-element-container {
     @apply flex flex-row;
     @apply space-x-4;
