@@ -56,7 +56,4 @@ public class Internship {
         inverseJoinColumns = @JoinColumn(name = "report_id", referencedColumnName = "id", table = "report"))
     @JsonIgnore
     private List<Report> reports;
-
-    @OneToMany(mappedBy = "internship")
-    private List<Submit> submits;
 }
