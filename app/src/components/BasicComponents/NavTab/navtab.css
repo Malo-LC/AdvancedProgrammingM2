@@ -1,5 +1,6 @@
 .button {
-    @apply h-[50px] hover:border-b-4 border-[#ffe500];
+    @apply h-[50px] border-b-4 hover:border-[#ffe500] border-[#163767];
+    @apply transition duration-100 ease-in-out;
     @apply flex  items-center;
     @apply cursor-pointer;
 }

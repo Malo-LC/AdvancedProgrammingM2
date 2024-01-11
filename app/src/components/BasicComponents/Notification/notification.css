@@ -1,0 +1,7 @@
+.notification-button {
+    @apply flex;
+}
+
+.notification-number {
+    @apply absolute
+}

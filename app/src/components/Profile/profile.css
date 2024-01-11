@@ -1,7 +1,0 @@
-.profile {
-    @apply flex flex-row;
-}
-
-.notification-button {
-    @apply h-6;
-}
