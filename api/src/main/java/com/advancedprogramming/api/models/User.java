@@ -33,6 +33,7 @@ public class User implements UserDetails {
     private String email;
     private String role;
     private LocalDate birthDate;
+    private Integer promotionYear;
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
