@@ -1,13 +1,9 @@
 package com.advancedprogramming.api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -71,14 +67,6 @@ public class User implements UserDetails {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-
-    @ManyToMany
-    @JoinTable(
-        name = "user_internship",
-        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", table = "user"),
-        inverseJoinColumns = @JoinColumn(name = "internship_id", referencedColumnName = "id", table = "internship"))
-    @JsonIgnore
-    private List<Internship> internships;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

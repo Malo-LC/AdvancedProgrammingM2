@@ -50,8 +50,8 @@ public class Submit {
     private Report report;
 
     @ManyToOne
-    @JoinColumn(name = "internship_id")
-    private Internship internship;
+    @JoinColumn(name = "student_internship_id")
+    private StudentInternship studentInternship;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
