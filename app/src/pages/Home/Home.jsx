@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import api from "../../utils/api";
+import Navbar from "../../components/Navbar/Navbar";
 
 function Home() {
   useEffect(() => {
@@ -17,8 +18,8 @@ function Home() {
 
   return (
     <div>
-      <h1>Home</h1>
-      <button onClick={api.disconnect}>Disconnect</button>
+      <Navbar />
+      {/* <button onClick={api.disconnect}>Disconnect</button> */}
     </div>
   );
 }

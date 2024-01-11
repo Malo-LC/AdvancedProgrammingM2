@@ -1,0 +1,9 @@
+.button {
+    @apply h-[50px] hover:border-b-4 border-[#ffe500];
+    @apply flex  items-center;
+    @apply cursor-pointer;
+}
+
+.button-text {
+    @apply text-white;
+}
