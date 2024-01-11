@@ -15,9 +15,11 @@ import api from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
 
 import PropTypes from "prop-types";
+import User from "../../../models/Users.js";
+
+const user = new User({ id: 1, firstname: "test", lastname: "test" });
 
 export function ProfileTooltip({ firstname, profilePicture }) {
-  // Component code here
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
