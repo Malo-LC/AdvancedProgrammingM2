@@ -1,0 +1,57 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+Table user {
+  id integer [primary key]
+  firstName varchar
+  lastName varchar
+  role varchar
+  password varchar
+  email varchar
+}
+
+Table internship {
+  id integer [primary key]
+  year varchar
+  description varchar
+}
+
+Table student_internship {
+  id integer [primary key]
+  mission varchar
+  start_date datetime
+  finish_date datetime
+  validation_statut varchar
+  salary integer
+
+  id_intership integer [ref: < internship.id]
+  id_student integer [ref: < user.id]
+  id_company_tutor integer [ref: < user.id]
+  id_school_tutor integer [ref: < user.id]
+}
+
+Table report {
+  id integer [primary key]
+  title varchar
+  description varchar
+  deadline datetime
+  internship_id integer [ref: < internship.id]
+}
+
+Table submit {
+  id integer [primary key]
+  file_id integer [ref: - file.id]
+  report_id integer [ref: < report.id]
+  student_id integer [ref: < student_internship.id]
+  date datetime
+  validated_by_school boolean
+  validated_by_company boolean
+}
+
+Table file {
+  id integer [primary key]
+  data mediumblob
+  name varchar
+  type varchar
+}
