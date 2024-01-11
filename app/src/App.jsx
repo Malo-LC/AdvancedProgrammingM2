@@ -17,6 +17,8 @@ function App() {
       api.setToken(token);
       userService.getRole();
       navigate("/home");
+    } else {
+      navigate("/");
     }
     setLoading(false);
   }, []);

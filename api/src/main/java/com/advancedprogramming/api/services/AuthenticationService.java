@@ -41,7 +41,7 @@ public class AuthenticationService {
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
             .build();
-        Map<String, Object> extraClaims = Map.of("role", user.getRole(), "email", user.getEmail());
+        Map<String, Object> extraClaims = getExtraClaims(user);
         User savedUser = userRepository.save(user);
         String jwtToken = jwtService.generateToken(user, extraClaims);
         saveUserToken(savedUser, jwtToken);
@@ -59,7 +59,7 @@ public class AuthenticationService {
         );
         User user = userRepository.findByEmail(request.getEmail())
             .orElseThrow();
-        Map<String, Object> extraClaims = Map.of("role", user.getRole(), "email", user.getEmail());
+        Map<String, Object> extraClaims = getExtraClaims(user);
         String jwtToken = jwtService.generateToken(user, extraClaims);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
@@ -109,5 +109,17 @@ public class AuthenticationService {
             token.setRevoked(true);
         });
         tokenRepository.saveAll(validUserTokens);
+    }
+
+    private Map<String, Object> getExtraClaims(User user) {
+        return Map.of(
+            "role", user.getRole(),
+            "email", user.getEmail(),
+            "firstName", user.getFirstName(),
+            "lastName", user.getLastName()
+            // TODO: add more claims
+//            "birthDate", user.getBirthDate(),
+//            "promotionYear", user.getPromotionYear()
+        );
     }
 }
