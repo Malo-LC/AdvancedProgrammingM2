@@ -40,8 +40,8 @@ function Register() {
 
   const onSubmit = (data) => {
     const finalData = {
-      firstname: data.firstname?.trim(),
-      lastname: data.lastname?.trim(),
+      firstName: data.firstname?.trim(),
+      lastName: data.lastname?.trim(),
       email: data.email?.trim(),
       password: data.password?.trim(),
     };
