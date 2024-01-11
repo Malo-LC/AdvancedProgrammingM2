@@ -2,7 +2,7 @@ package com.advancedprogramming.api.controllers;
 
 import com.advancedprogramming.api.controllers.beans.FileDBResponse;
 import com.advancedprogramming.api.controllers.beans.MessageResponse;
-import com.advancedprogramming.api.models.FileDB;
+import com.advancedprogramming.api.models.Filedb;
 import com.advancedprogramming.api.services.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -41,7 +41,7 @@ public class FileController {
 
     @GetMapping("/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
-        FileDB fileDB = storageService.getFile(id);
+        Filedb fileDB = storageService.getFile(id);
 
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
