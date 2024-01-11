@@ -54,10 +54,6 @@ public class Submit {
     private StudentInternship studentInternship;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "filedb_id")
     private Filedb filedb;
 }

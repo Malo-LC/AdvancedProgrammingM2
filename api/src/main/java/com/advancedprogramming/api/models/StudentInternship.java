@@ -25,7 +25,6 @@ import java.util.List;
 public class StudentInternship {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Integer id;
     private Boolean isApproved;
     private String companyName;
@@ -34,6 +33,9 @@ public class StudentInternship {
     private String companyCity;
     private String companyCountry;
     private String mission;
+    private String tutorSchoolFirstName;
+    private String tutorSchoolLastName;
+    private String tutorSchoolEmail;
     private LocalDate startDate;
     private LocalDate endDate;
     private Integer wage;
@@ -79,8 +81,12 @@ public class StudentInternship {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "tutor_user_id")
-    private User tutorUser;
+    @JoinColumn(name = "tutor_school_user_id")
+    private User tutorSchoolUser;
+
+    @ManyToOne
+    @JoinColumn(name = "tutor_company_user_id")
+    private User tutorCompanyUser;
 
     @ManyToOne
     @JoinColumn(name = "internship_id")

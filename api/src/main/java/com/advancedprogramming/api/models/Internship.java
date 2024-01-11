@@ -35,7 +35,6 @@ public class Internship {
     private Integer id;
 
     private YearEnum year;
-    private LocalDate deadline;
 
     public void setId(Integer id) {
         this.id = id;
@@ -45,15 +44,6 @@ public class Internship {
         this.year = year;
     }
 
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
-    }
-
-    @ManyToMany
-    @JoinTable(
-        name = "internship_report",
-        joinColumns = @JoinColumn(name = "internship_id", referencedColumnName = "id", table = "internship"),
-        inverseJoinColumns = @JoinColumn(name = "report_id", referencedColumnName = "id", table = "report"))
-    @JsonIgnore
+    @OneToMany(mappedBy = "internship")
     private List<Report> reports;
 }
