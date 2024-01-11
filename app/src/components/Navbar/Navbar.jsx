@@ -1,6 +1,6 @@
 import logo_efrei_white from "../../assets/images/logo_efrei_white.png";
 import { NavTab } from "../BasicComponents/NavTab/NavTab.jsx";
-import { Profile } from "../Profile/Profile";
+import { ProfileNav } from "../ProfileNav/ProfileNav";
 
 //style
 import "./navbar.css";
@@ -14,7 +14,7 @@ export default function Navbar() {
         <NavTab name="Documents" />
       </div>
       <div className="profile">
-        <Profile firstname="James" lastname="Jacob" />
+        <ProfileNav firstname="James" lastname="Jacob" />
       </div>
     </div>
   );

@@ -1,0 +1,6 @@
+.profile {
+    @apply flex flex-row space-x-3;
+    @apply items-center;
+    @apply text-white;
+}
+
