@@ -4,6 +4,8 @@ import com.advancedprogramming.api.models.bean.YearEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,6 +36,7 @@ public class Internship {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     private YearEnum year;
 
     public void setId(Integer id) {
