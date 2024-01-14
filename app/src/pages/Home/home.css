@@ -1,0 +1,41 @@
+.content-container {
+    display: flex;
+    align-items: center; /* Alignement vertical des éléments */
+}
+.text-container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 200px;
+}
+  
+.text-container h1{
+    width: 100%;
+    color: #163767;
+    font-weight: bold;
+    overflow: hidden; /* Masque le texte qui dépasse */
+  text-overflow: ellipsis; /* Affiche des points de suspension (...) pour le texte qui dépasse */
+  white-space: nowrap; 
+  font-size: 50px;
+    
+   
+}
+.content-container h2{
+    color: #6D7ED6;
+    font-size: 30px;
+    overflow: hidden; /* Masque le texte qui dépasse */
+    text-overflow: ellipsis; /* Affiche des points de suspension (...) pour le texte qui dépasse */
+    white-space: nowrap; 
+}
+.img-container{
+    margin-top: 44px;
+    margin-left: 500px;
+}
+.wave-svg {
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   left: 0;
+  }
+  
+  
+  
