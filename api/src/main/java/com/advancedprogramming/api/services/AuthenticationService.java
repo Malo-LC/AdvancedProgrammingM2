@@ -8,6 +8,7 @@ import com.advancedprogramming.api.models.Token;
 import com.advancedprogramming.api.models.TokenRepository;
 import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.models.UserRepository;
+import com.advancedprogramming.api.models.bean.RoleEnum;
 import com.advancedprogramming.api.models.token.TokenType;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -30,16 +31,18 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         // check if email is already registered
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new RuntimeException("Email already registered");
         }
 
         User user = User.builder()
-            .firstName(request.getFirstName())
-            .lastName(request.getLastName())
-            .role("ROLE_USER")
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
+            .firstName(request.firstName())
+            .lastName(request.lastName())
+            .promotionYear(request.promotionYear())
+            .birthDate(request.birthDate())
+            .role(RoleEnum.STUDENT)
+            .email(request.email())
+            .password(passwordEncoder.encode(request.password()))
             .build();
         Map<String, Object> extraClaims = getExtraClaims(user);
         User savedUser = userRepository.save(user);

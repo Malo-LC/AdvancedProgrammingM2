@@ -1,6 +1,9 @@
 package com.advancedprogramming.api.models;
 
+import com.advancedprogramming.api.models.bean.RoleEnum;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +34,10 @@ public class User implements UserDetails {
     private String lastName;
     private String password;
     private String email;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
+
     private LocalDate birthDate;
     private Integer promotionYear;
 
@@ -54,7 +60,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setRole(String role) {
+    public void setRole(RoleEnum role) {
         this.role = role;
     }
 
