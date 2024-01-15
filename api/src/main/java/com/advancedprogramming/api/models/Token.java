@@ -24,7 +24,7 @@ public class Token {
     @GeneratedValue
     public Integer id;
 
-    @Column(unique = true)
+    @Column(unique = true, length = 2000)
     public String token;
 
     public TokenType tokenType = TokenType.BEARER;
