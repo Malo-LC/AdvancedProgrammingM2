@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import api from "../../utils/api";
-import Navbar from "../../components/Navbar/Navbar";
 
 function Home() {
   useEffect(() => {
@@ -16,12 +15,7 @@ function Home() {
       });
   }, []);
 
-  return (
-    <div>
-      <Navbar />
-      {/* <button onClick={api.disconnect}>Disconnect</button> */}
-    </div>
-  );
+  return <div>{/* <button onClick={api.disconnect}>Disconnect</button> */}</div>;
 }
 
 export default Home;
