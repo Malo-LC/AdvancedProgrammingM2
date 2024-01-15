@@ -16,7 +16,6 @@ function App() {
     if (token) {
       api.setToken(token);
       userService.getRole();
-      navigate("/home");
     } else {
       navigate("/");
     }
