@@ -1,23 +1,21 @@
-import React from "react";
+import Logout from "@mui/icons-material/Logout";
+import Settings from "@mui/icons-material/Settings";
 import { Avatar } from "@mui/material";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import Divider from "@mui/material/Divider";
-import Logout from "@mui/icons-material/Logout";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Settings from "@mui/icons-material/Settings";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import api from "../../../utils/api";
 
 import { useNavigate } from "react-router-dom";
 
 import PropTypes from "prop-types";
-import User from "../../../models/Users.js";
 
-const user = new User({ id: 1, firstname: "test", lastname: "test" });
+// const user = new User({ id: 1, firstname: "test", lastname: "test" });
 
 export function ProfileTooltip({ firstname, profilePicture }) {
   const navigate = useNavigate();
@@ -95,7 +93,7 @@ export function ProfileTooltip({ firstname, profilePicture }) {
       >
         <MenuItem onClick={() => navigate("/profile")}>
           <Avatar></Avatar>
-          <button onClick={() => navigate("/profile")}>Profile</button>
+          <p>Profile</p>
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => navigate("/settings")}>
