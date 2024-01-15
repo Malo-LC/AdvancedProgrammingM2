@@ -1,11 +1,10 @@
+import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import Home from "./pages/Home/Home";
-import { useEffect, useState } from "react";
-import api from "./utils/api";
-import RestrictedRoute from "./RestrictedRoute";
 import userService from "./services/userService";
+import api from "./utils/api";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -17,9 +16,10 @@ function App() {
       api.setToken(token);
       userService.getRole();
       navigate("/home");
-    } else {
-      navigate("/");
     }
+    // else {
+    //   navigate("/");
+    // }
     setLoading(false);
   }, []);
 
