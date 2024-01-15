@@ -1,11 +1,11 @@
+import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import RestrictedRoute from "./RestrictedRoute";
+import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import Home from "./pages/Home/Home";
-import { useEffect, useState } from "react";
-import api from "./utils/api";
-import RestrictedRoute from "./RestrictedRoute";
 import userService from "./services/userService";
+import api from "./utils/api";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -34,10 +34,9 @@ function App() {
       <Route
         path="/home"
         element={
-          <Home />
-          // <RestrictedRoute>
-          //   <Home />
-          // </RestrictedRoute>
+          <RestrictedRoute>
+            <Home />
+          </RestrictedRoute>
         }
       />
     </Routes>

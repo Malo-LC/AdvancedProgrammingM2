@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
 
 const RestrictedRoute = ({ children, ...rest }) => {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -7,7 +7,12 @@ const RestrictedRoute = ({ children, ...rest }) => {
     return <Navigate to="/" replace />;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
 };
 
 export default RestrictedRoute;
