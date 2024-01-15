@@ -1,10 +1,13 @@
 package com.advancedprogramming.api.controllers;
 
-import com.advancedprogramming.api.controllers.beans.FileDBResponse;
 import com.advancedprogramming.api.controllers.beans.MessageResponse;
+import com.advancedprogramming.api.controllers.beans.SubmitResponse;
 import com.advancedprogramming.api.models.Filedb;
 import com.advancedprogramming.api.services.FileStorageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.advancedprogramming.api.services.SubmitService;
+import com.advancedprogramming.api.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +18,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/file")
-public class FileController {
-    @Autowired
-    private FileStorageService storageService;
+@RequestMapping(path = "/submit")
+@RequiredArgsConstructor
+public class SubmitController {
+    private final FileStorageService storageService;
+    private final SubmitService submitService;
+    private final UserService userService;
 
     @PostMapping("/upload")
     public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
+        String message;
         try {
             storageService.store(file);
 
@@ -39,7 +43,7 @@ public class FileController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
         Filedb fileDB = storageService.getFile(id);
 
@@ -49,26 +53,9 @@ public class FileController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<FileDBResponse>> getListFiles() {
-        List<FileDBResponse> files = storageService.getAllFiles()
-            .stream()
-            .map(dbFile -> {
-                String fileDownloadUri = ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/files/")
-                    .path(dbFile.getId())
-                    .toUriString();
-
-                return new FileDBResponse(
-                    dbFile.getId(),
-                    dbFile.getName(),
-                    dbFile.getType(),
-                    fileDownloadUri,
-                    dbFile.getData().length
-                );
-            })
-            .toList();
-
-        return ResponseEntity.status(HttpStatus.OK).body(files);
+    public ResponseEntity<List<SubmitResponse>> getListFiles(HttpServletRequest request) {
+        String token = userService.getTokenFromRequest(request);
+        List<SubmitResponse> submits = submitService.getSubmitsByUser(token);
+        return ResponseEntity.status(HttpStatus.OK).body(submits);
     }
 }
