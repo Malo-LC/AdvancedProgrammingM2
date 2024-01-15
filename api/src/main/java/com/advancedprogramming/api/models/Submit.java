@@ -25,9 +25,9 @@ public class Submit {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private LocalDate submitDate;
-    private Boolean isApprovedBySchool;
-    private Boolean isApprovedByCompany;
+    private LocalDate submitDate = LocalDate.now();
+    private Boolean isApprovedBySchool = false;
+    private Boolean isApprovedByCompany = false;
 
     public void setId(Integer id) {
         this.id = id;

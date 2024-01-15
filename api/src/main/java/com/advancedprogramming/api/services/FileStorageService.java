@@ -17,13 +17,14 @@ public class FileStorageService {
     @Autowired
     private FileDBRepository fileDBRepository;
 
-    public void store(MultipartFile file) throws IOException {
+    public Filedb store(MultipartFile file) throws IOException {
         if (file == null) {
             throw new IOException("File is null");
         }
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         Filedb FileDB = new Filedb(fileName, file.getContentType(), file.getBytes());
         fileDBRepository.save(FileDB);
+        return FileDB;
     }
 
     public Filedb getFile(String id) {
