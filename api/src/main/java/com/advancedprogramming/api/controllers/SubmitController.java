@@ -29,17 +29,25 @@ public class SubmitController {
     private final SubmitService submitService;
     private final UserService userService;
 
-    @PostMapping("/upload")
-    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message;
+    @PostMapping("/upload/{reportId}")
+    public ResponseEntity<MessageResponse> uploadFile(
+        @RequestParam("file") MultipartFile file,
+        @PathVariable Integer reportId,
+        HttpServletRequest request
+    ) {
+        String token = userService.getTokenFromRequest(request);
         try {
-            storageService.store(file);
-
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message, true));
-        } catch (Exception e) {
+            boolean success = submitService.uploadSubmit(token, reportId, file);
+            String message;
+            if (success) {
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message, true));
+            }
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message, false));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(e.getMessage(), false));
         }
     }
 
