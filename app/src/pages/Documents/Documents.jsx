@@ -22,7 +22,6 @@ function Documents() {
         try {
           const userInfo = await userService.getUserInfo();
           const userRole = await userService.getRole();
-          console.log(userInfo);
           if (userInfo) {
             setUser(userInfo);
           }
