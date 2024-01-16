@@ -42,7 +42,7 @@ function Documents() {
       <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }} className="title">
         <p>Mes Documents</p>
       </motion.div>
-      <motion.div className="metric-container">{userRole === "" && <div className=""></div>}</motion.div>
+      <motion.div className="metric-container"></motion.div>
     </div>
   );
 }

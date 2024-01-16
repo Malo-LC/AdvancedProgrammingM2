@@ -3,5 +3,6 @@
 }
 
 .documents {
-    @apply flex justify-center flex-col items-center;
+    @apply flex justify-start w-full;
+    @apply mx-[30px] sm:mx-[90px] lg:mx-[150px] my-[30px] sm:my-[40px] lg:my-[40px];
 }
