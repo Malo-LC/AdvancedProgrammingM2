@@ -23,17 +23,28 @@ import api from "../../utils/api.js";
 //style
 import "./navbar.css";
 
+//will be exported into a data file later
+const menuItemsStudent = [
+  { label: "Faire ma demande", url: "/demandes", icon: <SupervisorAccountIcon /> },
+  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
+  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+];
+const menuItemsAdmin = [
+  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
+  { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
+  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+];
+const menuItemsTuteur = [
+  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
+  { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
+  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+];
+
 export default function Navbar() {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const controls = useAnimation();
-
-  //will be exported into a data file later
-  const menuItemsStudent = [
-    { label: "Faire ma demande", url: "/demandes", icon: <SupervisorAccountIcon /> },
-    { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-    { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-  ];
+  let menuItems = [];
 
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState(null);
@@ -64,6 +75,14 @@ export default function Navbar() {
     fetchUserInfo();
   }, []);
 
+  if (userRole === "STUDENT") {
+    menuItems = menuItemsStudent;
+  } else if (userRole === "ADMIN") {
+    menuItems = menuItemsAdmin;
+  } else if (userRole === "TUTEUR") {
+    menuItems = menuItemsTuteur;
+  }
+
   const toggleDrawer = (open) => (event) => {
     if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
       return;
@@ -83,20 +102,16 @@ export default function Navbar() {
             <Box sx={{ width: "100%", maxWidth: 350, bgcolor: "background.paper" }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
               <nav>
                 <List disablePadding>
-                  {userRole === "STUDENT" && (
+                  {menuItems.map((item) => (
                     <>
-                      {menuItemsStudent.map((item) => (
-                        <>
-                          <ListItem>
-                            <ListItemButton onClick={() => navigate(item.url)}>
-                              <ListItemIcon>{item.icon}</ListItemIcon>
-                              <ListItemText primary={item.label} />
-                            </ListItemButton>
-                          </ListItem>
-                        </>
-                      ))}
+                      <ListItem>
+                        <ListItemButton onClick={() => navigate(item.url)}>
+                          <ListItemIcon>{item.icon}</ListItemIcon>
+                          <ListItemText primary={item.label} />
+                        </ListItemButton>
+                      </ListItem>
                     </>
-                  )}
+                  ))}
                 </List>
               </nav>
             </Box>
@@ -117,16 +132,12 @@ export default function Navbar() {
               <img src={logo_efrei_white} className="h-[40px] cursor-pointer" onClick={() => navigate("/home")} />
             </div>
             <div className="flex flex-row space-x-3">
-              {userRole === "STUDENT" && (
+              {menuItems.map((item, index) => (
                 <>
-                  {menuItemsStudent.map((item, index) => (
-                    <>
-                      <NavTab name={item.label} url={item.url} />
-                      {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
-                    </>
-                  ))}
+                  <NavTab name={item.label} url={item.url} />
+                  {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
                 </>
-              )}
+              ))}
             </div>
           </div>
           <div className="flex-none">
