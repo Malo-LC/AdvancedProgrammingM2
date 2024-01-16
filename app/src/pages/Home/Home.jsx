@@ -15,7 +15,7 @@ function Home() {
       });
   }, []);
 
-  return <div>{/* <button onClick={api.disconnect}>Disconnect</button> */}</div>;
+  return <div></div>;
 }
 
 export default Home;
