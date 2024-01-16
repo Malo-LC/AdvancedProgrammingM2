@@ -113,7 +113,9 @@ export default function Navbar() {
       ) : (
         <>
           <div className="flex flex-row space-x-6 items-center">
-            <img src={logo_efrei_white} className="h-[40px]" />
+            <div>
+              <img src={logo_efrei_white} className="h-[40px] cursor-pointer" onClick={() => navigate("/home")} />
+            </div>
             <div className="flex flex-row space-x-3">
               {userRole === "STUDENT" && (
                 <>
