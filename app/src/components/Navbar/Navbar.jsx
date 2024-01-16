@@ -1,3 +1,4 @@
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import DescriptionIcon from "@mui/icons-material/Description";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -82,6 +83,14 @@ export default function Navbar() {
                     </ListItemButton>
                   </ListItem>
                   <ListItem>
+                    <ListItemButton onClick={() => navigate("/dashboard")}>
+                      <ListItemIcon>
+                        <DashboardIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Dashboard" />
+                    </ListItemButton>
+                  </ListItem>
+                  <ListItem>
                     <ListItemButton onClick={() => navigate("/documents")}>
                       <ListItemIcon>
                         <DescriptionIcon />
@@ -110,6 +119,7 @@ export default function Navbar() {
           <div className="flex-grow">
             <nav className="nav-element-container">
               <NavTab name="Home" />
+              <NavTab name="Dashboard" />
               <NavTab name="Documents" />
             </nav>
           </div>
