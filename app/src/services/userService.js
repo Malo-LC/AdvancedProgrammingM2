@@ -19,6 +19,19 @@ class UserService {
     }
     return null;
   }
+
+  getUserInfo() {
+    const decodedToken = this.decodeToken();
+    if (decodedToken) {
+      const userInfo = {
+        firstname: decodedToken.firstName,
+        lastname: decodedToken.lastName,
+        mail: decodedToken.email,
+      };
+      return userInfo;
+    }
+    return null;
+  }
 }
 
 const userService = new UserService();

@@ -5,6 +5,6 @@
 }
 
 .nav-element-container {
-    @apply flex flex-row;
+    @apply flex flex-row justify-center;
     @apply space-x-4;
 }

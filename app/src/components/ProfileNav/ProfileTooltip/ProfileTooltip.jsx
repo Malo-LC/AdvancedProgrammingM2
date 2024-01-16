@@ -114,6 +114,6 @@ export function ProfileTooltip({ firstname, profilePicture }) {
 }
 
 ProfileTooltip.propTypes = {
-  firstname: PropTypes.string.isRequired,
-  profilePicture: PropTypes.string.isRequired,
+  firstname: PropTypes.string,
+  profilePicture: PropTypes.string,
 };
