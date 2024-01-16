@@ -8,6 +8,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
@@ -24,11 +25,13 @@ import "./navbar.css";
 export default function Navbar() {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const controls = useAnimation();
 
   const [user, setUser] = useState(null);
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
+    controls.start({ y: 0 });
     const token = localStorage.getItem("token");
 
     console.log(token);
@@ -60,7 +63,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar">
+    <motion.div className="navbar" initial={{ y: "-100%" }} animate={controls} transition={{ type: "spring", bounce: 0.5 }}>
       {isMobile ? (
         <>
           <button>
@@ -119,6 +122,6 @@ export default function Navbar() {
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 }
