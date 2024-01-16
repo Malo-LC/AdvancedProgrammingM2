@@ -1,10 +1,14 @@
-.button {
+.button-text {
+    @apply text-white;
+}
+
+.navtab {
     @apply h-[50px] border-b-4 hover:border-[#ffe500] border-[#163767];
     @apply transition duration-100 ease-in-out;
     @apply flex  items-center;
     @apply cursor-pointer;
 }
 
-.button-text {
-    @apply text-white;
+.navtab.active {
+  @apply border-[#fcba03];
 }

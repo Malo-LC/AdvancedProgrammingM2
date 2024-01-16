@@ -1,6 +1,6 @@
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import BusinessIcon from "@mui/icons-material/Business";
 import DescriptionIcon from "@mui/icons-material/Description";
-import HomeIcon from "@mui/icons-material/Home";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import MenuIcon from "@mui/icons-material/Menu";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -28,23 +28,32 @@ export default function Navbar() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const controls = useAnimation();
 
+  //will be exported into a data file later
+  const menuItemsStudent = [
+    { label: "Faire ma demande", url: "/demandes", icon: <SupervisorAccountIcon /> },
+    { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
+    { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+  ];
+
   const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
     controls.start({ y: 0 });
     const token = localStorage.getItem("token");
 
-    console.log(token);
-
     const fetchUserInfo = async () => {
       if (token) {
         api.setToken(token);
         try {
           const userInfo = await userService.getUserInfo();
-          console.log(userInfo);
+          const userRole = await userService.getRole();
           if (userInfo) {
             setUser(userInfo);
+          }
+          if (userRole) {
+            setUserRole(userRole);
           }
         } catch (error) {
           console.log("Error fetching user info: ", error);
@@ -74,35 +83,25 @@ export default function Navbar() {
             <Box sx={{ width: "100%", maxWidth: 350, bgcolor: "background.paper" }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
               <nav>
                 <List disablePadding>
-                  <ListItem>
-                    <ListItemButton onClick={() => navigate("/home")}>
-                      <ListItemIcon>
-                        <HomeIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Home" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemButton onClick={() => navigate("/dashboard")}>
-                      <ListItemIcon>
-                        <DashboardIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Dashboard" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemButton onClick={() => navigate("/documents")}>
-                      <ListItemIcon>
-                        <DescriptionIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Documents" />
-                    </ListItemButton>
-                  </ListItem>
+                  {userRole === "STUDENT" && (
+                    <>
+                      {menuItemsStudent.map((item) => (
+                        <>
+                          <ListItem>
+                            <ListItemButton onClick={() => navigate(item.url)}>
+                              <ListItemIcon>{item.icon}</ListItemIcon>
+                              <ListItemText primary={item.label} />
+                            </ListItemButton>
+                          </ListItem>
+                        </>
+                      ))}
+                    </>
+                  )}
                 </List>
               </nav>
             </Box>
           </Drawer>
-          <div>
+          <div onClick={() => navigate("/home")}>
             <img src={logo_efrei_white} className="h-[30px]" />
           </div>
           {user && (
@@ -113,15 +112,20 @@ export default function Navbar() {
         </>
       ) : (
         <>
-          <div className="flex-none">
+          <div className="flex flex-row space-x-6 items-center">
             <img src={logo_efrei_white} className="h-[40px]" />
-          </div>
-          <div className="flex-grow">
-            <nav className="nav-element-container">
-              <NavTab name="Home" />
-              <NavTab name="Dashboard" />
-              <NavTab name="Documents" />
-            </nav>
+            <div className="flex flex-row space-x-3">
+              {userRole === "STUDENT" && (
+                <>
+                  {menuItemsStudent.map((item, index) => (
+                    <>
+                      <NavTab name={item.label} url={item.url} />
+                      {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
+                    </>
+                  ))}
+                </>
+              )}
+            </div>
           </div>
           <div className="flex-none">
             {user && (
