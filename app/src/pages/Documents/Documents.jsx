@@ -1,9 +1,9 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
-import userService from "../../services/userService";
-import api from "../../utils/api";
 import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar";
 import DocElement from "../../components/DocElement/DocElement";
+import userService from "../../services/userService";
+import api from "../../utils/api";
 
 //style
 import "./documents.css";
