@@ -1,9 +1,10 @@
-import React from "react";
+//style
+import "./searchbar.css";
 
 function SearchBar() {
   return (
-    <div className="searchbar">
-      <input />
+    <div>
+      <input className="searchbar" placeholder="Recherche de documents..." />
     </div>
   );
 }

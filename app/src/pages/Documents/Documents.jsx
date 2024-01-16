@@ -2,6 +2,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import userService from "../../services/userService";
 import api from "../../utils/api";
+import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar";
 
 //style
 import "./documents.css";
@@ -39,10 +40,12 @@ function Documents() {
 
   return (
     <div className="documents">
-      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }} className="title">
-        <p>Mes Documents</p>
+      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }}>
+        <p className="title">Mes Documents</p>
+        <div>
+          <Searchbar />
+        </div>
       </motion.div>
-      <motion.div className="metric-container"></motion.div>
     </div>
   );
 }

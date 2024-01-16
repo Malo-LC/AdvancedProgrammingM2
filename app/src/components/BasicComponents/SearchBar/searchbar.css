@@ -1,0 +1,5 @@
+.searchbar {
+    @apply mt-8 px-4 py-1;
+    @apply w-[250px] sm:w-[300px] md:w-[350px];
+    @apply border border-gray-300 rounded-lg focus:outline-none;
+}
