@@ -6,5 +6,9 @@
 
 .nav-element-container {
     @apply flex flex-row justify-center;
-    @apply space-x-4;
+    @apply space-x-3;
+}
+
+.tab-separator {
+    @apply text-white text-2xl translate-y-[6px] font-extralight;
 }

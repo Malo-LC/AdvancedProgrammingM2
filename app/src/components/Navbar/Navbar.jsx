@@ -1,6 +1,3 @@
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import DescriptionIcon from "@mui/icons-material/Description";
-import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -19,6 +16,9 @@ import { ProfileNav } from "../ProfileNav/ProfileNav";
 
 import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
+import { menuItemsStudent } from "../../constants/menuItems.js";
+import { menuItemsAdmin } from "../../constants/menuItems.js";
+import { menuItemsTuteur } from "../../constants/menuItems.js";
 
 //style
 import "./navbar.css";
@@ -27,24 +27,27 @@ export default function Navbar() {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const controls = useAnimation();
+  let menuItems = [];
 
   const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
     controls.start({ y: 0 });
     const token = localStorage.getItem("token");
 
-    console.log(token);
-
     const fetchUserInfo = async () => {
       if (token) {
         api.setToken(token);
         try {
           const userInfo = await userService.getUserInfo();
-          console.log(userInfo);
+          const userRole = await userService.getRole();
           if (userInfo) {
             setUser(userInfo);
+          }
+          if (userRole) {
+            setUserRole(userRole);
           }
         } catch (error) {
           console.log("Error fetching user info: ", error);
@@ -54,6 +57,14 @@ export default function Navbar() {
 
     fetchUserInfo();
   }, []);
+
+  if (userRole === "STUDENT") {
+    menuItems = menuItemsStudent;
+  } else if (userRole === "ADMIN") {
+    menuItems = menuItemsAdmin;
+  } else if (userRole === "TUTEUR") {
+    menuItems = menuItemsTuteur;
+  }
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
@@ -74,35 +85,21 @@ export default function Navbar() {
             <Box sx={{ width: "100%", maxWidth: 350, bgcolor: "background.paper" }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
               <nav>
                 <List disablePadding>
-                  <ListItem>
-                    <ListItemButton onClick={() => navigate("/home")}>
-                      <ListItemIcon>
-                        <HomeIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Home" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemButton onClick={() => navigate("/dashboard")}>
-                      <ListItemIcon>
-                        <DashboardIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Dashboard" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemButton onClick={() => navigate("/documents")}>
-                      <ListItemIcon>
-                        <DescriptionIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Documents" />
-                    </ListItemButton>
-                  </ListItem>
+                  {menuItems.map((item) => (
+                    <>
+                      <ListItem>
+                        <ListItemButton onClick={() => navigate(item.url)}>
+                          <ListItemIcon>{item.icon}</ListItemIcon>
+                          <ListItemText primary={item.label} />
+                        </ListItemButton>
+                      </ListItem>
+                    </>
+                  ))}
                 </List>
               </nav>
             </Box>
           </Drawer>
-          <div>
+          <div onClick={() => navigate("/home")}>
             <img src={logo_efrei_white} className="h-[30px]" />
           </div>
           {user && (
@@ -113,15 +110,18 @@ export default function Navbar() {
         </>
       ) : (
         <>
-          <div className="flex-none">
-            <img src={logo_efrei_white} className="h-[40px]" />
-          </div>
-          <div className="flex-grow">
-            <nav className="nav-element-container">
-              <NavTab name="Home" />
-              <NavTab name="Dashboard" />
-              <NavTab name="Documents" />
-            </nav>
+          <div className="flex flex-row space-x-6 items-center">
+            <div>
+              <img src={logo_efrei_white} className="h-[40px] cursor-pointer" onClick={() => navigate("/home")} />
+            </div>
+            <div className="flex flex-row space-x-3">
+              {menuItems.map((item, index) => (
+                <>
+                  <NavTab name={item.label} url={item.url} />
+                  {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
+                </>
+              ))}
+            </div>
           </div>
           <div className="flex-none">
             {user && (
