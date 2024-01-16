@@ -1,6 +1,3 @@
-import BusinessIcon from "@mui/icons-material/Business";
-import DescriptionIcon from "@mui/icons-material/Description";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import MenuIcon from "@mui/icons-material/Menu";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -19,26 +16,12 @@ import { ProfileNav } from "../ProfileNav/ProfileNav";
 
 import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
+import { menuItemsStudent } from "../../constants/menuItems.js";
+import { menuItemsAdmin } from "../../constants/menuItems.js";
+import { menuItemsTuteur } from "../../constants/menuItems.js";
 
 //style
 import "./navbar.css";
-
-//will be exported into a data file later
-const menuItemsStudent = [
-  { label: "Faire ma demande", url: "/demandes", icon: <SupervisorAccountIcon /> },
-  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-];
-const menuItemsAdmin = [
-  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
-  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-];
-const menuItemsTuteur = [
-  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
-  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-];
 
 export default function Navbar() {
   const navigate = useNavigate();
