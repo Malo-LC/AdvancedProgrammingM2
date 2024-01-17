@@ -39,7 +39,7 @@ function Stages() {
 
   return (
     <div className="stages">
-      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }} className="title">
+      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 14 }} className="title">
         <p>Mes stages</p>
       </motion.div>
       <motion.div className="metric-container">{userRole === "" && <div className=""></div>}</motion.div>

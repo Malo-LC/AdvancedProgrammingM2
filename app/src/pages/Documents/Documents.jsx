@@ -52,30 +52,30 @@ function Documents() {
 
   return (
     <div className="documents">
-      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }}>
+      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 14 }}>
         <p className="title">Mes Documents</p>
         <div className="flex flex-row">
           <Searchbar />
         </div>
       </motion.div>
-      <table className="table">
-        <thead>
+      <div className="table">
+        <div>
           <div className="border-b pb-3">
-            <tr className="mx-5 flex flex-row justify-between">
+            <div className="mx-5 flex flex-row justify-between">
               {userRole &&
                 docColumn.map((item, index) => (
-                  <th className="font-semibold w-[150px] items-start" key={index}>
+                  <div className="font-semibold w-[150px] items-start" key={index}>
                     {item}
-                  </th>
+                  </div>
                 ))}
-            </tr>
+            </div>
           </div>
-        </thead>
-        <tbody>
+        </div>
+        <div>
           <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="delivered" />
           <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" />
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 }

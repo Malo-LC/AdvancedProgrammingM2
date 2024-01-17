@@ -1,20 +1,25 @@
 import React from "react";
 import Status from "../BasicComponents/Status/Status";
+import ValidationBubble from "../BasicComponents/ValidationBubble/ValidationBubble";
 
 //style
 import "./docelement.css";
 
-function DocElement({ name, deadline, student_name, validation, status }) {
+function DocElement({ name, deadline, student_name, validation_name, status }) {
   return (
-    <tr className="docelement">
-      <td className="elements">{name}</td>
-      <td className="elements font-thin">{deadline}</td>
-      <td className="elements">{student_name}</td>
-      <td className="elements">{validation}</td>
-      <td className="elements">
+    <div className="docelement justify-between mr-[100px]">
+      <div className="elements">{name}</div>
+      <div className="elements font-thin">{deadline}</div>
+      <div className="elements">{student_name}</div>
+      <div className="elements space-x-1">
+        <ValidationBubble validationStatus="validated" firstname="Stephane" lastname="Plaza" />
+        <ValidationBubble validationStatus="notValidated" firstname="Didier" lastname="Bourdon" />
+        <ValidationBubble validationStatus="notTreated" firstname="Didier" lastname="Bourdon" />
+      </div>
+      <div className="elements">
         <Status status={status} />
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 }
 
