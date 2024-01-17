@@ -10,16 +10,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import React, { useEffect } from "react";
 import api from "../../../utils/api";
+import NoAvatar from "../../../assets/images/no-avatar.png";
 
 import { useNavigate } from "react-router-dom";
 
 import PropTypes from "prop-types";
 
-// const user = new User({ id: 1, firstname: "test", lastname: "test" });
-
-export function ProfileTooltip({ firstname, profilePicture }) {
+export function ProfileTooltip({ profilePicture }) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [image, setImage] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,19 +28,15 @@ export function ProfileTooltip({ firstname, profilePicture }) {
     setAnchorEl(null);
   };
 
+  const getPfp = async () => {
+    const res = await api.getPfp(profilePicture);
+    setImage(res);
+  };
+
   useEffect(() => {
-    api
-      .get("user/me")
-      .then((res) => {
-        if (!res?.access_token) {
-          api.disconnect();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log(profilePicture);
+    getPfp();
   }, []);
+
   return (
     <div>
       <Box>
@@ -53,8 +49,7 @@ export function ProfileTooltip({ firstname, profilePicture }) {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <img src={profilePicture} alt={firstname} />
-            <Avatar alt={firstname} src={profilePicture} sx={{ width: 35, height: 35 }} />
+            <img src={image ? image : NoAvatar} alt="pfp" className="w-9 h-9 rounded-full" />
           </IconButton>
         </Tooltip>
       </Box>
@@ -94,7 +89,7 @@ export function ProfileTooltip({ firstname, profilePicture }) {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={() => navigate("/profile")}>
-          <Avatar></Avatar>
+          <Avatar />
           <p>Profile</p>
         </MenuItem>
         <Divider />
