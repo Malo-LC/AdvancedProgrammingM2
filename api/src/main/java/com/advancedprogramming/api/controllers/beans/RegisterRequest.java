@@ -8,6 +8,7 @@ public record RegisterRequest(
     String email,
     LocalDate birthDate,
     Integer promotionYear,
-    String password
+    String password,
+    CustomFile profilePicture
 ) {
 }

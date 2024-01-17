@@ -4,6 +4,7 @@ import com.advancedprogramming.api.config.JwtService;
 import com.advancedprogramming.api.controllers.beans.AuthenticationRequest;
 import com.advancedprogramming.api.controllers.beans.AuthenticationResponse;
 import com.advancedprogramming.api.controllers.beans.RegisterRequest;
+import com.advancedprogramming.api.models.Filedb;
 import com.advancedprogramming.api.models.Token;
 import com.advancedprogramming.api.models.TokenRepository;
 import com.advancedprogramming.api.models.User;
@@ -17,7 +18,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.Map;
 
 @Service
@@ -28,12 +32,21 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final FileStorageService fileStorageService;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) throws IOException {
         // check if email is already registered
         if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new RuntimeException("Email already registered");
         }
+
+        MultipartFile profilePictureMultipart = Base64ToMultipartFileConverter.convert(
+            request.profilePicture().base64(),
+            request.profilePicture().type(),
+            request.profilePicture().name()
+        );
+
+        Filedb profilePicture = fileStorageService.store(profilePictureMultipart);
 
         User user = User.builder()
             .firstName(request.firstName())
@@ -41,6 +54,7 @@ public class AuthenticationService {
             .promotionYear(request.promotionYear())
             .birthDate(request.birthDate())
             .role(RoleEnum.STUDENT)
+            .filedb(profilePicture)
             .email(request.email())
             .password(passwordEncoder.encode(request.password()))
             .build();
@@ -115,11 +129,17 @@ public class AuthenticationService {
     }
 
     private Map<String, Object> getExtraClaims(User user) {
+        String profilePictureUri = ServletUriComponentsBuilder
+            .fromCurrentContextPath()
+            .path("/files/")
+            .path(user.getFiledb().getId().toString())
+            .toUriString();
         return Map.of(
             "role", user.getRole(),
             "email", user.getEmail(),
             "firstName", user.getFirstName(),
-            "lastName", user.getLastName()
+            "lastName", user.getLastName(),
+            "profilePicture", profilePictureUri
             // TODO: add more claims
 //            "birthDate", user.getBirthDate(),
 //            "promotionYear", user.getPromotionYear()

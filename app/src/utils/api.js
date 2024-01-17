@@ -29,6 +29,18 @@ class CRUDApi {
     return response.json();
   }
 
+  async postFile(resource, data) {
+    const response = await fetch(`${this.baseUrl}/${resource}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: data,
+    });
+
+    return response.json();
+  }
+
   async get(resource) {
     const response = await fetch(`${this.baseUrl}/${resource}`, {
       method: "GET",
