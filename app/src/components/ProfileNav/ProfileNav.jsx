@@ -11,6 +11,7 @@ export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
     <div className="profile">
       {isMobile ? (
         <>
+          <Notification notificationNumber={4} />
           <ProfileTooltip firstname={firstname} lastname={lastname} profilePicture={profilePicture} />
         </>
       ) : (
@@ -28,7 +29,7 @@ export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
 }
 
 ProfileNav.propTypes = {
-  profilePicture: PropTypes.string.isRequired,
+  profilePicture: PropTypes.string,
   firstname: PropTypes.string.isRequired,
   lastname: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
