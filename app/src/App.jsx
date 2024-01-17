@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import RestrictedRoute from "./RestrictedRoute";
+import Profile from "./pages/Profile/Profile";
 import Documents from "./pages/Documents/Documents";
 import Stage from "./pages/Stages/Stage";
 import Home from "./pages/Home/Home";
@@ -37,6 +38,14 @@ function App() {
         element={
           <RestrictedRoute>
             <Home />
+          </RestrictedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <RestrictedRoute>
+            <Profile />
           </RestrictedRoute>
         }
       />
