@@ -14,34 +14,34 @@ import logo_efrei_white from "../../assets/images/logo_efrei_white.png";
 import { NavTab } from "../BasicComponents/NavTab/NavTab.jsx";
 import { ProfileNav } from "../ProfileNav/ProfileNav";
 
-import BusinessIcon from "@mui/icons-material/Business";
-import DescriptionIcon from "@mui/icons-material/Description";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+// import BusinessIcon from "@mui/icons-material/Business";
+// import DescriptionIcon from "@mui/icons-material/Description";
+// import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 
 import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
-// import { menuItemsStudent, menuItemsAdmin, menuItemsTuteur } from "../../constants/menuItems.js";
+import { menuItemsStudent, menuItemsAdmin, menuItemsTuteur } from "../../constants/menuItems";
 
 //style
 import "./navbar.css";
 
 //will be exported later probleme using MUI icon in JS file
-const menuItemsStudent = [
-  { label: "Faire ma demande", url: "/demandes", icon: <SupervisorAccountIcon /> },
-  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-];
+// const menuItemsStudent = [
+//   { label: "Faire ma demande", url: "/demandes", icon: <SupervisorAccountIcon /> },
+//   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
+//   { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+// ];
 
-const menuItemsAdmin = [
-  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
-  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-];
-const menuItemsTuteur = [
-  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
-  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-];
+// const menuItemsAdmin = [
+//   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
+//   { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
+//   { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+// ];
+// const menuItemsTuteur = [
+//   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
+//   { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
+//   { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+// ];
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -106,14 +106,12 @@ export default function Navbar() {
               <nav>
                 <List disablePadding>
                   {menuItems.map((item, index) => (
-                    <>
-                      <ListItem key={index}>
-                        <ListItemButton onClick={() => navigate(item.url)}>
-                          <ListItemIcon>{item.icon}</ListItemIcon>
-                          <ListItemText primary={item.label} />
-                        </ListItemButton>
-                      </ListItem>
-                    </>
+                    <ListItem key={index}>
+                      <ListItemButton onClick={() => navigate(item.url)}>
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItemText primary={item.label} />
+                      </ListItemButton>
+                    </ListItem>
                   ))}
                 </List>
               </nav>
@@ -136,10 +134,10 @@ export default function Navbar() {
             </div>
             <div className="flex flex-row space-x-3">
               {menuItems.map((item, index) => (
-                <>
-                  <NavTab name={item.label} url={item.url} key={index} />
+                <div key={index} className="flex">
+                  <NavTab name={item.label} url={item.url} />
                   {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
-                </>
+                </div>
               ))}
             </div>
           </div>
