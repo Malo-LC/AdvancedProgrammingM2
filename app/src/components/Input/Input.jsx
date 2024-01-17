@@ -22,7 +22,7 @@ export function Input({ type, name, placeholder, iconLeft, iconRight, errors, re
           </button>
         )}
       </div>
-      {errors && errors[name] && <span className="error-message">{errors[name].message}</span>}
+      {errors?.[name] && <span className="error-message">{errors[name].message}</span>}
     </div>
   );
 }

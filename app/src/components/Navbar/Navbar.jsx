@@ -64,6 +64,7 @@ export default function Navbar() {
           const userInfo = await userService.getUserInfo();
           const userRole = await userService.getRole();
           if (userInfo) {
+            console.log(userInfo);
             setUser(userInfo);
           }
           if (userRole) {
@@ -146,7 +147,7 @@ export default function Navbar() {
           <div className="flex-none">
             {user && (
               <div className="profile">
-                <ProfileNav isMobile={isMobile} firstname={user?.firstname} lastname={user?.lastname} />
+                <ProfileNav profilePicture={user.profilePictureUri} isMobile={isMobile} firstname={user?.firstname} lastname={user?.lastname} />
               </div>
             )}
           </div>

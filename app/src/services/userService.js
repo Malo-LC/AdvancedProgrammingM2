@@ -27,6 +27,7 @@ class UserService {
         firstname: formatFirstName(decodedToken.firstName),
         lastname: formatLastName(decodedToken.lastName),
         mail: decodedToken.email,
+        profilePictureUri: decodedToken.profilePicture,
       };
       return userInfo;
     }

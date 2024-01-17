@@ -2,10 +2,8 @@ package com.advancedprogramming.api.controllers;
 
 import com.advancedprogramming.api.controllers.beans.AuthenticationRequest;
 import com.advancedprogramming.api.controllers.beans.AuthenticationResponse;
-import com.advancedprogramming.api.services.AuthenticationService;
 import com.advancedprogramming.api.controllers.beans.RegisterRequest;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.advancedprogramming.api.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +24,8 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-        @RequestBody RegisterRequest request) {
+        @RequestBody RegisterRequest request
+    ) throws IOException {
         return ResponseEntity.ok(authService.register(request));
     }
 
