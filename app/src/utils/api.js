@@ -52,6 +52,17 @@ class CRUDApi {
     return response.json();
   }
 
+  async getPfp(resource) {
+    const response = await fetch(resource, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+    return response.text();
+  }
+
   async put(resource, data) {
     const response = await fetch(`${this.baseUrl}/${resource}`, {
       method: "PUT",
