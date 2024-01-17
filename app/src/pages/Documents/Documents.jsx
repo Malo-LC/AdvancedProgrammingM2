@@ -59,21 +59,19 @@ function Documents() {
         </div>
       </motion.div>
       <div className="table">
-        <div>
-          <div className="border-b pb-3">
-            <div className="mx-5 flex flex-row justify-between">
-              {userRole &&
-                docColumn.map((item, index) => (
-                  <div className="font-semibold w-[150px] items-start" key={index}>
-                    {item}
-                  </div>
-                ))}
-            </div>
+        <div className="border-b pb-3">
+          <div className="mx-5 flex flex-row justify-between">
+            {userRole &&
+              docColumn.map((item, index) => (
+                <div className="font-semibold w-[150px] items-start" key={index}>
+                  {item}
+                </div>
+              ))}
           </div>
         </div>
         <div>
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="delivered" />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
         </div>
       </div>
     </div>
