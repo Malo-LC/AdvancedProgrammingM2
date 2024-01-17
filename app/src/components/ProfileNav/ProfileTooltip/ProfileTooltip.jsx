@@ -39,6 +39,7 @@ export function ProfileTooltip({ firstname, profilePicture }) {
       .catch((err) => {
         console.log(err);
       });
+    console.log(profilePicture);
   }, []);
   return (
     <div>
@@ -52,6 +53,7 @@ export function ProfileTooltip({ firstname, profilePicture }) {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
+            <img src={profilePicture} alt={firstname} />
             <Avatar alt={firstname} src={profilePicture} sx={{ width: 35, height: 35 }} />
           </IconButton>
         </Tooltip>
