@@ -9,8 +9,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import React, { useEffect } from "react";
-import api from "../../../utils/api";
 import NoAvatar from "../../../assets/images/no-avatar.png";
+import api from "../../../utils/api";
 
 import { useNavigate } from "react-router-dom";
 
@@ -35,6 +35,17 @@ export function ProfileTooltip({ profilePicture }) {
 
   useEffect(() => {
     getPfp();
+    api
+      .get("user/me")
+      .then((res) => {
+        if (!res?.access_token) {
+          api.disconnect();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(profilePicture);
   }, []);
 
   return (
