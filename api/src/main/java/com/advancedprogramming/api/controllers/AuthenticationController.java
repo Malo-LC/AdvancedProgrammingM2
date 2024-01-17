@@ -46,6 +46,8 @@ public class AuthenticationController {
         if (request.profilePicture() == null) {
             return ResponseEntity.badRequest().build();
         }
+
+    f4f83d2 (create a pfp)
         return ResponseEntity.ok(authService.register(request));
     }
 
