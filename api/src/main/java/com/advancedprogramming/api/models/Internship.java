@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -32,6 +33,8 @@ public class Internship {
 
     private Integer year;
     private String title;
+    private Boolean isClosed = false;
+    private LocalDate EndDate;
 
     public void setId(Integer id) {
         this.id = id;
@@ -47,6 +50,14 @@ public class Internship {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setIsClosed(Boolean isClosed) {
+        this.isClosed = isClosed;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        EndDate = endDate;
     }
 
     @OneToMany(mappedBy = "internship")
