@@ -4,6 +4,7 @@ import com.advancedprogramming.api.controllers.beans.AuthenticationRequest;
 import com.advancedprogramming.api.controllers.beans.AuthenticationResponse;
 import com.advancedprogramming.api.controllers.beans.RegisterRequest;
 import com.advancedprogramming.api.services.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,8 +25,11 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-        @RequestBody RegisterRequest request
+        @Valid @RequestBody RegisterRequest request
     ) throws IOException {
+        if (request.profilePicture() == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(authService.register(request));
     }
 

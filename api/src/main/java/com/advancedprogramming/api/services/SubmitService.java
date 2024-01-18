@@ -11,15 +11,18 @@ import com.advancedprogramming.api.models.Submit;
 import com.advancedprogramming.api.models.SubmitRepository;
 import com.advancedprogramming.api.models.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SubmitService {
     private final StudentInternshipRepository studentInternshipRepository;
     private final UserService userService;
@@ -101,5 +104,25 @@ public class SubmitService {
         }
         // No student internship found
         return false;
+    }
+
+    public Boolean acceptOrDeclineSubmit(Integer submitId, Boolean isAccepted, User user) {
+        Optional<Submit> submit = submitRepository.findById(submitId);
+        if (submit.isPresent()) {
+            Submit s = submit.get();
+            if (Objects.equals(s.getStudentInternship().getTutorCompanyUser().getId(), user.getId())) {
+                s.setIsApprovedByCompany(isAccepted);
+            } else if (Objects.equals(s.getStudentInternship().getTutorSchoolUser().getId(), user.getId())) {
+                s.setIsApprovedBySchool(isAccepted);
+            } else {
+                log.warn("User {} is not allowed to accept or decline submit {}", user.getId(), submitId);
+                return false;
+            }
+            submitRepository.save(s);
+            return true;
+        } else {
+            log.warn("Submit not found with id {}", submitId);
+            return false;
+        }
     }
 }
