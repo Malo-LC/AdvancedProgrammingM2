@@ -64,3 +64,5 @@ values (1,
         'Cahier des charges de votre projet de fin d\'études',
         'Cahier des charges',
         4);
+
+update report_seq set next_val=14 where next_val=1;
