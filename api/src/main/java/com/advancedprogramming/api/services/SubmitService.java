@@ -53,7 +53,7 @@ public class SubmitService {
                         submit != null ? submit.getId() : null,
                         user.getId(),
                         report.getId(),
-                        internship.getYear(),
+                        internship.getPromotionYear(),
                         report.getTitle(),
                         report.getDeadline(),
                         submit != null ? submit.getIsApprovedBySchool() : null,

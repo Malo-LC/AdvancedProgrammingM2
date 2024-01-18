@@ -8,18 +8,23 @@
 git clone https://github.com/Malo-LC/AdvancedProgrammingM2.git
 ```
 
-2. Avoir une base de données MySQL (port 3306) avec un utilisateur root et un mot de passe `password`
-3. Lancer le backend
+2. lancer le docker-compose
+
+```bash
+docker-compose up -d
+```
+
+3. Lancer les migrations
 
 ```bash
 cd api
-mvn spring-boot:run
+mvn clean flyway:migrate
 ```
 
-4. Lancer les migrations
+3. Lancer le serveur
 
 ```bash
-mvn clean flyway:migrate
+mvn spring-boot:run
 ```
 
 5. Lancer le frontend
