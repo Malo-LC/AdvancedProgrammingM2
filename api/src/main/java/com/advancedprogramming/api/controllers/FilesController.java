@@ -21,6 +21,9 @@ public class FilesController {
     @GetMapping("/{id}")
     public ResponseEntity<String> getFile(@PathVariable String id) {
         Filedb fileDB = storageService.getFile(id);
+        if (fileDB == null) {
+            return ResponseEntity.notFound().build();
+        }
 
         String base64 = new String(fileDB.getData());
 
