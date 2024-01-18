@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StudentInternshipRepository extends JpaRepository<StudentInternship, String> {
+public interface StudentInternshipRepository extends JpaRepository<StudentInternship, Integer> {
 
     List<StudentInternship> findAllByUserId(Integer userId);
 

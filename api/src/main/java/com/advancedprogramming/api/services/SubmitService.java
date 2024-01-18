@@ -1,5 +1,6 @@
 package com.advancedprogramming.api.services;
 
+import com.advancedprogramming.api.controllers.beans.SubmitFileBody;
 import com.advancedprogramming.api.controllers.beans.SubmitResponse;
 import com.advancedprogramming.api.models.Filedb;
 import com.advancedprogramming.api.models.Internship;
@@ -71,26 +72,34 @@ public class SubmitService {
         }
     }
 
-    public boolean uploadSubmit(String token, Integer reportId, MultipartFile file) throws IOException {
+    public boolean uploadSubmit(String token, Integer studentInternshipId, SubmitFileBody body) throws IOException {
         User user = userService.getUserByToken(token);
 
-        Optional<StudentInternship> studentInternships = studentInternshipRepository.findAllByUserId(user.getId())
-            .stream()
-            .min((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate()));
+        Optional<StudentInternship> optionalStudentInternship = studentInternshipRepository.findById(studentInternshipId);
 
-        if (studentInternships.isPresent()) {
-            StudentInternship studentInternship = studentInternships.get();
+        if (optionalStudentInternship.isPresent()) {
+            StudentInternship studentInternship = optionalStudentInternship.get();
+            if (!Objects.equals(studentInternship.getUser().getId(), user.getId())) {
+                log.warn("User {} is not allowed to upload a submit for student internship {}", user.getId(), studentInternshipId);
+                return false;
+            }
+
             List<Submit> submits = studentInternship.getSubmits();
 
             Optional<Submit> submit = submits
                 .stream()
-                .filter(s -> s.getReport().getId().equals(reportId))
+                .filter(s -> s.getReport().getId().equals(body.reportId()))
                 .findFirst();
 
             if (submit.isEmpty()) {
                 // No submit found, create a new one
+                MultipartFile file = Base64ToMultipartFileConverter.convert(
+                    body.file().base64(),
+                    body.file().type(),
+                    body.file().name()
+                );
                 Filedb filedb = fileStorageService.store(file);
-                Report report = reportRepository.findById(reportId).orElseThrow();
+                Report report = reportRepository.findById(body.reportId()).orElseThrow();
                 Submit newSubmit = new Submit();
                 newSubmit.setReport(report);
                 newSubmit.setStudentInternship(studentInternship);
@@ -98,27 +107,29 @@ public class SubmitService {
                 submitRepository.save(newSubmit);
                 return true;
             }
+            log.warn("Submit already exists for student internship {}", studentInternshipId);
             // Submit found, cannot create a new one
             // TODO: maybe update the file?
             return false;
         }
+        log.warn("Student internship not found with id {}", studentInternshipId);
         // No student internship found
         return false;
     }
 
     public Boolean acceptOrDeclineSubmit(Integer submitId, Boolean isAccepted, User user) {
-        Optional<Submit> submit = submitRepository.findById(submitId);
-        if (submit.isPresent()) {
-            Submit s = submit.get();
-            if (Objects.equals(s.getStudentInternship().getTutorCompanyUser().getId(), user.getId())) {
-                s.setIsApprovedByCompany(isAccepted);
-            } else if (Objects.equals(s.getStudentInternship().getTutorSchoolUser().getId(), user.getId())) {
-                s.setIsApprovedBySchool(isAccepted);
+        Optional<Submit> optionalSubmit = submitRepository.findById(submitId);
+        if (optionalSubmit.isPresent()) {
+            Submit submit = optionalSubmit.get();
+            if (Objects.equals(submit.getStudentInternship().getTutorCompanyUser().getId(), user.getId())) {
+                submit.setIsApprovedByCompany(isAccepted);
+            } else if (Objects.equals(submit.getStudentInternship().getTutorSchoolUser().getId(), user.getId())) {
+                submit.setIsApprovedBySchool(isAccepted);
             } else {
                 log.warn("User {} is not allowed to accept or decline submit {}", user.getId(), submitId);
                 return false;
             }
-            submitRepository.save(s);
+            submitRepository.save(submit);
             return true;
         } else {
             log.warn("Submit not found with id {}", submitId);
