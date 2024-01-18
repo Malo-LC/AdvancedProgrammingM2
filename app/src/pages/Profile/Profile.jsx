@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { motion, useAnimation } from "framer-motion";
 import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
 
@@ -35,6 +35,10 @@ function Profile() {
 
   return (
     <div className="bg-gray-100 h-screen items-center justify-center">
+      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }} className="title">
+        <p>Mon profil</p>
+      </motion.div>
+      <motion.div className="metric-container">{userRole === "" && <div className=""></div>}</motion.div>
       <h2 className="text-gray-800 text-lg font-semibold mb-3">Mon profil</h2>
       <div className="flex items-center justify-center">
         <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -53,7 +57,7 @@ function Profile() {
             <div className="flex">
               <div className="w-1/3">
                 <div className="font-semibold mb-2">Email</div>
-                <div className="font-semibold mb-2">Téléphone Mobile</div>
+                <div className="font-semibold mb-2">Téléphone</div>
                 <div className="font-semibold mb-2">Adresse</div>
                 <div className="font-semibold mb-2">Promotion</div>
                 <div className="font-semibold mb-2">Majeur</div>

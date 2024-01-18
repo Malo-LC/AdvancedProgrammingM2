@@ -1,0 +1,7 @@
+.title {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-[#163767] mt-2;
+}
+
+.profile {
+    @apply flex justify-center flex-col items-center;
+}
