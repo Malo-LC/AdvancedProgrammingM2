@@ -26,8 +26,8 @@ public class Submit {
     private Integer id;
 
     private LocalDate submitDate = LocalDate.now();
-    private Boolean isApprovedBySchool = false;
-    private Boolean isApprovedByCompany = false;
+    private Boolean isApprovedBySchool = null;
+    private Boolean isApprovedByCompany = null;
 
     public void setId(Integer id) {
         this.id = id;
