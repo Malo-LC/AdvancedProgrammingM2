@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record RequiredReport(
     Integer id,
-    String name,
+    String title,
     String description,
     LocalDate deadline
 ) {
