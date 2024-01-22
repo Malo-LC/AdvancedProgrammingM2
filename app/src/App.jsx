@@ -2,6 +2,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Home from "./pages/Home/Home";
+import Demandes from "./pages/Demande/Demande";
 import { useEffect, useState } from "react";
 import api from "./utils/api";
 import RestrictedRoute from "./RestrictedRoute";
@@ -38,6 +39,7 @@ function App() {
           // </RestrictedRoute>
         }
       />
+        <Route path="/demandes" element={<Demandes />}/>
     </Routes>
   );
 }
