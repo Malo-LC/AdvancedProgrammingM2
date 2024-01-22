@@ -86,12 +86,12 @@ public class SubmitService {
 
             List<Submit> submits = studentInternship.getSubmits();
 
-            Optional<Submit> submit = submits
+            Optional<Submit> optionalSubmit = submits
                 .stream()
                 .filter(s -> s.getReport().getId().equals(body.reportId()))
                 .findFirst();
 
-            if (submit.isEmpty()) {
+            if (optionalSubmit.isEmpty()) {
                 // No submit found, create a new one
                 MultipartFile file = Base64ToMultipartFileConverter.convert(
                     body.file().base64(),
@@ -110,7 +110,22 @@ public class SubmitService {
             log.warn("Submit already exists for student internship {}", studentInternshipId);
             // Submit found, cannot create a new one
             // TODO: maybe update the file?
-            return false;
+            Submit submit = optionalSubmit.get();
+            if (Boolean.FALSE.equals(submit.getIsApprovedByCompany()) || Boolean.FALSE.equals(submit.getIsApprovedBySchool())) {
+                MultipartFile file = Base64ToMultipartFileConverter.convert(
+                    body.file().base64(),
+                    body.file().type(),
+                    body.file().name()
+                );
+                Filedb filedb = fileStorageService.store(file);
+                submit.setFiledb(filedb);
+                submitRepository.save(submit);
+                return true;
+            } else {
+                log.warn("Submit already approved or pending for student internship {}", studentInternshipId);
+                // Submit already approved
+                return false;
+            }
         }
         log.warn("Student internship not found with id {}", studentInternshipId);
         // No student internship found
