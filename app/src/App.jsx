@@ -39,7 +39,7 @@ function App() {
           // </RestrictedRoute>
         }
       />
-        <Route path="/demandes" element={<Demandes />}/>
+        <Route path="/admin/demandes" element={<Demandes />}/>
     </Routes>
   );
 }
