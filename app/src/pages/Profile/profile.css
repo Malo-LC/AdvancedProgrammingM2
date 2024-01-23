@@ -3,12 +3,17 @@
     @apply flex flex-row w-screen justify-between px-[150px] py-[40px];
 }
 
-.info-container {
+.info-container-desktop {
     @apply flex flex-row space-x-10 items-center justify-center;
 }
 
+.info-container-mobile {
+    @apply flex flex-col space-y-10 items-center justify-center;
+}
+
 .user-info-table {
-    @apply bg-[#F2F4F8] flex flex-col w-[600px] rounded-lg border border-[#939393] border-opacity-80 shadow-lg;
+    @apply flex flex-col md:w-[600px] w-[300px];
+    @apply bg-[#F2F4F8] rounded-lg border border-[#939393] border-opacity-80 shadow-lg;
 }
 
 .user-info-pic {
@@ -17,5 +22,5 @@
 }
 
 .user-info-element { 
-    @apply pl-10 py-3 flex flex-row space-x-[150px];
+    @apply pl-10 py-3 flex flex-row md:space-x-[150px];
 }
