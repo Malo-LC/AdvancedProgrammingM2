@@ -1,0 +1,16 @@
+.homepage {
+    @apply flex ;
+}
+
+.homepage-mobile {
+    @apply flex-col space-y-[50px] items-center justify-between mt-20;
+}
+
+.homepage-desktop {
+    @apply justify-between px-10 items-center h-full pt-[150px];
+}
+
+.text-div {
+    @apply flex flex-col space-y-2;
+    @apply w-[330px] sm:w-[400px] md:w-[600px] md:pl-10;
+}
