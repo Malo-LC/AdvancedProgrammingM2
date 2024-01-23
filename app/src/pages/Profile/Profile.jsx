@@ -3,11 +3,13 @@ import { motion } from "framer-motion";
 import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
 import NoAvatar from "../../assets/images/no-avatar.png";
+import { useMediaQuery } from "react-responsive";
 
 //style
 import "./profile.css";
 
 function Profile() {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const [user, setUser] = useState(null);
   const [image, setImage] = React.useState(null);
 
@@ -52,7 +54,7 @@ function Profile() {
       <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }} className="title">
         <p>Mon profil</p>
       </motion.div>
-      <div className="info-container">
+      <div className={`${isMobile ? "info-container-mobile" : "info-container-desktop"}`}>
         <div className="user-info-pic">
           <img className="rounded-full border-2 border-gray-300 h-[130px] w-[130px] mb-4" src={image || NoAvatar} />
           <div className="flex flex-col text-center">
