@@ -123,7 +123,7 @@ export default function Navbar() {
           </div>
           {user && (
             <div className="profile">
-              <ProfileNav isMobile={isMobile} firstname={user.firstname} lastname={user.lastname} />
+              <ProfileNav isMobile={isMobile} firstname={user.firstname} lastname={user.lastname} profilePicture={user.profilePictureUri} />
             </div>
           )}
         </>
