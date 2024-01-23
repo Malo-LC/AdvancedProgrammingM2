@@ -4,9 +4,8 @@ import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
 
 function Profile() {
-
   const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState('');
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -34,12 +33,11 @@ function Profile() {
   }
 
   return (
-    <div className="bg-gray-100 h-screen items-center justify-center">
+    <div className="h-screen items-center justify-center">
       <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }} className="title">
         <p>Mon profil</p>
       </motion.div>
-      <motion.div className="metric-container">{userRole === "" && <div className=""></div>}</motion.div>
-      <h2 className="text-gray-800 text-lg font-semibold mb-3">Mon profil</h2>
+
       <div className="flex items-center justify-center">
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <div className="flex flex-col items-center">
@@ -75,9 +73,8 @@ function Profile() {
           </div>
         </div>
       </div>
-
     </div>
-  )
+  );
 }
 
 export default Profile;
