@@ -1,5 +1,6 @@
 .title {
     @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-[#163767] mt-2;
+    @apply flex flex-row w-screen justify-between px-[150px] py-[40px];
 }
 
 .page-header {
