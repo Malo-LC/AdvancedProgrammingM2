@@ -64,7 +64,6 @@ export default function Navbar() {
           const userInfo = await userService.getUserInfo();
           const userRole = await userService.getRole();
           if (userInfo) {
-            console.log(userInfo);
             setUser(userInfo);
           }
           if (userRole) {
