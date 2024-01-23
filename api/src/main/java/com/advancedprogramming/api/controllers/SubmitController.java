@@ -4,16 +4,16 @@ import com.advancedprogramming.api.controllers.beans.MessageResponse;
 import com.advancedprogramming.api.controllers.beans.SubmitApproveBody;
 import com.advancedprogramming.api.controllers.beans.SubmitFileBody;
 import com.advancedprogramming.api.controllers.beans.SubmitResponse;
-import com.advancedprogramming.api.models.Filedb;
 import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.models.bean.RoleEnum;
 import com.advancedprogramming.api.services.FileStorageService;
 import com.advancedprogramming.api.services.SubmitService;
 import com.advancedprogramming.api.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,12 +30,14 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/submit")
 @CrossOrigin(origins = "*")
+@Tag(name = "Submit")
 @RequiredArgsConstructor
 public class SubmitController {
     private final FileStorageService storageService;
     private final SubmitService submitService;
     private final UserService userService;
 
+    @Operation(summary = "Upload a file")
     @PostMapping("/upload/{studentInternshipId}")
     public ResponseEntity<MessageResponse> uploadFile(
         @Valid @RequestBody SubmitFileBody body,
@@ -58,6 +60,7 @@ public class SubmitController {
         }
     }
 
+    @Operation(summary = "Approve or decline a submit by tutor, by submit id")
     @PutMapping("/approve/{submitId}")
     public ResponseEntity<MessageResponse> acceptOrDeclineSubmitByTutor(
         @PathVariable Integer submitId,
@@ -75,22 +78,11 @@ public class SubmitController {
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse("Could not update submit", false));
     }
 
-    @GetMapping("/download/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
-        Filedb fileDB = storageService.getFile(id);
-        if (fileDB == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        return ResponseEntity.ok()
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-            .body(fileDB.getData());
-    }
-
+    @Operation(summary = "Get all submits by user")
     @GetMapping("/all")
     public ResponseEntity<List<SubmitResponse>> getListFiles(HttpServletRequest request) {
-        String token = userService.getTokenFromRequest(request);
-        List<SubmitResponse> submits = submitService.getSubmitsByUser(token);
+        User user = userService.getUserByFromRequest(request);
+        List<SubmitResponse> submits = submitService.getSubmitsByUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(submits);
     }
 }

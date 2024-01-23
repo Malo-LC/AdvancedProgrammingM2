@@ -31,12 +31,10 @@ public class SubmitService {
     private final FileStorageService fileStorageService;
     private final SubmitRepository submitRepository;
 
-    public List<SubmitResponse> getSubmitsByUser(String token) {
-        User user = userService.getUserByToken(token);
-
+    public List<SubmitResponse> getSubmitsByUser(User user) {
         Optional<StudentInternship> studentInternships = studentInternshipRepository.findAllByUserId(user.getId())
             .stream()
-            .min((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate()));
+            .max((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate()));
 
         if (studentInternships.isPresent()) {
             StudentInternship studentInternship = studentInternships.get();

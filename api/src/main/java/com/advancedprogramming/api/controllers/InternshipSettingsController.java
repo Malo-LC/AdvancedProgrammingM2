@@ -6,6 +6,9 @@ import com.advancedprogramming.api.models.bean.RoleEnum;
 import com.advancedprogramming.api.services.InternshipSettingsService;
 import com.advancedprogramming.api.services.UserService;
 import com.advancedprogramming.api.services.bean.InternshipSettings;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,11 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/internship")
 @CrossOrigin(origins = "*")
+@Tag(name = "Internship Settings")
 @RequiredArgsConstructor
 public class InternshipSettingsController {
     private final InternshipSettingsService internshipSettingsService;
     private final UserService userService;
 
+    @Operation(summary = "Get internship settings by id")
     @GetMapping("/{internshipId}")
     public ResponseEntity<InternshipSettings> getInternshipSettings(
         @PathVariable Integer internshipId,
@@ -43,6 +48,7 @@ public class InternshipSettingsController {
         return ResponseEntity.ok(internshipSettings);
     }
 
+    @Operation(summary = "Update internship settings")
     @PostMapping("/update")
     public ResponseEntity<MessageResponse> updateInternshipSettings(
         HttpServletRequest request,
