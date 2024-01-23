@@ -18,9 +18,9 @@ import { ProfileNav } from "../ProfileNav/ProfileNav";
 // import DescriptionIcon from "@mui/icons-material/Description";
 // import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 
+import { menuItemsAdmin, menuItemsStudent, menuItemsTuteur } from "../../constants/menuItems";
 import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
-import { menuItemsStudent, menuItemsAdmin, menuItemsTuteur } from "../../constants/menuItems";
 
 //style
 import "./navbar.css";
@@ -133,14 +133,14 @@ export default function Navbar() {
             <div>
               <img src={logo_efrei_white} className="h-[40px] cursor-pointer" onClick={() => navigate("/home")} />
             </div>
-            <div className="flex flex-row space-x-3">
-              {menuItems.map((item, index) => (
-                <div key={index} className="flex">
-                  <NavTab name={item.label} url={item.url} />
-                  {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
-                </div>
-              ))}
-            </div>
+          </div>
+          <div className="flex flex-row space-x-3">
+            {menuItems.map((item, index) => (
+              <>
+                <NavTab name={item.label} url={item.url} key={index} />
+                {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
+              </>
+            ))}
           </div>
           <div className="flex-none">
             {user && (
