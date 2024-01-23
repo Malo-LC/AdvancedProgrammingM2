@@ -38,18 +38,18 @@ function Home() {
     <div className="flex flex-col">
       <motion.div className={`homepage ${isMobile ? "homepage-mobile" : "homepage-desktop"}`}>
         <motion.div className="text-div" variants={textDivVariants} initial="hidden" animate="visible">
-          <motion.div className="text-[40px] text-[#163767] font-bold" variants={textItemVariants}>
+          <motion.div className="text-[40px] sm:text-[50px] md:text-[70px] text-[#163767] font-bold" variants={textItemVariants}>
             <h1>MYEFREI STAGE</h1>
           </motion.div>
-          <motion.div className="text-[#6D7ED6] text-[25px] font-semibold" variants={textItemVariants}>
+          <motion.div className="text-[#6D7ED6] text-[25px] md:text-[35px] font-semibold" variants={textItemVariants}>
             <h1>Ton site de gestion des stages</h1>
           </motion.div>
-          <motion.div className="text-[20px] font-light" variants={textItemVariants}>
+          <motion.div className="text-[20px] md:text-[25px] font-light md:w-[400px]" variants={textItemVariants}>
             <h1>Un seul site pour gérer toutes tes demandes de stage EFREI</h1>
           </motion.div>
         </motion.div>
         <motion.div>
-          <img src={homepage_img} className="h-[300px]" />
+          <img src={homepage_img} className="h-[300px] md:h-[400px]" />
         </motion.div>
       </motion.div>
 
