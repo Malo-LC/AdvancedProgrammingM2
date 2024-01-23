@@ -7,7 +7,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import logo_efrei_white from "../../assets/images/logo_efrei_white.png";
@@ -64,7 +64,6 @@ export default function Navbar() {
           const userInfo = await userService.getUserInfo();
           const userRole = await userService.getRole();
           if (userInfo) {
-            console.log(userInfo);
             setUser(userInfo);
           }
           if (userRole) {
@@ -136,10 +135,10 @@ export default function Navbar() {
           </div>
           <div className="flex flex-row space-x-3">
             {menuItems.map((item, index) => (
-              <>
-                <NavTab name={item.label} url={item.url} key={index} />
+              <React.Fragment key={index}>
+                <NavTab name={item.label} url={item.url} />
                 {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
-              </>
+              </React.Fragment>
             ))}
           </div>
           <div className="flex-none">

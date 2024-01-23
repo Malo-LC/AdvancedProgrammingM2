@@ -1,14 +1,13 @@
-import Logout from "@mui/icons-material/Logout";
-import Settings from "@mui/icons-material/Settings";
-import { Avatar } from "@mui/material";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import React, { useEffect } from "react";
+import power from "../../../assets/images/icons/power.svg";
+import settings from "../../../assets/images/icons/settings.svg";
+import user from "../../../assets/images/icons/user.svg";
 import NoAvatar from "../../../assets/images/no-avatar.png";
 import api from "../../../utils/api";
 
@@ -100,21 +99,17 @@ export function ProfileTooltip({ profilePicture }) {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={() => navigate("/profile")}>
-          <Avatar />
-          <p>Profile</p>
+          <img src={user} className="h-6 mr-3 text-[#163767]" alt="User Icon" />
+          <p className="text-[#163767]">Profile</p>
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => navigate("/settings")}>
-          <ListItemIcon>
-            <Settings />
-          </ListItemIcon>
-          Settings
+          <img src={settings} className="h-6 mr-3 text-[#163767]" alt="Settings Icon" />
+          <p className="text-[#163767]">Paramètres</p>
         </MenuItem>
         <MenuItem onClick={api.disconnect}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
+          <img src={power} className="h-6 mr-3 text-[#163767]" alt="Power Icon" />
+          <p className="text-[#163767]">Déconnexion</p>
         </MenuItem>
       </Menu>
     </div>

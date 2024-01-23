@@ -4,12 +4,12 @@ import ActionButton from "../BasicComponents/ActionButton/ActionButton";
 
 //style
 import "./docelement.css";
-
+// ${userRole === "STUDENT" ? "w-[850px]" : "w-full"}
 function DocElement({ name, deadline, student_name, validation_name, status, userRole }) {
   return (
-    <div className="flex flex-row items-center space-x-2">
-      <div className={`docelement justify-between ${userRole === "STUDENT" ? "w-[750px]" : "w-full"}`}>
-        <div className="elements">{name}</div>
+    <div className="flex flex-row items-center space-x-2 ">
+      <div className={`docelement justify-between w-full `}>
+        <div className="elements bg-purple-100">{name}</div>
         <div className="elements font-thin">{deadline}</div>
         <div className="elements">{student_name}</div>
         <div className="elements space-x-1">

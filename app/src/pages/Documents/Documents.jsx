@@ -51,26 +51,33 @@ function Documents() {
   }
 
   return (
-    <div className="documents">
-      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 14 }}>
+    <div>
+      <motion.div className="page-header" initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 14 }}>
         <p className="title">Mes Documents</p>
         <div className="flex flex-row">
           <Searchbar />
         </div>
       </motion.div>
       <div className="table">
-        <div className="border-b pb-3">
-          <div className="mx-5 flex flex-row justify-between">
-            {userRole &&
-              docColumn.map((item, index) => (
-                <div className="font-semibold w-[150px] items-start" key={index}>
-                  {item}
-                </div>
-              ))}
-          </div>
+        <div className="table-title">
+          {userRole &&
+            docColumn.map((item, index) => (
+              <div className="font-semibold w-[150px] text-center" key={index}>
+                {item}
+              </div>
+            ))}
         </div>
-        <div>
+        <div className="doc-container">
           <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
+          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
           <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
         </div>
       </div>

@@ -1,9 +1,9 @@
 .docelement {
     @apply flex flex-row items-center;
-    @apply  px-6 py-3 my-2 border rounded-lg;
+    @apply px-6 py-3 my-2 border rounded-lg;
     @apply bg-[#F2F4F8];
 }
 
 .elements {
-    @apply w-[150px] flex place-items-start;
+    @apply flex items-center;
 }

@@ -2,16 +2,25 @@
     @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-[#163767] mt-2;
 }
 
+.page-header {
+    @apply flex flex-row w-screen justify-between px-[150px] py-[40px];
+}
+
 .documents {
     @apply flex justify-start flex-col;
-    @apply mx-[30px] sm:mx-[90px] md:mx-[90px] lg:mx-[150px] my-[30px] sm:my-[40px] lg:my-[40px];
+    @apply mx-[30px] sm:mx-[90px] md:mx-[90px] lg:mx-[150px] my-[30px] sm:my-[40px] lg:my-[40px] ;
 }
 
 .table-title {
-    @apply flex flex-row space-x-[50px] pb-4;
-    @apply border-b
+    @apply flex flex-row justify-between w-full pl-4 pr-10;
+    @apply border-b pb-3;
 }
 
 .table {
-    @apply mt-10;
+    @apply flex flex-col w-screen px-[150px];
+}
+
+.doc-container {
+    @apply h-[550px] overflow-auto;
+    @apply mt-2;
 }
