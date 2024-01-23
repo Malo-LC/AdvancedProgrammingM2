@@ -21,7 +21,7 @@ function Demandes() {
                     {demandesList.map((demande) => (
                         <div key={demande.id} className="demande-card">
                             <div className="demande-info">
-                                <p>{demande.nom}</p>
+                                <p className="demande-name">{demande.nom}</p>
                                 <p>{demande.type}</p>
                             </div>
                             <div className="demande-status">

@@ -1,6 +1,6 @@
 .demandes-container{
        padding: 20px;
-       min-height: 100vh;
+       margin-left: 100px;
 }
 
 .demandes-container h1 {
@@ -23,14 +23,21 @@
     justify-content: space-between;
     margin-bottom: 10px;
     padding: 10px;
-    background-color: whitesmoke;
+    background-color: #F5F8FB;
     border-radius: 4px;
+    width: 92%;
 }
 .demande-info{
-    width: 10%;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.demande-info > .demande-name{
+    font-weight: bold;
 }
 .demande-info p {
-    margin-left: 20px;
+    margin: 0; 
+    margin-left: 120px;
     padding-right: 10px;
     color: #333;
     font-size: 16px;
@@ -38,7 +45,14 @@
 
 .demande-status p {
     margin: 0;
+    width: 70%;
+    margin-right: 200px;
     color: #666;
+    text-decoration: underline;
+    color: #163767;
+}
+.demande-actions{
+    margin-right: 200px;
 }
 
 .btn {
@@ -52,23 +66,23 @@
 
 .accepter {
     background-color: white;
-    color: green;
-    border: 2px solid green;
+    color: #BCE3D4;
+    border: 2px solid #BCE3D4;
 
 }
 .accepter:hover {
-    background-color: green;
+    background-color: #BCE3D4;
     color: white;
 }
 .refuser {
     background-color: white;
-    color: #f44336;
-    border: 2px solid #f44336;
+    color: #F8AB94;
+    border: 2px solid #F8AB94;
     margin-right: 0;
 
 }
 .refuser:hover {
-    background-color: #f44336;
+    background-color: #F8AB94;
     color: white;
 }
 
