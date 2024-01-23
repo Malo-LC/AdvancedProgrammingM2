@@ -9,6 +9,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import userService from "./services/userService";
 import api from "./utils/api";
+import Demandes from "./pages/Demande/Demande";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -70,6 +71,22 @@ function App() {
         element={
           <RestrictedRoute>
             <Stage />
+          </RestrictedRoute>
+        }
+      />
+      <Route
+        path="/admin/demandes"
+        element={
+          <RestrictedRoute>
+            <Demandes />
+          </RestrictedRoute>
+        }
+      />
+      <Route
+        path="/tuteur/demandes"
+        element={
+          <RestrictedRoute>
+            <Demandes />
           </RestrictedRoute>
         }
       />
