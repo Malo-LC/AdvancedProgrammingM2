@@ -4,6 +4,8 @@ import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
 import NoAvatar from "../../assets/images/no-avatar.png";
 import { useMediaQuery } from "react-responsive";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 //style
 import "./profile.css";
@@ -37,7 +39,13 @@ function Profile() {
   }, []);
 
   if (!user) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress sx={{ width: "200%" }} />
+        </Box>
+      </div>
+    );
   }
 
   const userInfo = [
