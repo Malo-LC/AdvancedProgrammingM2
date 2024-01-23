@@ -135,14 +135,14 @@ export default function Navbar() {
             <div>
               <img src={logo_efrei_white} className="h-[40px] cursor-pointer" onClick={() => navigate("/home")} />
             </div>
-            <div className="flex flex-row space-x-3">
-              {menuItems.map((item, index) => (
-                <>
-                  <NavTab name={item.label} url={item.url} key={index} />
-                  {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
-                </>
-              ))}
-            </div>
+          </div>
+          <div className="flex flex-row space-x-3">
+            {menuItems.map((item, index) => (
+              <>
+                <NavTab name={item.label} url={item.url} key={index} />
+                {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
+              </>
+            ))}
           </div>
           <div className="flex-none">
             {user && (
