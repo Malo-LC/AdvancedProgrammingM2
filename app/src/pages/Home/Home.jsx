@@ -3,11 +3,6 @@ import { useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import api from "../../utils/api";
 import Navbar from "../../components/Navbar/Navbar";
-import './home.css'
-
-//style
-import footer from "../../assets/images/footer.svg";
-import homepage_img from "../../assets/images/homepage_img.svg";
 import "./home.css";
 
 //style

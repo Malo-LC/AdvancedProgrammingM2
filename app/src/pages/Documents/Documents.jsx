@@ -55,7 +55,7 @@ function Documents() {
   return (
     <div className={`documents ${isMobile ? "items-start" : "items-center justify-center"}`}>
       <motion.div
-        className={`page-header ${isMobile ? "flex-col" : "flex-row"}`}
+        className={`documents-header ${isMobile ? "flex-col" : "flex-row"}`}
         initial={{ x: "-300%" }}
         animate={{ x: 0 }}
         transition={{ type: "spring", stiffness: 120, damping: 14 }}
