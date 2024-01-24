@@ -11,8 +11,8 @@ public record SubmitResponse(
     YearEnum internshipName,
     String reportName,
     LocalDate deadline,
-    Boolean isValidatedByTutorSchool,
-    Boolean isValidatedByTutorInternship,
+    SubmitTutor tutorSchool,
+    SubmitTutor tutorInternship,
     Boolean isSubmitted
 ) {
 }
