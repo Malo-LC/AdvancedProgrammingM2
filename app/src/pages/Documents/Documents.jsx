@@ -4,7 +4,6 @@ import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar";
 import DocElement from "../../components/DocElement/DocElement";
 import userService from "../../services/userService";
 import api from "../../utils/api";
-import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar";
 
 //style
 import "./documents.css";
@@ -54,7 +53,7 @@ function Documents() {
   return (
     <div>
       <motion.div className="page-header" initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 14 }}>
-        <p className="title">Mes Documents</p>
+        <p className="document-title">Mes Documents</p>
         <div className="flex flex-row">
           <Searchbar />
         </div>
