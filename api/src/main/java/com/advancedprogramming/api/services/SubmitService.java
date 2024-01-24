@@ -2,6 +2,7 @@ package com.advancedprogramming.api.services;
 
 import com.advancedprogramming.api.controllers.beans.SubmitFileBody;
 import com.advancedprogramming.api.controllers.beans.SubmitResponse;
+import com.advancedprogramming.api.controllers.beans.SubmitTutor;
 import com.advancedprogramming.api.models.Filedb;
 import com.advancedprogramming.api.models.Internship;
 import com.advancedprogramming.api.models.Report;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -41,6 +43,9 @@ public class SubmitService {
             Internship internship = studentInternship.getInternship();
             List<Submit> submits = studentInternship.getSubmits();
             List<Report> reports = internship.getReports();
+            Map<Integer, User> getUserById = userService.getUserById();
+            User tutorSchool = getUserById.get(studentInternship.getTutorSchoolUser().getId());
+            User tutorCompany = getUserById.get(studentInternship.getTutorCompanyUser().getId());
 
             return reports
                 .stream()
@@ -51,6 +56,14 @@ public class SubmitService {
                         .findFirst()
                         .orElse(null);
 
+                    SubmitTutor tutorSchoolSubmit = submit != null
+                        ? new SubmitTutor(tutorSchool.getId(), submit.getIsApprovedBySchool(), tutorSchool.getFirstName(), tutorSchool.getLastName())
+                        : null;
+
+                    SubmitTutor tutorCompanySubmit = submit != null
+                        ? new SubmitTutor(tutorCompany.getId(), submit.getIsApprovedByCompany(), tutorCompany.getFirstName(), tutorCompany.getLastName())
+                        : null;
+
                     return new SubmitResponse(
                         submit != null ? submit.getId() : null,
                         user.getId(),
@@ -58,8 +71,8 @@ public class SubmitService {
                         internship.getPromotionYear(),
                         report.getTitle(),
                         report.getDeadline(),
-                        submit != null ? submit.getIsApprovedBySchool() : null,
-                        submit != null ? submit.getIsApprovedByCompany() : null,
+                        tutorSchoolSubmit,
+                        tutorCompanySubmit,
                         submit != null
                     );
                 })

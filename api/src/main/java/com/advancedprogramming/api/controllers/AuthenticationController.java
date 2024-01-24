@@ -1,20 +1,10 @@
 package com.advancedprogramming.api.controllers;
 
-import java.io.IOException;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.advancedprogramming.api.config.LogoutService;
 import com.advancedprogramming.api.controllers.beans.AuthenticationRequest;
 import com.advancedprogramming.api.controllers.beans.AuthenticationResponse;
 import com.advancedprogramming.api.controllers.beans.RegisterRequest;
 import com.advancedprogramming.api.services.AuthenticationService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,6 +14,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/auth")
@@ -38,31 +36,31 @@ public class AuthenticationController {
     @PostMapping("/register")
     @Operation(summary = "Register a new user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User registered successfully", content = @Content(mediaType = "application/json")),
-            @ApiResponse(responseCode = "400", description = "Bad request")
+        @ApiResponse(responseCode = "200", description = "User registered successfully", content = @Content(mediaType = "application/json")),
+        @ApiResponse(responseCode = "400", description = "Bad request")
     })
     public ResponseEntity<AuthenticationResponse> register(
-            @Valid @RequestBody RegisterRequest request) throws IOException {
+        @Valid @RequestBody RegisterRequest request
+    ) throws IOException {
         if (request.profilePicture() == null) {
             return ResponseEntity.badRequest().build();
         }
-
-    f4f83d2 (create a pfp)
         return ResponseEntity.ok(authService.register(request));
     }
 
     @Operation(summary = "Authenticate a user")
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request) {
+        @RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
     @Operation(summary = "Logout a user")
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(
-            HttpServletRequest request,
-            HttpServletResponse response) {
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
         logoutService.logout(request, response, null);
         return ResponseEntity.ok().build();
     }
