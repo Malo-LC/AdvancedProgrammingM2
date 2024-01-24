@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -16,6 +17,23 @@ public class StudentInternshipService {
     @Autowired
     private StudentInternshipRepository studentInternshipRepository;
     public Boolean createStudentInternship(StudentInternshipRequest request) {
+        //check if unique id ?
+
+        StudentInternship studentInternship = StudentInternship.builder()
+                .id(request.id())
+                .isApproved(request.isApproved())
+                .companyName(request.companyName())
+                .companyAddress(request.companyAddress())
+                .companyPostalCode(request.companyPostalCode())
+                .companyCity(request.companyCity())
+                .companyCountry(request.companyCountry())
+                .mission(request.mission())
+                .tutorSchoolFirstName(request.tutorSchoolFirstName()).
+                tutorSchoolLastName(request.tutorSchoolLastName()).
+                tutorSchoolEmail(request.tutorSchoolEmail()).
+                startDate(request.startDate()).
+                endDate(request.endDate()).
+                wage(request.wage()).build();
         return true;
     }
 }

@@ -27,12 +27,11 @@ public class StudentIntershipController {
     private StudentInternshipService studentInternshipService;
 
 
-    @PostMapping
+    @PostMapping("/create")
     @Operation(summary = "Create student internship")
     public ResponseEntity<MessageResponse> createStudentInternship(
             @Valid @RequestBody StudentInternshipRequest request
     ) throws IOException {
-        //return ResponseEntity.ok(studentInternshipService.createStudentInternship(request));
         try {
             boolean success = studentInternshipService.createStudentInternship(request);
             String message;
