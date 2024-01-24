@@ -1,5 +1,7 @@
 package com.advancedprogramming.api.controllers.beans;
 
+import com.advancedprogramming.api.models.User;
+
 import java.time.LocalDate;
 
 public record StudentInternshipRequest(
@@ -16,6 +18,9 @@ public record StudentInternshipRequest(
         String tutorSchoolEmail,
         LocalDate startDate,
         LocalDate endDate,
-        Integer wage
+        Integer wage,
+        Integer user_id,
+        Integer internship_id
+
 ) {
 }
