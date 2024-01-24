@@ -12,7 +12,7 @@ export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
       {isMobile ? (
         <>
           <Notification notificationNumber={4} />
-          <ProfileTooltip firstname={firstname} lastname={lastname} profilePicture={profilePicture} />
+          <ProfileTooltip profilePicture={profilePicture} />
         </>
       ) : (
         <>
@@ -21,7 +21,7 @@ export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
             <p>{firstname}</p>
             <p>{lastname}</p>
           </div>
-          <ProfileTooltip />
+          <ProfileTooltip profilePicture={profilePicture} />
         </>
       )}
     </div>

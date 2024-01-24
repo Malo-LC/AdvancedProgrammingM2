@@ -64,6 +64,7 @@ export default function Navbar() {
           const userInfo = await userService.getUserInfo();
           const userRole = await userService.getRole();
           if (userInfo) {
+            console.log(userInfo);
             setUser(userInfo);
           }
           if (userRole) {
@@ -124,7 +125,7 @@ export default function Navbar() {
           </div>
           {user && (
             <div className="profile">
-              <ProfileNav isMobile={isMobile} firstname={user.firstname} lastname={user.lastname} />
+              <ProfileNav isMobile={isMobile} firstname={user.firstname} lastname={user.lastname} profilePicture={user.profilePictureUri} />
             </div>
           )}
         </>
@@ -134,19 +135,19 @@ export default function Navbar() {
             <div>
               <img src={logo_efrei_white} className="h-[40px] cursor-pointer" onClick={() => navigate("/home")} />
             </div>
-            <div className="flex flex-row space-x-3">
-              {menuItems.map((item, index) => (
-                <>
-                  <NavTab name={item.label} url={item.url} key={index} />
-                  {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
-                </>
-              ))}
-            </div>
+          </div>
+          <div className="flex flex-row space-x-3">
+            {menuItems.map((item, index) => (
+              <>
+                <NavTab name={item.label} url={item.url} key={index} />
+                {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
+              </>
+            ))}
           </div>
           <div className="flex-none">
             {user && (
               <div className="profile">
-                <ProfileNav isMobile={isMobile} firstname={user?.firstname} lastname={user?.lastname} />
+                <ProfileNav profilePicture={user.profilePictureUri} isMobile={isMobile} firstname={user?.firstname} lastname={user?.lastname} />
               </div>
             )}
           </div>

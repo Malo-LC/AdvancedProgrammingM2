@@ -1,41 +1,17 @@
-.content-container {
-    display: flex;
-    align-items: center; /* Alignement vertical des éléments */
+.homepage {
+    @apply flex ;
 }
-.text-container{
-    display: flex;
-    flex-direction: column;
-    margin-left: 200px;
+
+.homepage-mobile {
+    @apply flex-col space-y-[130px] items-center justify-between mt-20;
 }
-  
-.text-container h1{
-    width: 100%;
-    color: #163767;
-    font-weight: bold;
-    overflow: hidden; /* Masque le texte qui dépasse */
-  text-overflow: ellipsis; /* Affiche des points de suspension (...) pour le texte qui dépasse */
-  white-space: nowrap; 
-  font-size: 50px;
-    
-   
+
+.homepage-desktop {
+    @apply space-x-4 xl:space-x-[120px] 2xl:space-x-[200px] items-center h-full pt-[150px];
 }
-.content-container h2{
-    color: #6D7ED6;
-    font-size: 30px;
-    overflow: hidden; /* Masque le texte qui dépasse */
-    text-overflow: ellipsis; /* Affiche des points de suspension (...) pour le texte qui dépasse */
-    white-space: nowrap; 
+
+.text-div {
+    @apply flex flex-col space-y-2;
+    @apply w-[330px] sm:w-[400px] md:w-[600px] 2xl:w-[750px] md:pl-10;
 }
-.img-container{
-    margin-top: 44px;
-    margin-left: 500px;
-}
-.wave-svg {
-   position: absolute;
-   bottom: 0;
-   width: 100%;
-   left: 0;
-  }
-  
-  
-  
+

@@ -38,16 +38,34 @@ function Register() {
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmit = (data) => {
+  function readFileAsync(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const onSubmit = async (data) => {
+    const f = data.profilePicture[0];
+    const rawBody = await readFileAsync(f);
+
     const finalData = {
       firstName: data.firstname?.trim(),
       lastName: data.lastname?.trim(),
       email: data.email?.trim(),
       password: data.password?.trim(),
+      profilePicture: { base64: rawBody, name: f.name, type: f.type },
     };
+
     api
       .post("auth/register", finalData)
       .then((res) => {
+        console.log(res);
+        if (!res.access_token) {
+          return;
+        }
         api.setToken(res.access_token);
         navigate("/home");
       })
@@ -65,6 +83,7 @@ function Register() {
             <Input placeholder="Firstname" type="text" name="firstname" iconLeft={profile} errors={errors} register={register} />
             <Input placeholder="Lastname" type="text" name="lastname" iconLeft={profile} errors={errors} register={register} />
             <Input placeholder="Mail" type="text" name="email" iconLeft={mail} errors={errors} register={register} />
+            <Input placeholder="Profile picture" type="file" name="profilePicture" iconLeft={mail} errors={errors} register={register} />
             <Input placeholder="Password" type="password" name="password" iconLeft={lock} iconRight={EyeOff} errors={errors} register={register} />
             <Input
               placeholder="Password Confirmation"
@@ -76,7 +95,7 @@ function Register() {
               register={register}
             />
             <div className="button-container">
-              <input type="submit" value="Register"></input>
+              <input type="submit" value="Register" />
               <div className="no-account">
                 <p>Already an account?</p>
                 <Link to="/" className="register-link">

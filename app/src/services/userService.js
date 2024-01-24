@@ -27,6 +27,7 @@ class UserService {
         firstname: formatFirstName(decodedToken.firstName),
         lastname: formatLastName(decodedToken.lastName),
         mail: decodedToken.email,
+        profilePictureUri: decodedToken.profilePicture,
       };
       return userInfo;
     }
@@ -37,6 +38,7 @@ class UserService {
     const decodedToken = this.decodeToken();
     if (decodedToken) {
       const userProfile = {
+        profilePictureUri: decodedToken.profilePicture,
         firstname: formatFirstName(decodedToken.firstName),
         lastname: formatLastName(decodedToken.lastName),
         email: decodedToken.email,
@@ -53,9 +55,12 @@ class UserService {
 }
 
 const formatFirstName = (name) => {
-  return name.split(' ').map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }).join(' ');
+  return name
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
 };
 
 const formatLastName = (name) => {

@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
+import NoAvatar from "../../assets/images/no-avatar.png";
+import { useMediaQuery } from "react-responsive";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
+//style
+import "./profile.css";
 
 function Profile() {
-
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState('');
+  const [image, setImage] = React.useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -16,8 +23,10 @@ function Profile() {
         api.setToken(token);
         try {
           const userProfile = await userService.getUserProfile();
-          const userRoleInfo = await userService.getRole();
+          let profilePic = null;
           if (userProfile) {
+            profilePic = await api.getPfp(userProfile.profilePictureUri);
+            setImage(profilePic);
             setUser(userProfile);
           }
         } catch (error) {
@@ -27,57 +36,59 @@ function Profile() {
     };
 
     fetchUserInfo();
-  }, []); // Le tableau vide garantit que l'effet s'exécute une seule fois après le premier rendu
+  }, []);
 
   if (!user) {
-    return <div>Loading...</div>; // Vous pouvez personnaliser ce chargement comme vous le souhaitez
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress sx={{ width: "200%" }} />
+        </Box>
+      </div>
+    );
   }
 
+  const userInfo = [
+    { name: "Email", info: user.email },
+    { name: "Téléphone", info: user.phone },
+    { name: "Adresse", info: user.address },
+    { name: "Promotion", info: user.promotionYear },
+    { name: "Majeur", info: user.major },
+    { name: "Classe", info: user.class },
+  ];
+
   return (
-    <div className="bg-gray-100 h-screen items-center justify-center">
+    <div className="h-screen items-center justify-center space-y-[50px]">
       <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }} className="title">
         <p>Mon profil</p>
       </motion.div>
-      <motion.div className="metric-container">{userRole === "" && <div className=""></div>}</motion.div>
-      <h2 className="text-gray-800 text-lg font-semibold mb-3">Mon profil</h2>
-      <div className="flex items-center justify-center">
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <div className="flex flex-col items-center">
-            <img
-              className="rounded-full border-2 border-gray-300 w-24 h-24 mb-4"
-              src="https://placehold.co/96x96.png"
-              alt="{user.firstname} {user.lastname} profile picture"
-            />
-            <div className="text-lg font-semibold mb-2">{user.firstname}</div>
-            <div className="text-lg font-semibold mb-2">{user.lastname}</div>
+      <div className={`${isMobile ? "info-container-mobile" : "info-container-desktop"}`}>
+        <div className="user-info-pic">
+          <img className="rounded-full border-2 border-gray-300 h-[130px] w-[130px] mb-4" src={image || NoAvatar} />
+          <div className="flex flex-col text-center">
+            <div className="text-lg font-semibold">{user.firstname}</div>
+            <div className="text-lg font-semibold">{user.lastname}</div>
           </div>
         </div>
-        <div className="bg-white m-10 p-6 rounded-lg shadow-lg w-5/12">
-          <div className="mt-4">
-            <div className="flex">
-              <div className="w-1/3">
-                <div className="font-semibold mb-2">Email</div>
-                <div className="font-semibold mb-2">Téléphone</div>
-                <div className="font-semibold mb-2">Adresse</div>
-                <div className="font-semibold mb-2">Promotion</div>
-                <div className="font-semibold mb-2">Majeur</div>
-                <div className="font-semibold mb-2">Classe</div>
+        <div className="user-info-table">
+          {userInfo.map((item, index) => (
+            <React.Fragment key={index}>
+              <div className={`user-info-element ${index < userInfo.length - 1 ? "border-b border-[#939393] border-opacity-80" : ""}`}>
+                <p className="font-semibold w-1/3">{item.name}</p>
+                <div className="mb-2 w-2/3">
+                  {item.info === undefined ? (
+                    <p className={`${item.info === undefined ? "font-light text-gray-500" : "font-normal"}`}>Non renseigné</p>
+                  ) : (
+                    item.info
+                  )}
+                </div>
               </div>
-              <div className="w-2/3">
-                <div className="mb-2">{user.email}</div>
-                <div className="mb-2">{user.phone}</div>
-                <div className="mb-2">{user.address}</div>
-                <div className="mb-2">{user.promotionYear}</div>
-                <div className="mb-2">{user.major}</div>
-                <div className="mb-2">{user.class}</div>
-              </div>
-            </div>
-          </div>
+            </React.Fragment>
+          ))}
         </div>
       </div>
-
     </div>
-  )
+  );
 }
 
 export default Profile;

@@ -26,4 +26,9 @@ public class UserService {
         }
         return authHeader.substring(7);
     }
+
+    public User getUserByFromRequest(HttpServletRequest request) {
+        String token = getTokenFromRequest(request);
+        return getUserByToken(token);
+    }
 }
