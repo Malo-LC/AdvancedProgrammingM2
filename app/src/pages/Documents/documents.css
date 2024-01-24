@@ -3,12 +3,11 @@
 }
 
 .page-header {
-    @apply flex flex-row w-screen justify-between px-[150px] py-[40px];
+    @apply flex w-screen justify-between pl-[30px] md:px-[150px] md:py-[40px] xl:px-[150px] xl:py-[40px] 2xl:px-[150px] 2xl:py-[40px];
 }
 
 .documents {
-    @apply flex justify-start flex-col;
-    @apply mx-[30px] sm:mx-[90px] md:mx-[90px] lg:mx-[150px] my-[30px] sm:my-[40px] lg:my-[40px] ;
+    @apply flex flex-col;
 }
 
 .table-title {
@@ -17,10 +16,10 @@
 }
 
 .table {
-    @apply flex flex-col w-screen px-[150px];
+    @apply flex flex-col md:w-[850px] xl:w-[900px] 2xl:w-[950px];
 }
 
 .doc-container {
-    @apply h-[550px] overflow-auto;
+    @apply overflow-auto;
     @apply mt-2;
 }
