@@ -8,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -30,5 +34,10 @@ public class UserService {
     public User getUserByFromRequest(HttpServletRequest request) {
         String token = getTokenFromRequest(request);
         return getUserByToken(token);
+    }
+
+    public Map<Integer, User> getUserById() {
+        List<User> users = (List<User>) userRepository.findAll();
+        return users.stream().collect(Collectors.toMap(User::getId, user -> user));
     }
 }
