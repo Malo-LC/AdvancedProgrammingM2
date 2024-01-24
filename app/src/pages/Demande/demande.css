@@ -1,0 +1,100 @@
+.demandes-container{
+       padding: 20px;
+       margin-left: 100px;
+}
+
+.demandes-container h1 {
+    font-weight: bold;
+    color: #163767;
+    font-size: 30px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+
+.demandes-list {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.demande-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #F5F8FB;
+    border-radius: 4px;
+    width: 92%;
+}
+.demande-info{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.demande-info > .demande-name{
+    font-weight: bold;
+}
+.demande-info p {
+    margin: 0; 
+    margin-left: 120px;
+    padding-right: 10px;
+    color: #333;
+    font-size: 16px;
+}
+
+.demande-status p {
+    margin: 0;
+    width: 70%;
+    margin-right: 200px;
+    color: #666;
+    text-decoration: underline;
+    color: #163767;
+}
+.demande-actions{
+    margin-right: 200px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.accepter {
+    background-color: white;
+    color: #BCE3D4;
+    border: 2px solid #BCE3D4;
+
+}
+.accepter:hover {
+    background-color: #BCE3D4;
+    color: white;
+}
+.refuser {
+    background-color: white;
+    color: #F8AB94;
+    border: 2px solid #F8AB94;
+    margin-right: 0;
+
+}
+.refuser:hover {
+    background-color: #F8AB94;
+    color: white;
+}
+
+
+.voir-plus {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
