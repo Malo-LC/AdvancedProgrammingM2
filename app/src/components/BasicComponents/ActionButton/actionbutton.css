@@ -1,0 +1,13 @@
+.action-button {
+    @apply py-2 rounded-md w-[140px] flex justify-center;
+    @apply  hover:scale-105;
+    @apply transition  duration-100;
+}
+
+.download {
+    @apply bg-[#163767] text-white border border-white;
+}
+
+.upload {
+    @apply text-[#163767] border border-[#163767];   
+}

@@ -59,7 +59,7 @@ function Profile() {
 
   return (
     <div className="h-screen items-center justify-center space-y-[50px]">
-      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }} className="title">
+      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 10 }} className="profile-title">
         <p>Mon profil</p>
       </motion.div>
       <div className={`${isMobile ? "info-container-mobile" : "info-container-desktop"}`}>

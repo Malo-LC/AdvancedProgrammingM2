@@ -14,4 +14,3 @@
     @apply flex flex-col space-y-2;
     @apply w-[330px] sm:w-[400px] md:w-[600px] 2xl:w-[750px] md:pl-10;
 }
-

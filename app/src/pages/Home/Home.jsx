@@ -10,6 +10,11 @@ import footer from "../../assets/images/footer.svg";
 import homepage_img from "../../assets/images/homepage_img.svg";
 import "./home.css";
 
+//style
+import footer from "../../assets/images/footer.svg";
+import homepage_img from "../../assets/images/homepage_img.svg";
+import "./home.css";
+
 function Home() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 

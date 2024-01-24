@@ -1,5 +1,14 @@
-.searchbar {
-    @apply mt-8 px-4 py-1;
+.input-searchbar {
+    @apply py-2 pr-10 pl-3 my-3;
     @apply w-[250px] sm:w-[300px] md:w-[350px];
     @apply border border-gray-300 rounded-lg focus:outline-none;
+}
+
+.searchbar {
+    @apply flex items-center relative;
+}
+
+.search-icon-right {
+    @apply absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer h-6;
+    @apply hover:scale-105 transition duration-100
 }

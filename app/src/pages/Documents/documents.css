@@ -1,8 +1,26 @@
-.title {
+.document-title {
     @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-[#163767] mt-2;
     @apply flex flex-row w-screen justify-between px-[150px] py-[40px];
 }
 
+.page-header {
+    @apply flex w-screen justify-between pl-[30px] md:px-[150px] md:py-[40px] xl:px-[150px] xl:py-[40px] 2xl:px-[150px] 2xl:py-[40px];
+}
+
 .documents {
-    @apply flex justify-center flex-col items-center;
+    @apply flex flex-col;
+}
+
+.table-title {
+    @apply flex flex-row justify-between w-full pl-4 pr-10;
+    @apply border-b pb-3;
+}
+
+.table {
+    @apply flex flex-col md:w-[850px] xl:w-[900px] 2xl:w-[950px];
+}
+
+.doc-container {
+    @apply overflow-auto;
+    @apply mt-2;
 }
