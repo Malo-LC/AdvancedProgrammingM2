@@ -8,6 +8,9 @@ import com.advancedprogramming.api.models.Filedb;
 import com.advancedprogramming.api.models.StudentInternship;
 import com.advancedprogramming.api.models.StudentInternshipRepository;
 import com.advancedprogramming.api.services.StudentInternshipService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,22 +28,23 @@ public class StudentIntershipController {
 
 
     @PostMapping
-    public ResponseEntity<Boolean> register(
-            @RequestBody StudentInternshipRequest request
+    @Operation(summary = "Create student internship")
+    public ResponseEntity<MessageResponse> createStudentInternship(
+            @Valid @RequestBody StudentInternshipRequest request
     ) throws IOException {
-        return ResponseEntity.ok(studentInternshipService.createStudentInternship(request));
-        /*try {
+        //return ResponseEntity.ok(studentInternshipService.createStudentInternship(request));
+        try {
             boolean success = studentInternshipService.createStudentInternship(request);
             String message;
             if (success) {
                 message = "Created to student internship sucessfuly: ";
                 return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message, true));
             }
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            message = "Could not create the student internship !";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message, false));
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(e.getMessage(), false));
-        }*/
+        }
     }
 }
