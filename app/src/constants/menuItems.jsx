@@ -10,7 +10,7 @@ export const menuItemsStudent = [
 
 export const menuItemsAdmin = [
   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
+  { label: "Creation compte tuteur", url: "/creation-tuteur", icon: <SupervisorAccountIcon /> },
   { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
 ];
 export const menuItemsTuteur = [
