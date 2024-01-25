@@ -2,8 +2,8 @@ import Status from "../BasicComponents/Status/Status";
 import ValidationBubble from "../BasicComponents/ValidationBubble/ValidationBubble";
 import ActionButton from "../BasicComponents/ActionButton/ActionButton";
 import { useMediaQuery } from "react-responsive";
-import React, { useState } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 //style
 import "./docelement.css";
@@ -22,7 +22,7 @@ function DocElement({ name, deadline, student_name, validation_name, status, use
     <>
       {isMobile ? (
         <motion.div className="docelement-mobile">
-          <button onClick={handleClick} className="flex flex-row justify-between w-full">
+          <button onClick={handleClick} className="flex flex-row justify-between w-full items-center">
             <div className="elements text-xl">{name}</div>
             <div className="elements">
               <Status status={status} />
