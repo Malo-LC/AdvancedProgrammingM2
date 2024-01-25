@@ -1,7 +1,6 @@
 import React from 'react';
 import {useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import './Demande.css';
 function Demandes() {
 
     // TODO :   Quand le role est student => fetch data  
