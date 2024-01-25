@@ -15,6 +15,6 @@ export const menuItemsAdmin = [
 ];
 export const menuItemsTuteur = [
   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
+  // { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
   { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
 ];

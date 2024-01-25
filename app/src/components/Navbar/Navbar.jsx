@@ -137,7 +137,7 @@ export default function Navbar() {
             {menuItems.map((item, index) => (
               <React.Fragment key={index}>
                 <NavTab name={item.label} url={item.url} />
-                {index < menuItemsStudent.length - 1 && <div className="tab-separator">|</div>}
+                {index < menuItems.length - 1 && <div className="tab-separator">|</div>}
               </React.Fragment>
             ))}
           </div>
