@@ -12,12 +12,14 @@ import com.advancedprogramming.api.models.StudentInternshipRepository;
 import com.advancedprogramming.api.models.Submit;
 import com.advancedprogramming.api.models.SubmitRepository;
 import com.advancedprogramming.api.models.User;
+import com.advancedprogramming.api.models.bean.RoleEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -34,9 +36,34 @@ public class SubmitService {
     private final SubmitRepository submitRepository;
 
     public List<SubmitResponse> getSubmitsByUser(User user) {
+        if (RoleEnum.TUTOR.equals(user.getRole())) {
+            return getSubmitTutor(user);
+        } else if (RoleEnum.STUDENT.equals(user.getRole())) {
+            return getSubmitStudent(user);
+        }
+        return List.of();
+    }
+
+    private List<SubmitResponse> getSubmitTutor(User tutor) {
+        List<User> students = findStudentIdsOfTutor(tutor);
+        List<SubmitResponse> submits = new ArrayList<>();
+        for (User student : students) {
+            submits.addAll(getSubmitStudent(student));
+        }
+        return submits;
+    }
+
+    private List<User> findStudentIdsOfTutor(User tutor) {
+        return studentInternshipRepository.findAllByTutorId(tutor.getId())
+            .stream()
+            .map(StudentInternship::getUser)
+            .toList();
+    }
+
+    private List<SubmitResponse> getSubmitStudent(User user) {
         Optional<StudentInternship> studentInternships = studentInternshipRepository.findAllByUserId(user.getId())
             .stream()
-            .max((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate()));
+            .min((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate()));
 
         if (studentInternships.isPresent()) {
             StudentInternship studentInternship = studentInternships.get();
