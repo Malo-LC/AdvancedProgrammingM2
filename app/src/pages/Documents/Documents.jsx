@@ -17,27 +17,23 @@ function Documents() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   // const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState(null);
+  const userRole = userService.getRole();
   const [documents, setDocuments] = useState([]);
-
-  let docColumn;
 
   useEffect(() => {
     controls.start({ y: 0 });
     api.get("submit/all").then((res) => {
       setDocuments(res);
     });
-    const fetchUserInfo = async () => {
-      const userRole = await userService.getRole();
-      setUserRole(userRole);
-    };
-    fetchUserInfo();
   }, []);
 
+  let docColumn;
   if (userRole === "STUDENT") {
     docColumn = docColumnNamesStudent;
   } else if (userRole === "TUTOR") {
     docColumn = docColumnNamesTutor;
+  } else {
+    docColumn = [];
   }
 
   return (

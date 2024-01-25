@@ -49,33 +49,12 @@ export default function Navbar() {
   const controls = useAnimation();
   let menuItems = [];
 
-  const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState(null);
+  const user = userService.getUserInfo();
+  const userRole = userService.getRole();
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
     controls.start({ y: 0 });
-    const token = localStorage.getItem("token");
-
-    const fetchUserInfo = async () => {
-      if (token) {
-        api.setToken(token);
-        try {
-          const userInfo = await userService.getUserInfo();
-          const userRole = await userService.getRole();
-          if (userInfo) {
-            setUser(userInfo);
-          }
-          if (userRole) {
-            setUserRole(userRole);
-          }
-        } catch (error) {
-          console.log("Error fetching user info: ", error);
-        }
-      }
-    };
-
-    fetchUserInfo();
   }, []);
 
   if (userRole === "STUDENT") {
@@ -98,7 +77,7 @@ export default function Navbar() {
     <motion.div className="navbar" initial={{ y: "-100%" }} animate={controls} transition={{ type: "spring", bounce: 0.5 }}>
       {isMobile ? (
         <>
-          <button>
+          <button type="button">
             <MenuIcon fontSize="large" sx={{ color: "rgba(255, 255, 255, 255)" }} onClick={toggleDrawer(true)} />
           </button>
           <Drawer anchor="left" open={showNavbar} onClose={toggleDrawer(false)}>

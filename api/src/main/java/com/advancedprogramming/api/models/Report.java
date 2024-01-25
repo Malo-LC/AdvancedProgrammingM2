@@ -1,5 +1,6 @@
 package com.advancedprogramming.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -52,5 +53,6 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "internship_id")
+    @JsonIgnore
     private Internship internship;
 }
