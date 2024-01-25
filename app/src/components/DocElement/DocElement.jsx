@@ -2,15 +2,14 @@ import Status from "../BasicComponents/Status/Status";
 import ValidationBubble from "../BasicComponents/ValidationBubble/ValidationBubble";
 import ActionButton from "../BasicComponents/ActionButton/ActionButton";
 import { useMediaQuery } from "react-responsive";
-import React, { useState } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 //style
 import "./docelement.css";
-// ${userRole === "STUDENT" ? "w-[850px]" : "w-full"}
+
 function DocElement({ name, deadline, student_name, validation_name, status, userRole }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  // const controls = useAnimation();
   const [isExpanded, setIsExpanded] = useState(false);
   const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
 
@@ -22,7 +21,7 @@ function DocElement({ name, deadline, student_name, validation_name, status, use
     <>
       {isMobile ? (
         <motion.div className="docelement-mobile">
-          <button onClick={handleClick} className="flex flex-row justify-between w-full">
+          <button onClick={handleClick} className="flex flex-row justify-between w-full items-center">
             <div className="elements text-xl">{name}</div>
             <div className="elements">
               <Status status={status} />
@@ -31,7 +30,7 @@ function DocElement({ name, deadline, student_name, validation_name, status, use
           <motion.div className="expanded-content" animate={{ opacity: isExpanded ? 1 : 0, height: isExpanded ? mobileElementHeight : 0 }}>
             {isExpanded && (
               <>
-                {student_name && (
+                {userRole === "TUTOR" && (
                   <div className="elements-hidden">
                     <p className="mr-2">Nom étudiant :</p>
                     <p className="font-thin">{student_name}</p>
@@ -65,7 +64,7 @@ function DocElement({ name, deadline, student_name, validation_name, status, use
           <div className={`docelement justify-between w-full `}>
             <div className="elements">{name}</div>
             <div className="elements font-thin">{deadline}</div>
-            <div className="elements">{student_name}</div>
+            {userRole === "TUTOR" && <div className="elements">{student_name}</div>}
             <div className="elements space-x-1">
               <ValidationBubble validationStatus="validated" firstname="Stephane" lastname="Plaza" />
               <ValidationBubble validationStatus="notValidated" firstname="Didier" lastname="Bourdon" />

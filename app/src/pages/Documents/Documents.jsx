@@ -9,7 +9,7 @@ import { useMediaQuery } from "react-responsive";
 //style
 import "./documents.css";
 
-const docColumnNamesAdmin = ["Nom du document", "Deadline", "Nom de l'élève", "Validation", "Status"];
+const docColumnNamesTutor = ["Nom du document", "Deadline", "Nom de l'élève", "Validation", "Status"];
 const docColumnNamesStudent = ["Nom du document", "Deadline", "Intitulé du stage", "Validation", "Status", "Action"];
 
 function Documents() {
@@ -48,8 +48,8 @@ function Documents() {
 
   if (userRole === "STUDENT") {
     docColumn = docColumnNamesStudent;
-  } else if (userRole === "ADMIN") {
-    docColumn = docColumnNamesAdmin;
+  } else if (userRole === "TUTOR") {
+    docColumn = docColumnNamesTutor;
   }
 
   return (
