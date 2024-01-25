@@ -10,6 +10,7 @@ import Register from "./pages/Register/Register";
 import userService from "./services/userService";
 import api from "./utils/api";
 import Demandes from "./pages/Demande/Demande";
+import TutorRegister from "./pages/Register/TutorRegister.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -58,6 +59,14 @@ function App() {
           </RestrictedRoute>
         }
       />
+        <Route
+            path="/creation-tuteur"
+            element={
+                <RestrictedRoute>
+                    <TutorRegister />
+                </RestrictedRoute>
+            }
+        />
       <Route
         path="/documents"
         element={
