@@ -54,7 +54,7 @@ function App() {
         path="/demandes"
         element={
           <RestrictedRoute>
-            <Documents />
+            <Demandes />
           </RestrictedRoute>
         }
       />

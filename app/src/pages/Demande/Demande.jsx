@@ -1,59 +1,87 @@
 import React from 'react';
-import {useState } from "react";
-import Navbar from "../../components/Navbar/Navbar";
+import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { motion, useAnimation } from "framer-motion";
+import userService from "../../services/userService";
+import api from "../../utils/api";
+
+import DemandeStageElement from '../../components/DemandeStageElement/DemandeStageElement';
+
+
+const requestColumnNamesTutor = ["Année du Stage", "Statut", "Nom de l'étudiant", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
+const requestColumnNamesStudent = ["Année du Stage", "Statut", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
+
 function Demandes() {
+  const controls = useAnimation();
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
-    // TODO :   Quand le role est student => fetch data  
-    const demandesList = [
-        { id: 1, nom: 'Malo Le Corvec', type: 'Stage M1', status: 'Information du stage' },
-        { id: 2, nom: 'Benjamin Liszewski', type: 'Stage M1', status: 'Information du stage' },
-        { id: 3, nom: 'Victor Tran', type: 'Stage M1', status: 'Information du stage' },
-        { id: 4, nom: 'Pape Mouhamadou Mamoune Sock', type: 'Stage M1', status: 'Information du stage' },
-        { id: 1, nom: 'Malo Le Corvec', type: 'Stage M1', status: 'Information du stage' },
-        { id: 2, nom: 'Benjamin Liszewski', type: 'Stage M1', status: 'Information du stage' },
-        { id: 3, nom: 'Victor Tran', type: 'Stage M1', status: 'Information du stage' },
-        { id: 4, nom: 'Pape Mouhamadou Mamoune Sock', type: 'Stage M1', status: 'Information du stage' },
-        { id: 1, nom: 'Malo Le Corvec', type: 'Stage M1', status: 'Information du stage' },
-    ];
-    const [showAll, setShowAll] = useState(false);
+  // const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
+  const [requests, setRequests] = useState([]);
 
-    const displayedDemandes = showAll ? demandesList : demandesList.slice(0, 7)
-    return (
-        <div>
-            <Navbar />
-            <div className="p-10 ml-24 responsive-padding responsive-margin">
-                <h1 className="font-bold text-3xl text-[#163767] mb-4 ml-6">Mes Demandes ({displayedDemandes.length})</h1>
-                <div className="bg-white rounded-lg p-5 responsive-width">
-                    {displayedDemandes.map((demande) => (
-                        <div key={demande.id} className="flex items-center justify-between mb-2 p-2 bg-[#F5F8FB] mr-20 w-11/12 rounded-md responsive-margin responsive-width">
-                            <div className="w-4/12 flex flex-col">
-                                <p className="font-bold ml-24">{demande.nom}</p>
-                                <p className="ml-24 text-gray-800">{demande.type}</p>
-                            </div>
-                            <div className="w-2/12 mr-48">
-                            <a href={demande.url} className="text-[#163767] underline">{demande.status}</a>                            
-                            </div>
-                            <div className="mr-8 w-3/12" >
-                                <button className="px-3 py-2 border-2 border-green-300 text-green-300 rounded-md mr-3 hover:bg-green-300 hover:text-white">Accepter</button>
-                                <button className="px-3 py-2 border-2 border-red-300 text-red-300 rounded-md hover:bg-red-300 hover:text-white">Refuser</button>
-                            </div>
-                        </div>
-                    ))}
-                </div >
-                {demandesList.length > 7 && !showAll && (
-                    <div className="flex justify-center w-full mt-4"> 
-                        <button 
-                            className="bg-[#163767] text-white py-2 px-4  rounded hover:bg-white hover:text-[#163767]"
-                            onClick={() => setShowAll(true)}
-                        >
-                            Voir autres demandes
-                        </button>
-                    </div>
-                )}
-            </div>
+
+  useEffect(() => {
+    controls.start({ y: 0 });
+    api.get("studentInternship/all").then((res) => {
+      setRequests(res);
+    });
+    const fetchUserInfo = async () => {
+      const userRole = await userService.getRole();
+      setUserRole(userRole);
+    };
+    fetchUserInfo();
+  }, []);
+
+  let requestColumn;
+
+  if (userRole === "STUDENT") {
+    requestColumn = requestColumnNamesStudent;
+  } else if (userRole === "TUTOR") {
+    requestColumn = requestColumnNamesTutor;
+  }
+
+  console.log(requests);
+
+  return (
+    <div className={`documents ${isMobile ? "items-start" : "items-center justify-center"}`}>
+      <motion.div
+        className={`documents-header ${isMobile ? "flex-col" : "flex-row"}`}
+        initial={{ x: "-300%" }}
+        animate={{ x: 0 }}
+        transition={{ type: "spring", stiffness: 120, damping: 14 }}
+      >
+        <p className="document-title">Mes Demandes de Stage</p>
+      </motion.div>
+      <div className="table">
+        {isMobile === false && (
+          <div className="table-title">
+            {userRole &&
+              requestColumn.map((item, index) => (
+                <div className="font-semibold text-center" key={index}>
+                  {item}
+                </div>
+              ))}
+          </div>
+        )}
+        <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px]"}`}>
+          {requests.map((item, key) => (
+            <DemandeStageElement
+              internship_status={item.isInternshipValidated}
+              internship_name={item.mission}
+              internship_year={item.mission}
+              internship_request_status={item.mission}
+              internship_company_name={item.companyName}
+              internship_begin_date={item.startDate}
+              internship_end_date={item.endDate}
+              internship_id={1}
+              student_name={item.mission}
+              userRole={userRole}
+            />
+          ))}
         </div>
-    );
+      </div>
+    </div>
+  )
 }
-
 
 export default Demandes;
