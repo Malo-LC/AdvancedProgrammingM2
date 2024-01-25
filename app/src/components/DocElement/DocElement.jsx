@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 //style
 import "./docelement.css";
 
-function DocElement({ name, deadline, student_name, validation_name, status, userRole }) {
+function DocElement({ name, deadline, student_name, internship_name, status, userRole }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
   const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
@@ -40,6 +40,12 @@ function DocElement({ name, deadline, student_name, validation_name, status, use
                   <p className="mr-2">Date de rendue :</p>
                   <p className="font-thin">{deadline}</p>
                 </div>
+                {userRole === "STUDENT" && (
+                  <div className="elements-hidden">
+                    <p className="mr-2">Nom du stage :</p>
+                    <p className="font-thin">{internship_name}</p>
+                  </div>
+                )}
                 <div className="elements-hidden space-x-1 mt-1">
                   <p className="mr-2">Validations :</p>
                   <div className="flex flex-row space-x-2">
@@ -64,6 +70,7 @@ function DocElement({ name, deadline, student_name, validation_name, status, use
           <div className={`docelement justify-between w-full `}>
             <div className="elements">{name}</div>
             <div className="elements font-thin">{deadline}</div>
+            <div className="elements font-thin">{internship_name}</div>
             {userRole === "TUTOR" && <div className="elements">{student_name}</div>}
             <div className="elements space-x-1">
               <ValidationBubble validationStatus="validated" firstname="Stephane" lastname="Plaza" />
@@ -91,6 +98,7 @@ DocElement.propTypes = {
   name: PropTypes.string.isRequired,
   deadline: PropTypes.string.isRequired,
   student_name: PropTypes.string,
+  internship_name: PropTypes.string,
   validation_name: PropTypes.string,
   status: PropTypes.string.isRequired,
   userRole: PropTypes.string.isRequired,
