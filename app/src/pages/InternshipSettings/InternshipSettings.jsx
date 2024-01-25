@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { Plus, Trash } from "react-feather";
+import { toast } from "react-toastify";
 
 const InternshipSettings = () => {
   const [internships, setInternships] = useState([]);
@@ -9,11 +10,17 @@ const InternshipSettings = () => {
   const [selectedInternship, setSelectedInternship] = useState(null);
 
   useEffect(() => {
-    api.get("internship/all").then((res) => {
-      setInternships(res);
-      setLoading(false);
-      setSelectedInternship(res[0].id);
-    });
+    api
+      .get("internship/all")
+      .then((res) => {
+        setInternships(res);
+        setLoading(false);
+        setSelectedInternship(res[0].id);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Erreur lors du chargement des stages");
+      });
   }, []);
 
   useEffect(() => {
@@ -48,6 +55,7 @@ const InternshipSettings = () => {
   const saveSettings = () => {
     api.post("internship/update", internshipSettings).then(() => {
       getInternshipSettings();
+      toast.success("Paramètres enregistrés");
     });
   };
 
@@ -78,7 +86,7 @@ const InternshipSettings = () => {
   };
 
   return (
-    <div className="p-10">
+    <div className="p-4 md:p-10">
       <div className="flex flex-row items-center">
         <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#163767]">Parametrage du stage de </p>
         <select
@@ -96,7 +104,7 @@ const InternshipSettings = () => {
         <div>Loading...</div>
       ) : (
         <div className="flex flex-col">
-          <div className="flex flex-col p-5">
+          <div className="flex flex-col p-3 md:p-5">
             <p className="text-lg font-bold">Parametres</p>
             <div className="flex flex-col gap-2 justify-start w-full">
               <div className="flex flex-row items-center gap-4">
@@ -119,9 +127,9 @@ const InternshipSettings = () => {
               </div>
             </div>
           </div>
-          <p className="text-lg font-bold p-5">Documents</p>
-          <div className="flex w-full flex-col items-center justify-center">
-            <div className="flex w-2/3 flex-col ">
+          <p className="text-lg font-bold p-3 md:p-5">Documents</p>
+          <div className="flex w-full flex-col items-center justify-center md:p-5">
+            <div className="flex w-full md:w-2/3 flex-col ">
               <div className="flex justify-start border-b mb-3">
                 <div className="w-1/2">Nom du document</div>
                 <div>Deadline</div>
@@ -133,7 +141,7 @@ const InternshipSettings = () => {
                       <div className="w-1/2">
                         <input
                           type="text"
-                          className="bg-white p-2 border border-slate-300 rounded-lg"
+                          className="bg-white p-2 border border-slate-300 rounded-lg w-min"
                           defaultValue={report.title}
                           onBlur={(e) => handleChange(e, report.id, "title")}
                         />

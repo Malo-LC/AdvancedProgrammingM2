@@ -12,6 +12,7 @@ import api from "./utils/api";
 import Demandes from "./pages/Demande/Demande";
 import InternshipSettings from "./pages/InternshipSettings/InternshipSettings";
 import TutorRegister from "./pages/Register/TutorRegister.jsx";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -33,82 +34,85 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route
-        path="/home"
-        element={
-          <RestrictedRoute>
-            <Home />
-          </RestrictedRoute>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <RestrictedRoute>
-            <Profile />
-          </RestrictedRoute>
-        }
-      />
-      <Route
-        path="/demandes"
-        element={
-          <RestrictedRoute>
-            <Documents />
-          </RestrictedRoute>
-        }
-      />
-      <Route
-        path="/creation-tuteur"
-        element={
-          <RestrictedRoute>
-            <TutorRegister />
-          </RestrictedRoute>
-        }
-      />
-      <Route
-        path="/documents"
-        element={
-          <RestrictedRoute>
-            <Documents />
-          </RestrictedRoute>
-        }
-      />
-      <Route
-        path="/stages"
-        element={
-          <RestrictedRoute>
-            <Stage />
-          </RestrictedRoute>
-        }
-      />
-      <Route
-        path="/admin/demandes"
-        element={
-          <RestrictedRoute>
-            <Demandes />
-          </RestrictedRoute>
-        }
-      />
-      <Route
-        path="/parametres/stages"
-        element={
-          <RestrictedRoute>
-            <InternshipSettings />
-          </RestrictedRoute>
-        }
-      />
-      <Route
-        path="/tuteur/demandes"
-        element={
-          <RestrictedRoute>
-            <Demandes />
-          </RestrictedRoute>
-        }
-      />
-    </Routes>
+    <>
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/home"
+          element={
+            <RestrictedRoute>
+              <Home />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <RestrictedRoute>
+              <Profile />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/demandes"
+          element={
+            <RestrictedRoute>
+              <Documents />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/creation-tuteur"
+          element={
+            <RestrictedRoute>
+              <TutorRegister />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/documents"
+          element={
+            <RestrictedRoute>
+              <Documents />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/stages"
+          element={
+            <RestrictedRoute>
+              <Stage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/admin/demandes"
+          element={
+            <RestrictedRoute>
+              <Demandes />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/parametres/stages"
+          element={
+            <RestrictedRoute>
+              <InternshipSettings />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/tuteur/demandes"
+          element={
+            <RestrictedRoute>
+              <Demandes />
+            </RestrictedRoute>
+          }
+        />
+      </Routes>
+    </>
   );
 }
 

@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../components/Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //style
 import "./login.css";
 
@@ -46,34 +46,32 @@ function Login() {
       .catch((err) => {
         console.log(err);
         toast.error("Invalid credentials !", {
-          position: 'top-right',
+          position: "top-right",
         });
       });
   };
 
   return (
-      <div className="h-screen">
-        <div className="login-page">
-          <div className="login-component">
-            <img src={logo_efrei} alt="efrei_logo" className="logo"/>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Input placeholder="Mail" type="text" name="email" iconLeft={mail} errors={errors} register={register}/>
-              <Input placeholder="Password" type="password" name="password" iconLeft={lock} iconRight={EyeOff}
-                     errors={errors} register={register}/>
-              <div className="button-container">
-                <input type="submit" value="Login"></input>
-                <div className="no-account">
-                  <p>No account?</p>
-                  <Link to="/register" className="register-link ">
-                    Register
-                  </Link>
-                </div>
+    <div className="h-screen">
+      <div className="login-page">
+        <div className="login-component">
+          <img src={logo_efrei} alt="efrei_logo" className="logo" />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Input placeholder="Mail" type="text" name="email" iconLeft={mail} errors={errors} register={register} />
+            <Input placeholder="Password" type="password" name="password" iconLeft={lock} iconRight={EyeOff} errors={errors} register={register} />
+            <div className="button-container">
+              <input type="submit" value="Login"></input>
+              <div className="no-account">
+                <p>No account?</p>
+                <Link to="/register" className="register-link ">
+                  Register
+                </Link>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
-        <ToastContainer/>
       </div>
+    </div>
   );
 }
 
