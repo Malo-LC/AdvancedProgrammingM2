@@ -83,13 +83,19 @@ public class SubmitService {
                         .findFirst()
                         .orElse(null);
 
-                    SubmitTutor tutorSchoolSubmit = submit != null
-                        ? new SubmitTutor(tutorSchool.getId(), submit.getIsApprovedBySchool(), tutorSchool.getFirstName(), tutorSchool.getLastName())
-                        : null;
+                    SubmitTutor tutorSchoolSubmit = new SubmitTutor(
+                        tutorSchool.getId(),
+                        submit != null ? submit.getIsApprovedBySchool() : null,
+                        tutorSchool.getFirstName(),
+                        tutorSchool.getLastName()
+                    );
 
-                    SubmitTutor tutorCompanySubmit = submit != null
-                        ? new SubmitTutor(tutorCompany.getId(), submit.getIsApprovedByCompany(), tutorCompany.getFirstName(), tutorCompany.getLastName())
-                        : null;
+                    SubmitTutor tutorCompanySubmit = new SubmitTutor(
+                        tutorCompany.getId(),
+                        submit != null ? submit.getIsApprovedByCompany() : null,
+                        tutorCompany.getFirstName(),
+                        tutorCompany.getLastName()
+                    );
 
                     return new SubmitResponse(
                         submit != null ? submit.getId() : null,
@@ -146,8 +152,7 @@ public class SubmitService {
                 return true;
             }
             log.warn("Submit already exists for student internship {}", studentInternshipId);
-            // Submit found, cannot create a new one
-            // TODO: maybe update the file?
+            // Submit found, update it only if it is not approved
             Submit submit = optionalSubmit.get();
             if (Boolean.FALSE.equals(submit.getIsApprovedByCompany()) || Boolean.FALSE.equals(submit.getIsApprovedBySchool())) {
                 MultipartFile file = Base64ToMultipartFileConverter.convert(
