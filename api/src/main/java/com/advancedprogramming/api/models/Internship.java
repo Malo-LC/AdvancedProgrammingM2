@@ -30,7 +30,6 @@ public class Internship {
 
     @Enumerated(EnumType.STRING)
     private YearEnum promotionYear;
-
     private Integer year;
     private String title;
     private Boolean isClosed = false;

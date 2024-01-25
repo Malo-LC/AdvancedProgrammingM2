@@ -26,7 +26,7 @@ public class StudentInternship {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Boolean isApproved;
+    private Boolean isApproved; // false for refused, null for pending, true for approved
     private String companyName;
     private String companyAddress;
     private String companyPostalCode;
