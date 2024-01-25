@@ -25,7 +25,7 @@ Table student_internship {
   validation_statut varchar
   salary integer
 
-  id_intership integer [ref: < internship.id]
+  id_internship integer [ref: < internship.id]
   id_student integer [ref: < user.id]
   id_company_tutor integer [ref: < user.id]
   id_school_tutor integer [ref: < user.id]
