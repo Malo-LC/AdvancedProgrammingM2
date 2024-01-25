@@ -7,7 +7,6 @@ import Stage from "./pages/Stages/Stage";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import userService from "./services/userService";
 import api from "./utils/api";
 import Demandes from "./pages/Demande/Demande";
 import InternshipSettings from "./pages/InternshipSettings/InternshipSettings";
@@ -22,7 +21,6 @@ function App() {
     const token = localStorage.getItem("token");
     if (token) {
       api.setToken(token);
-      userService.getRole();
     } else {
       navigate("/");
     }

@@ -88,7 +88,7 @@ const InternshipSettings = () => {
   return (
     <div className="p-4 md:p-10">
       <div className="flex flex-row items-center">
-        <p className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#163767]">Parametrage du stage de </p>
+        <p className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#163767]">Paramétrage du stage de </p>
         <select
           className="ml-2 rounded-md p-1 bg-none bg-transparent border border-[#163767] text-xl sm:text-3xl lg:text-4xl font-bold text-[#163767]"
           onChange={(e) => setSelectedInternship(e.target.value)}

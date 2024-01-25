@@ -1,8 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
-import api from "../../utils/api";
-import Navbar from "../../components/Navbar/Navbar";
 import "./home.css";
 
 //style
@@ -22,19 +19,6 @@ function Home() {
     hidden: { opacity: 0, x: 0 },
     visible: { opacity: 1, x: 0 },
   };
-
-  useEffect(() => {
-    api
-      .get("user/me")
-      .then((res) => {
-        if (!res?.access_token) {
-          api.disconnect();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   return (
     <div className="flex flex-col items-center">
