@@ -13,6 +13,7 @@ export const menuItemsAdmin = [
   { label: "Creation compte tuteur", url: "/creation-tuteur", icon: <SupervisorAccountIcon /> },
   { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
   { label: "Pramétrer les stages", url: "/parametres/stages", icon: <Settings /> },
+  { label: "Demandes de stages", url: "/demandes", icon: <Settings /> },
 ];
 export const menuItemsTuteur = [
   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },

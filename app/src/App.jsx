@@ -40,7 +40,7 @@ function App() {
         <Route
           path="/home"
           element={
-            <RestrictedRoute>
+            <RestrictedRoute roles={["TUTOR", "STUDENT", "ADMIN"]}>
               <Home />
             </RestrictedRoute>
           }
@@ -48,23 +48,15 @@ function App() {
         <Route
           path="/profile"
           element={
-            <RestrictedRoute>
+            <RestrictedRoute roles={["TUTOR", "STUDENT", "ADMIN"]}>
               <Profile />
-            </RestrictedRoute>
-          }
-        />
-        <Route
-          path="/demandes"
-          element={
-            <RestrictedRoute>
-              <Documents />
             </RestrictedRoute>
           }
         />
         <Route
           path="/creation-tuteur"
           element={
-            <RestrictedRoute>
+            <RestrictedRoute roles={["ADMIN"]}>
               <TutorRegister />
             </RestrictedRoute>
           }
@@ -72,7 +64,7 @@ function App() {
         <Route
           path="/documents"
           element={
-            <RestrictedRoute>
+            <RestrictedRoute roles={["TUTOR", "STUDENT", "ADMIN"]}>
               <Documents />
             </RestrictedRoute>
           }
@@ -80,15 +72,15 @@ function App() {
         <Route
           path="/stages"
           element={
-            <RestrictedRoute>
+            <RestrictedRoute roles={["TUTOR", "STUDENT", "ADMIN"]}>
               <Stage />
             </RestrictedRoute>
           }
         />
         <Route
-          path="/admin/demandes"
+          path="/demandes"
           element={
-            <RestrictedRoute>
+            <RestrictedRoute roles={["ADMIN", "TUTOR"]}>
               <Demandes />
             </RestrictedRoute>
           }
@@ -96,16 +88,8 @@ function App() {
         <Route
           path="/parametres/stages"
           element={
-            <RestrictedRoute>
+            <RestrictedRoute roles={["ADMIN"]}>
               <InternshipSettings />
-            </RestrictedRoute>
-          }
-        />
-        <Route
-          path="/tuteur/demandes"
-          element={
-            <RestrictedRoute>
-              <Demandes />
             </RestrictedRoute>
           }
         />
