@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { motion, useAnimation } from "framer-motion";
 
+import ActionButton from "../BasicComponents/ActionButton/ActionButton";
+
 import PropTypes from "prop-types";
 
 import "./demandestageelement.css";
@@ -10,7 +12,7 @@ import Status from "../BasicComponents/Status/Status";
 DemandeStageElement.propTypes = {
   internship_name: PropTypes.string.isRequired,
   internship_year: PropTypes.string.isRequired,
-  internship_request_status: PropTypes.string.isRequired,
+  internship_status: PropTypes.bool.isRequired,
   internship_company_name: PropTypes.string.isRequired,
   internship_begin_date: PropTypes.string.isRequired,
   internship_end_date: PropTypes.string.isRequired,
@@ -33,56 +35,49 @@ function DemandeStageElement(props) {
     <>
       {isMobile ? (
         <motion.div className="requestelement-mobile">
-          {/* <button onClick={handleClick} className="flex flex-row justify-between w-full items-center">
-            <div className="elements text-xl">{internship_name}</div>
+          <button onClick={handleClick} className="flex flex-row justify-between w-full items-center">
+            <div className="elements text-xl">{props.internship_name}</div>
             <div className="elements">
-              <Status status={internship_request_status} />
+              <Status status={props.internship_status} type="demande" />
             </div>
           </button>
           <motion.div className="expanded-content" animate={{ opacity: isExpanded ? 1 : 0, height: isExpanded ? mobileElementHeight : 0 }}>
             {isExpanded && (
               <>
-                {userRole === "TUTOR" && (
+                {props.userRole === "TUTOR" && (
                   <div className="elements-hidden">
                     <p className="mr-2">Nom étudiant :</p>
-                    <p className="font-thin">{student_name}</p>
+                    <p className="font-thin">{props.student_name}</p>
                   </div>
                 )}
                 <div className="elements-hidden">
-                  <p className="mr-2">Date de rendue :</p>
-                  <p className="font-thin">{deadline}</p>
+                  <p className="mr-2">Nom de la société :</p>
+                  <p className="font-thin">{props.internship_company_name}</p>
                 </div>
-                <div className="elements-hidden space-x-1 mt-1">
-                  <p className="mr-2">Validations :</p>
-                  <div className="flex flex-row space-x-2">
-                    <ValidationBubble validationStatus="validated" firstname="Stephane" lastname="Plaza" />
-                    <ValidationBubble validationStatus="notValidated" firstname="Didier" lastname="Bourdon" />
-                    <ValidationBubble validationStatus="notTreated" firstname="Didier" lastname="Bourdon" />
-                  </div>
+                <div className="elements-hidden">
+                  <p className="mr-2">Date de début :</p>
+                  <p className="font-thin">{props.internship_begin_date}</p>
                 </div>
-                <div className="w-full flex justify-center mt-2">
-                  {userRole === "STUDENT" && (
-                    <>
-                      <ActionButton status={status} />
-                    </>
-                  )}
+                <div className="elements-hidden">
+                  <p className="mr-2">Date de fin :</p>
+                  <p className="font-thin">{props.internship_end_date}</p>
                 </div>
               </>
             )}
-          </motion.div> */}
+          </motion.div>
         </motion.div>
       ) : (
         <div className="flex flex-row items-center space-x-2 ">
           <div className={`requestelement justify-between w-full `}>
-            <div className="elements">{props.internship_year}</div>
-            <Status status={props.internship_request_status} />
+            <div className="elements">{props.internship_year}-{props.internship_year+1}</div>
+            <Status status={props.internship_status} type={"demande"} />
             <div className="elements">{props.internship_status}</div>
             {props.userRole === "TUTOR" && <div className="elements">{props.student_name}</div>}
             <div className="elements">{props.internship_name}</div>
             <div className="elements">{props.internship_company_name}</div>
             <div className="elements">{props.internship_begin_date}</div>
             <div className="elements">{props.internship_end_date}</div>
-            <div><a>Lien</a></div>
+            <div><a>Consulter</a></div>
           </div>
         </div>
       )}

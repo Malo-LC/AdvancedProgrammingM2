@@ -40,8 +40,6 @@ function Demandes() {
     requestColumn = requestColumnNamesTutor;
   }
 
-  console.log(requests);
-
   return (
     <div className={`documents ${isMobile ? "items-start" : "items-center justify-center"}`}>
       <motion.div
@@ -68,8 +66,7 @@ function Demandes() {
             <DemandeStageElement
               internship_status={item.isInternshipValidated}
               internship_name={item.mission}
-              internship_year={item.mission}
-              internship_request_status={item.mission}
+              internship_year={item.year}
               internship_company_name={item.companyName}
               internship_begin_date={item.startDate}
               internship_end_date={item.endDate}

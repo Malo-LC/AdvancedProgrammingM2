@@ -80,7 +80,7 @@ function App() {
         <Route
           path="/demandes"
           element={
-            <RestrictedRoute roles={["ADMIN", "TUTOR"]}>
+            <RestrictedRoute roles={["ADMIN", "TUTOR", "STUDENT"]}>
               <Demandes />
             </RestrictedRoute>
           }

@@ -23,7 +23,7 @@ function Status({ status, type }) {
   } else if (status === true && type === "demande") {
     icon = <AlertTriangle className="text-white" />;
     text = "Accepté";
-    colorClass = "bg-[#DF3A3A]";
+    colorClass = "bg-[#5CBF92]";
   } else if (status === null && type === "demande") {
     text = "En attente";
     colorClass = "bg-[#cccccc]";
