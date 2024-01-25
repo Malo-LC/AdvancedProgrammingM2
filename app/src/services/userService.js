@@ -1,15 +1,33 @@
 class UserService {
+  token = null;
   decodeToken() {
-    const token = localStorage.getItem("token");
-    if (token) {
+    if (!this.token) {
+      this.token = localStorage.getItem("token");
+    }
+    if (this.token) {
       try {
-        const decodedToken = JSON.parse(atob(token.split(".")[1]));
+        const decodedToken = JSON.parse(atob(this.token.split(".")[1]));
         return decodedToken;
       } catch (error) {
         console.error("Error decoding token:", error);
       }
     }
     return null;
+  }
+
+  isAuthentified() {
+    const decodedToken = this.decodeToken();
+    if (decodedToken) {
+      // check if token is expired
+      const expirationDate = new Date(decodedToken.exp * 1000);
+      const currentDate = new Date();
+      if (expirationDate < currentDate) {
+        localStorage.removeItem("token");
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 
   getRole() {

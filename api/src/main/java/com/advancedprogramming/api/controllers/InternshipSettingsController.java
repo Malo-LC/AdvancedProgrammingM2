@@ -1,13 +1,13 @@
 package com.advancedprogramming.api.controllers;
 
 import com.advancedprogramming.api.controllers.beans.MessageResponse;
+import com.advancedprogramming.api.models.Internship;
 import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.models.bean.RoleEnum;
 import com.advancedprogramming.api.services.InternshipSettingsService;
 import com.advancedprogramming.api.services.UserService;
 import com.advancedprogramming.api.services.bean.InternshipSettings;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/internship")
@@ -46,6 +48,20 @@ public class InternshipSettingsController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.ok(internshipSettings);
+    }
+
+    @Operation(summary = "Get list of available internships")
+    @GetMapping("/all")
+    public ResponseEntity<List<Internship>> getInternshipSettings(
+        HttpServletRequest request
+    ) {
+        User user = userService.getUserByFromRequest(request);
+        if (user == null || !user.getRole().equals(RoleEnum.ADMIN)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        List<Internship> allInternships = internshipSettingsService.getAllInternships();
+        return ResponseEntity.ok(allInternships);
     }
 
     @Operation(summary = "Update internship settings")

@@ -1,52 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import userService from "../../services/userService.js";
 import api from "../../utils/api.js";
 import NoAvatar from "../../assets/images/no-avatar.png";
 import { useMediaQuery } from "react-responsive";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
 
 //style
 import "./profile.css";
 
 function Profile() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const [user, setUser] = useState(null);
-  const [image, setImage] = React.useState(null);
+  const user = userService.getUserProfile();
+  const [image, setImage] = useState(null);
+
+  const fetchUserInfo = async () => {
+    const profilePic = await api.getPfp(user.profilePictureUri);
+    setImage(profilePic);
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    const fetchUserInfo = async () => {
-      if (token) {
-        api.setToken(token);
-        try {
-          const userProfile = await userService.getUserProfile();
-          let profilePic = null;
-          if (userProfile) {
-            profilePic = await api.getPfp(userProfile.profilePictureUri);
-            setImage(profilePic);
-            setUser(userProfile);
-          }
-        } catch (error) {
-          console.error("Error fetching user info: ", error);
-        }
-      }
-    };
-
     fetchUserInfo();
   }, []);
-
-  if (!user) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        <Box sx={{ display: "flex" }}>
-          <CircularProgress sx={{ width: "200%" }} />
-        </Box>
-      </div>
-    );
-  }
 
   const userInfo = [
     { name: "Email", info: user.email },
@@ -72,7 +46,7 @@ function Profile() {
         </div>
         <div className="user-info-table">
           {userInfo.map((item, index) => (
-            <React.Fragment key={index}>
+            <React.Fragment key={item.name}>
               <div className={`user-info-element ${index < userInfo.length - 1 ? "border-b border-[#939393] border-opacity-80" : ""}`}>
                 <p className="font-semibold w-1/3">{item.name}</p>
                 <div className="mb-2 w-2/3">

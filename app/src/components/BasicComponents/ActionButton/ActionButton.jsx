@@ -15,16 +15,16 @@ function ActionButton({ status }) {
           e.stopPropagation();
           handleButtonClick();
         }}
-        className={`action-button ${status === "delivered" ? "download" : "upload"}`}
+        className={`action-button ${status === true ? "download" : "upload"}`}
       >
-        {status === "delivered" ? "Télécharger" : "Soumettre"}
+        {status === true ? "Télécharger" : "Soumettre"}
       </button>
     </div>
   );
 }
 
 ActionButton.propTypes = {
-  status: PropTypes.string.isRequired,
+  status: PropTypes.bool.isRequired,
 };
 
 export default ActionButton;

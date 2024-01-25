@@ -24,7 +24,7 @@ function DocElement({ name, deadline, student_name, internship_name, status, use
           <button onClick={handleClick} className="flex flex-row justify-between w-full items-center">
             <div className="elements text-xl">{name}</div>
             <div className="elements">
-              <Status status={status} />
+              <Status status={status} type="document" />
             </div>
           </button>
           <motion.div className="expanded-content" animate={{ opacity: isExpanded ? 1 : 0, height: isExpanded ? mobileElementHeight : 0 }}>
@@ -78,7 +78,7 @@ function DocElement({ name, deadline, student_name, internship_name, status, use
               <ValidationBubble validationStatus="notTreated" firstname="Didier" lastname="Bourdon" />
             </div>
             <div className="elements">
-              <Status status={status} />
+              <Status status={status} type="document" />
             </div>
           </div>
           {userRole === "STUDENT" && (
@@ -100,7 +100,7 @@ DocElement.propTypes = {
   student_name: PropTypes.string,
   internship_name: PropTypes.string,
   validation_name: PropTypes.string,
-  status: PropTypes.string.isRequired,
+  status: PropTypes.bool.isRequired,
   userRole: PropTypes.string.isRequired,
 };
 

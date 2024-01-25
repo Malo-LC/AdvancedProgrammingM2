@@ -1,6 +1,7 @@
 package com.advancedprogramming.api.models;
 
 import com.advancedprogramming.api.models.bean.YearEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -60,5 +61,6 @@ public class Internship {
     }
 
     @OneToMany(mappedBy = "internship")
+    @JsonIgnore
     private List<Report> reports;
 }

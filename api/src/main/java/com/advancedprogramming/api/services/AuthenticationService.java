@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -33,6 +34,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final FileStorageService fileStorageService;
+    private final UserService userService;
 
     public AuthenticationResponse register(RegisterRequest request) throws IOException {
         // check if email is already registered
@@ -54,6 +56,40 @@ public class AuthenticationService {
             .promotionYear(request.promotionYear())
             .birthDate(request.birthDate())
             .role(RoleEnum.STUDENT)
+            .filedb(profilePicture)
+            .email(request.email())
+            .password(passwordEncoder.encode(request.password()))
+            .build();
+        Map<String, Object> extraClaims = getExtraClaims(user);
+        User savedUser = userRepository.save(user);
+        String jwtToken = jwtService.generateToken(user, extraClaims);
+        saveUserToken(savedUser, jwtToken);
+        return AuthenticationResponse.builder()
+            .accessToken(jwtToken)
+            .build();
+    }
+
+    public AuthenticationResponse tutorRegistration(RegisterRequest request) throws IOException {
+
+        // check if email is already registered
+        if (userRepository.findByEmail(request.email()).isPresent()) {
+            throw new RuntimeException("Email already registered");
+        }
+
+        MultipartFile profilePictureMultipart = Base64ToMultipartFileConverter.convert(
+            request.profilePicture().base64(),
+            request.profilePicture().type(),
+            request.profilePicture().name()
+        );
+
+        Filedb profilePicture = fileStorageService.store(profilePictureMultipart);
+
+        User user = User.builder()
+            .firstName(request.firstName())
+            .lastName(request.lastName())
+            .promotionYear(request.promotionYear())
+            .birthDate(request.birthDate())
+            .role(RoleEnum.TUTOR)
             .filedb(profilePicture)
             .email(request.email())
             .password(passwordEncoder.encode(request.password()))
@@ -132,17 +168,23 @@ public class AuthenticationService {
         String profilePictureUri = ServletUriComponentsBuilder
             .fromCurrentContextPath()
             .path("/files/")
-            .path(user.getFiledb().getId().toString())
+            .path(user.getFiledb().getId())
             .toUriString();
-        return Map.of(
+        Map<String, Object> extraClaims = new HashMap<>(Map.of(
             "role", user.getRole(),
             "email", user.getEmail(),
             "firstName", user.getFirstName(),
-            "lastName", user.getLastName(),
-            "profilePicture", profilePictureUri
-            // TODO: add more claims
-//            "birthDate", user.getBirthDate(),
-//            "promotionYear", user.getPromotionYear()
-        );
+            "lastName", user.getLastName()
+        ));
+        if (user.getBirthDate() != null) {
+            extraClaims.put("birthDate", user.getBirthDate());
+        }
+        if (user.getPromotionYear() != null) {
+            extraClaims.put("promotionYear", user.getPromotionYear());
+        }
+        if (user.getFiledb() != null) {
+            extraClaims.put("profilePicture", profilePictureUri);
+        }
+        return extraClaims;
     }
 }
