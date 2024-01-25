@@ -1,18 +1,11 @@
 package com.advancedprogramming.api.controllers;
 
-import com.advancedprogramming.api.controllers.beans.AuthenticationResponse;
 import com.advancedprogramming.api.controllers.beans.MessageResponse;
-import com.advancedprogramming.api.controllers.beans.RegisterRequest;
 import com.advancedprogramming.api.controllers.beans.StudentInternshipRequest;
-import com.advancedprogramming.api.models.Filedb;
-import com.advancedprogramming.api.models.StudentInternship;
-import com.advancedprogramming.api.models.StudentInternshipRepository;
 import com.advancedprogramming.api.services.StudentInternshipService;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
