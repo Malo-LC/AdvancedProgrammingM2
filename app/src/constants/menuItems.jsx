@@ -4,19 +4,19 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import { Settings } from "react-feather";
 
 export const menuItemsStudent = [
-  { label: "Faire ma demande", url: "/demandes", icon: <SupervisorAccountIcon /> },
+  { label: "Faire ma demande", url: "/demandes/student", icon: <SupervisorAccountIcon /> },
   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+  { label: "Mon stages", url: "/stages", icon: <BusinessIcon /> },
 ];
 
 export const menuItemsAdmin = [
+  { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
   { label: "Creation compte tuteur", url: "/creation-tuteur", icon: <SupervisorAccountIcon /> },
-  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+  { label: "Demandes de stages", url: "/demandes/validation", icon: <BusinessIcon /> },
   { label: "Pramétrer les stages", url: "/parametres/stages", icon: <Settings /> },
-  { label: "Demandes de stages", url: "/demandes", icon: <Settings /> },
+  { label: "Liste des stages", url: "/stages", icon: <BusinessIcon /> },
 ];
 export const menuItemsTuteur = [
   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  // { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
-  { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
+  { label: "Demandes de validation", url: "/demandes/validation", icon: <BusinessIcon /> },
 ];
