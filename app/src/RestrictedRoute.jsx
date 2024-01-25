@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import userService from "./services/userService";
 
 const RestrictedRoute = ({ children, ...rest }) => {
-  const isAuthenticated = !!localStorage.getItem("token");
+  const isAuthenticated = userService.isAuthentified();
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }

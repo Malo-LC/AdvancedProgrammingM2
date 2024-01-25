@@ -10,6 +10,7 @@ import Register from "./pages/Register/Register";
 import userService from "./services/userService";
 import api from "./utils/api";
 import Demandes from "./pages/Demande/Demande";
+import InternshipSettings from "./pages/InternshipSettings/InternshipSettings";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -79,6 +80,14 @@ function App() {
         element={
           <RestrictedRoute>
             <Demandes />
+          </RestrictedRoute>
+        }
+      />
+      <Route
+        path="/parametres/stages"
+        element={
+          <RestrictedRoute>
+            <InternshipSettings />
           </RestrictedRoute>
         }
       />

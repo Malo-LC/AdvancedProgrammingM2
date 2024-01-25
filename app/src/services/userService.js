@@ -12,6 +12,21 @@ class UserService {
     return null;
   }
 
+  isAuthentified() {
+    const decodedToken = this.decodeToken();
+    if (decodedToken) {
+      // check if token is expired
+      const expirationDate = new Date(decodedToken.exp * 1000);
+      const currentDate = new Date();
+      if (expirationDate < currentDate) {
+        localStorage.removeItem("token");
+        return false;
+      }
+      return true;
+    }
+    return false;
+  }
+
   getRole() {
     const decodedToken = this.decodeToken();
     if (decodedToken) {

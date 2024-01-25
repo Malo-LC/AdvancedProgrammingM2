@@ -35,6 +35,11 @@ public class InternshipSettingsService {
                 report.getDescription(),
                 report.getDeadline()
             ))
+            .sorted((o1, o2) -> {
+                if (o1.deadline() == null || o2.deadline() == null)
+                    return 0;
+                return o1.deadline().compareTo(o2.deadline());
+            })
             .toList();
 
         return new InternshipSettings(
@@ -93,5 +98,9 @@ public class InternshipSettingsService {
             }
         });
         return true;
+    }
+
+    public List<Internship> getAllInternships() {
+        return internshipRepository.findAll();
     }
 }
