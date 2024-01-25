@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { Plus, Trash } from "react-feather";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+
+//style
+import "./internshipSettings.css";
 
 const InternshipSettings = () => {
   const [internships, setInternships] = useState([]);
@@ -103,8 +107,82 @@ const InternshipSettings = () => {
       {loading || !internshipSettings ? (
         <div>Loading...</div>
       ) : (
-        <div className="flex flex-col mt-2">
-          <div className="flex flex-col p-3 md:p-5">
+        <div className="flex flex-row space-x-2 mt-4">
+          <div className="parameters">
+            <p className="text-lg font-bold py-2">Parametres</p>
+            <div className="flex flex-col gap-2 justify-center h-full">
+              <div className="parameters-element">
+                <div className="border-[#163767] bg-white border px-2 rounded-lg py-[10px] w-[170px] flex items-center justify-center">
+                  <p className="text-[#163767]">Date de fin du stage</p>
+                </div>
+                <input
+                  type="date"
+                  className="bg-white p-2 border border-slate-300 rounded-lg"
+                  defaultValue={internshipSettings.endDate}
+                  onBlur={(e) => handleChangeSettings(e, "endDate")}
+                />
+              </div>
+              <div className="parameters-element">
+                <div className="border-[#163767] bg-white border px-2 rounded-lg py-[10px] w-[170px] flex items-center justify-center">
+                  <p className="text-[#163767]">Cloturer le stage</p>
+                </div>
+                <input
+                  type="checkbox"
+                  className="bg-white p-2 border border-slate-300 rounded-lg"
+                  defaultValue={internshipSettings.isClosed}
+                  onBlur={(e) => handleChangeSettings(e, "isClosed")}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="documents w-4/6 h-auto flex items-center">
+            <p className="text-lg font-bold p-3 md:p-5">Documents</p>
+            <div className="flex w-full flex-col items-center justify-center md:p-5">
+              <div className="flex w-full md:w-2/3 flex-col ">
+                <div className="flex justify-start border-b mb-3">
+                  <div className="w-1/2">Nom du document</div>
+                  <div>Deadline</div>
+                </div>
+                <div className="flex flex-col gap-5 items-center w-full">
+                  {internshipSettings?.requiredReports?.map((report) => (
+                    <div className="flex flex-row items-center bg-[#F2F4F8] border border-slate-300 p-4 w-full rounded-lg" key={report.id}>
+                      <div className="flex justify-start w-full gap-2 md:gap-0">
+                        <div className="w-1/2">
+                          <input
+                            type="text"
+                            className="bg-white p-2 border border-slate-300 rounded-lg w-full md:w-auto"
+                            defaultValue={report.title}
+                            onBlur={(e) => handleChange(e, report.id, "title")}
+                          />
+                        </div>
+                        <input
+                          type="date"
+                          className="bg-white p-2 border border-slate-300 rounded-lg"
+                          defaultValue={report.deadline}
+                          onBlur={(e) => handleChange(e, report.id, "deadline")}
+                        />
+                      </div>
+                      <motion.div whileHover={{ scale: 1.1, rotate: [0, -5, 5, -5, 5, 0], transition: { duration: 0.3 } }} style={{}}>
+                        <Trash className="cursor-pointer text-red-500" onClick={() => deleteReport(report.id)} />
+                      </motion.div>
+                    </div>
+                  ))}
+                  {internshipSettings?.requiredReports?.length === 0 && <div className="text-center">Aucun rapport trouvé, veuillez en ajouter</div>}
+                  <motion.div whileHover={{ rotate: 180 }} className="add-doc">
+                    <Plus className="text-white" onClick={createNewReport} />
+                  </motion.div>
+                  <button
+                    type="button"
+                    className="bg-[#163767] text-white rounded-lg p-2 mt-5 w-fit hover:scale-105 duration-75"
+                    onClick={saveSettings}
+                  >
+                    Enregistrer les paramètres
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <div className="flex flex-col p-3 md:p-5">
             <p className="text-lg font-bold">Parametres</p>
             <div className="flex flex-col gap-2 justify-start w-full">
               <div className="flex flex-row items-center gap-4">
@@ -126,46 +204,7 @@ const InternshipSettings = () => {
                 />
               </div>
             </div>
-          </div>
-          <p className="text-lg font-bold p-3 md:p-5">Documents</p>
-          <div className="flex w-full flex-col items-center justify-center md:p-5">
-            <div className="flex w-full md:w-2/3 flex-col ">
-              <div className="flex justify-start border-b mb-3">
-                <div className="w-1/2">Nom du document</div>
-                <div>Deadline</div>
-              </div>
-              <div className="flex flex-col gap-5 items-center w-full">
-                {internshipSettings?.requiredReports?.map((report) => (
-                  <div className="flex flex-row items-center bg-[#F2F4F8] border border-slate-300 p-4 w-full rounded-lg" key={report.id}>
-                    <div className="flex justify-start w-full gap-2 md:gap-0">
-                      <div className="w-1/2">
-                        <input
-                          type="text"
-                          className="bg-white p-2 border border-slate-300 rounded-lg w-full md:w-auto"
-                          defaultValue={report.title}
-                          onBlur={(e) => handleChange(e, report.id, "title")}
-                        />
-                      </div>
-                      <input
-                        type="date"
-                        className="bg-white p-2 border border-slate-300 rounded-lg"
-                        defaultValue={report.deadline}
-                        onBlur={(e) => handleChange(e, report.id, "deadline")}
-                      />
-                    </div>
-                    <Trash className="cursor-pointer text-red-500" onClick={() => deleteReport(report.id)} />
-                  </div>
-                ))}
-                {internshipSettings?.requiredReports?.length === 0 && <div className="text-center">Aucun rapport trouvé, veuillez en ajouter</div>}
-                <div className="bg-[#BAD5FD] w-10 flex items-center justify-center p-1 border border-[#163767]">
-                  <Plus className="cursor-pointer " onClick={createNewReport} />
-                </div>
-                <button type="button" className="bg-[#163767] text-white rounded-lg p-2 mt-5 w-fit" onClick={saveSettings}>
-                  Enregistrer les paramètres
-                </button>
-              </div>
-            </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

@@ -1,0 +1,14 @@
+.add-doc {
+    @apply w-10 h-10 rounded-full flex items-center justify-center cursor-pointer;
+    @apply bg-[#163767];
+}
+
+.parameters {
+    @apply w-2/6 h-[160px] flex flex-col items-center pb-4;
+    @apply rounded-lg border border-[#939393] border-opacity-30;
+    @apply bg-gray-100 shadow-lg;
+}
+
+.parameters-element {
+    @apply flex flex-row space-x-5 items-center;
+}
