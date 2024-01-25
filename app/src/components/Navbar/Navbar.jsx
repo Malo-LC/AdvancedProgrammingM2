@@ -82,7 +82,7 @@ export default function Navbar() {
     menuItems = menuItemsStudent;
   } else if (userRole === "ADMIN") {
     menuItems = menuItemsAdmin;
-  } else if (userRole === "TUTEUR") {
+  } else if (userRole === "TUTOR") {
     menuItems = menuItemsTuteur;
   }
 
