@@ -107,7 +107,7 @@ const InternshipSettings = () => {
       {loading || !internshipSettings ? (
         <div>Loading...</div>
       ) : (
-        <div className="flex flex-row space-x-2 mt-4">
+        <div className="flex flex-row space-x-2 mt-[100px]">
           <div className="parameters">
             <p className="text-lg font-bold py-2">Parametres</p>
             <div className="flex flex-col gap-2 justify-center h-full">
@@ -136,14 +136,14 @@ const InternshipSettings = () => {
             </div>
           </div>
           <div className="documents w-4/6 h-auto flex items-center">
-            <p className="text-lg font-bold p-3 md:p-5">Documents</p>
-            <div className="flex w-full flex-col items-center justify-center md:p-5">
-              <div className="flex w-full md:w-2/3 flex-col ">
+            <p className="text-lg font-bold pb-3 md:pb-5">Documents</p>
+            <div className="flex w-full flex-col items-center justify-center ">
+              <div className="flex w-full px-5 flex-col">
                 <div className="flex justify-start border-b mb-3">
                   <div className="w-1/2">Nom du document</div>
                   <div>Deadline</div>
                 </div>
-                <div className="flex flex-col gap-5 items-center w-full">
+                <div className="flex flex-col gap-5 items-center w-full overflow-auto h-500">
                   {internshipSettings?.requiredReports?.map((report) => (
                     <div className="flex flex-row items-center bg-[#F2F4F8] border border-slate-300 p-4 w-full rounded-lg" key={report.id}>
                       <div className="flex justify-start w-full gap-2 md:gap-0">
@@ -162,7 +162,7 @@ const InternshipSettings = () => {
                           onBlur={(e) => handleChange(e, report.id, "deadline")}
                         />
                       </div>
-                      <motion.div whileHover={{ scale: 1.1, rotate: [0, -5, 5, -5, 5, 0], transition: { duration: 0.3 } }} style={{}}>
+                      <motion.div whileHover={{ scale: 1.1, rotate: [0, -10, 10, -10, 10, 0], transition: { duration: 0.3 } }} style={{}}>
                         <Trash className="cursor-pointer text-red-500" onClick={() => deleteReport(report.id)} />
                       </motion.div>
                     </div>
