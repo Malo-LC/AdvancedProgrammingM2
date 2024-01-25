@@ -18,31 +18,19 @@ function Documents() {
 
   // const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState(null);
+  const [documents, setDocuments] = useState([]);
 
   let docColumn;
 
   useEffect(() => {
     controls.start({ y: 0 });
-    const token = localStorage.getItem("token");
-
+    api.get("submit/all").then((res) => {
+      setDocuments(res);
+    });
     const fetchUserInfo = async () => {
-      if (token) {
-        api.setToken(token);
-        try {
-          // const userInfo = await userService.getUserInfo();
-          const userRole = await userService.getRole();
-          // if (userInfo) {
-          //   setUser(userInfo);
-          // }
-          if (userRole) {
-            setUserRole(userRole);
-          }
-        } catch (error) {
-          console.log("Error fetching user info: ", error);
-        }
-      }
+      const userRole = await userService.getRole();
+      setUserRole(userRole);
     };
-
     fetchUserInfo();
   }, []);
 
@@ -77,17 +65,27 @@ function Documents() {
           </div>
         )}
         <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px]"}`}>
-          <DocElement name="Rapport de stage" deadline="02/08/24" student_name="Don Diego" validation="test" status="delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
-          <DocElement name="test" deadline="01/01/01" student_name="test" validation="test" status="not_delivered" userRole={userRole} />
+          {documents.map((item, key) => (
+            <DocElement
+              key={key}
+              name={item.reportName}
+              internship_name={item.internshipName}
+              deadline={item.deadline}
+              student_name="test" //will be in the documents res later
+              validation="test"
+              status={item.isSubmitted}
+              userRole={userRole}
+            />
+          ))}
+          {/* <DocElement
+            name="Rapport de stage"
+            internship_name="Stage Sopra"
+            deadline="02/08/24"
+            student_name="Don Diego"
+            validation="test"
+            status="delivered"
+            userRole={userRole}
+          /> */}
         </div>
       </div>
     </div>
