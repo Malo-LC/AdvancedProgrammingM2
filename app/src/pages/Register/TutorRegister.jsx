@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import api from "../../utils/api";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Input } from "../../components/Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -96,12 +96,6 @@ function TutorRegister() {
                         />
                         <div className="button-container">
                             <input type="submit" value="Register" />
-                            <div className="no-account">
-                                <p>Already an account?</p>
-                                <Link to="/" className="register-link">
-                                    Login
-                                </Link>
-                            </div>
                         </div>
                     </form>
                 </div>
