@@ -3,9 +3,12 @@ import Navbar from "./components/Navbar/Navbar";
 import userService from "./services/userService";
 import { useEffect } from "react";
 import api from "./utils/api";
+import PropTypes from "prop-types";
 
-const RestrictedRoute = ({ children, ...rest }) => {
+const RestrictedRoute = ({ children, roles }) => {
   const isAuthenticated = userService.isAuthentified();
+  const userRole = userService.getRole();
+
   useEffect(() => {
     api
       .get("user/me")
@@ -19,8 +22,8 @@ const RestrictedRoute = ({ children, ...rest }) => {
       });
   }, []);
 
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
+  if (!isAuthenticated || !roles.includes(userRole)) {
+    return <Navigate to="/home" replace />;
   }
 
   return (
@@ -29,6 +32,11 @@ const RestrictedRoute = ({ children, ...rest }) => {
       {children}
     </>
   );
+};
+
+RestrictedRoute.propTypes = {
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default RestrictedRoute;
