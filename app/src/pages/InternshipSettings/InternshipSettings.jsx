@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { Plus, Trash } from "react-feather";
 import { toast } from "react-toastify";
@@ -88,9 +88,9 @@ const InternshipSettings = () => {
   return (
     <div className="p-4 md:p-10">
       <div className="flex flex-row items-center">
-        <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#163767]">Parametrage du stage de </p>
+        <p className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#163767]">Parametrage du stage de </p>
         <select
-          className="ml-2 rounded-md bg-none bg-transparent border border-[#163767] text-2xl sm:text-3xl lg:text-4xl font-bold text-[#163767]"
+          className="ml-2 rounded-md p-1 bg-none bg-transparent border border-[#163767] text-xl sm:text-3xl lg:text-4xl font-bold text-[#163767]"
           onChange={(e) => setSelectedInternship(e.target.value)}
         >
           {internships.map((internship) => (
@@ -103,7 +103,7 @@ const InternshipSettings = () => {
       {loading || !internshipSettings ? (
         <div>Loading...</div>
       ) : (
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-2">
           <div className="flex flex-col p-3 md:p-5">
             <p className="text-lg font-bold">Parametres</p>
             <div className="flex flex-col gap-2 justify-start w-full">
@@ -137,11 +137,11 @@ const InternshipSettings = () => {
               <div className="flex flex-col gap-5 items-center w-full">
                 {internshipSettings?.requiredReports?.map((report) => (
                   <div className="flex flex-row items-center bg-[#F2F4F8] border border-slate-300 p-4 w-full rounded-lg" key={report.id}>
-                    <div className="flex justify-start w-full">
+                    <div className="flex justify-start w-full gap-2 md:gap-0">
                       <div className="w-1/2">
                         <input
                           type="text"
-                          className="bg-white p-2 border border-slate-300 rounded-lg w-min"
+                          className="bg-white p-2 border border-slate-300 rounded-lg w-full md:w-auto"
                           defaultValue={report.title}
                           onBlur={(e) => handleChange(e, report.id, "title")}
                         />
