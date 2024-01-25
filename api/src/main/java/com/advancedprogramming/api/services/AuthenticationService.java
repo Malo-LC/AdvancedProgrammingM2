@@ -4,11 +4,7 @@ import com.advancedprogramming.api.config.JwtService;
 import com.advancedprogramming.api.controllers.beans.AuthenticationRequest;
 import com.advancedprogramming.api.controllers.beans.AuthenticationResponse;
 import com.advancedprogramming.api.controllers.beans.RegisterRequest;
-import com.advancedprogramming.api.models.Filedb;
-import com.advancedprogramming.api.models.Token;
-import com.advancedprogramming.api.models.TokenRepository;
-import com.advancedprogramming.api.models.User;
-import com.advancedprogramming.api.models.UserRepository;
+import com.advancedprogramming.api.models.*;
 import com.advancedprogramming.api.models.bean.RoleEnum;
 import com.advancedprogramming.api.models.token.TokenType;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +29,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final FileStorageService fileStorageService;
+    private final UserService userService;
 
     public AuthenticationResponse register(RegisterRequest request) throws IOException {
         // check if email is already registered
@@ -65,6 +62,40 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
             .accessToken(jwtToken)
             .build();
+    }
+
+    public AuthenticationResponse tutorRegistration(RegisterRequest request) throws IOException{
+
+        // check if email is already registered
+        if (userRepository.findByEmail(request.email()).isPresent()) {
+            throw new RuntimeException("Email already registered");
+        }
+
+        MultipartFile profilePictureMultipart = Base64ToMultipartFileConverter.convert(
+                request.profilePicture().base64(),
+                request.profilePicture().type(),
+                request.profilePicture().name()
+        );
+
+        Filedb profilePicture = fileStorageService.store(profilePictureMultipart);
+
+        User user = User.builder()
+                .firstName(request.firstName())
+                .lastName(request.lastName())
+                .promotionYear(request.promotionYear())
+                .birthDate(request.birthDate())
+                .role(RoleEnum.TUTOR)
+                .filedb(profilePicture)
+                .email(request.email())
+                .password(passwordEncoder.encode(request.password()))
+                .build();
+        Map<String, Object> extraClaims = getExtraClaims(user);
+        User savedUser = userRepository.save(user);
+        String jwtToken = jwtService.generateToken(user, extraClaims);
+        saveUserToken(savedUser, jwtToken);
+        return AuthenticationResponse.builder()
+                .accessToken(jwtToken)
+                .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
