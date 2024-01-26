@@ -4,11 +4,10 @@
 }
 
 .parameters {
-    @apply w-2/6 h-[160px] flex flex-col items-center pb-4;
-    @apply rounded-lg border border-[#939393] border-opacity-30;
-    @apply bg-gray-100 shadow-lg;
+    @apply w-[300px] h-[160px] flex flex-col px-5;
+    @apply border-[#939393] border-r border-opacity-20 h-full;
 }
 
 .parameters-element {
-    @apply flex flex-row space-x-5 items-center;
+    @apply flex flex-col space-y-3 px-5 items-start;
 }

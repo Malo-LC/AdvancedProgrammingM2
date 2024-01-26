@@ -3,6 +3,9 @@ import api from "../../utils/api";
 import { Plus, Trash } from "react-feather";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import Switch from "@mui/material/Switch";
+import { styled } from "@mui/material/styles";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 //style
 import "./internshipSettings.css";
@@ -64,34 +67,77 @@ const InternshipSettings = () => {
   };
 
   const handleChange = (e, id, key) => {
-    setInternshipSettings((prev) => {
-      return {
-        ...prev,
-        requiredReports: prev.requiredReports.map((report) => {
-          if (report.id === id) {
-            return {
-              ...report,
-              [key]: e.target.value,
-            };
-          }
-          return report;
-        }),
-      };
-    });
+    setInternshipSettings((prev) => ({
+      ...prev,
+      requiredReports: prev.requiredReports.map((report) => {
+        if (report.id === id) {
+          return {
+            ...report,
+            [key]: e.target.value,
+          };
+        }
+        return report;
+      }),
+    }));
   };
 
   const handleChangeSettings = (e, key) => {
-    setInternshipSettings((prev) => {
-      return {
-        ...prev,
-        [key]: e.target.value,
-      };
-    });
+    const updatedValue = e.target.checked;
+    setInternshipSettings((prev) => ({
+      ...prev,
+      [key]: updatedValue,
+    }));
   };
 
+  const IOSSwitch = styled((props) => <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />)(({ theme }) => ({
+    width: 42,
+    height: 26,
+    padding: 0,
+    "& .MuiSwitch-switchBase": {
+      padding: 0,
+      margin: 2,
+      transitionDuration: "300ms",
+      "&.Mui-checked": {
+        transform: "translateX(16px)",
+        color: "#fff",
+        "& + .MuiSwitch-track": {
+          backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
+          opacity: 1,
+          border: 0,
+        },
+        "&.Mui-disabled + .MuiSwitch-track": {
+          opacity: 0.5,
+        },
+      },
+      "&.Mui-focusVisible .MuiSwitch-thumb": {
+        color: "#33cf4d",
+        border: "6px solid #fff",
+      },
+      "&.Mui-disabled .MuiSwitch-thumb": {
+        color: theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[600],
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+      },
+    },
+    "& .MuiSwitch-thumb": {
+      boxSizing: "border-box",
+      width: 22,
+      height: 22,
+    },
+    "& .MuiSwitch-track": {
+      borderRadius: 26 / 2,
+      backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
+      opacity: 1,
+      transition: theme.transitions.create(["background-color"], {
+        duration: 500,
+      }),
+    },
+  }));
+
   return (
-    <div className="p-4 md:p-10">
-      <div className="flex flex-row items-center">
+    <div className="">
+      <div className="flex flex-row items-center mx-10 mt-10">
         <p className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#163767]">Paramétrage du stage de </p>
         <select
           className="ml-2 rounded-md p-1 bg-none bg-transparent border border-[#163767] text-xl sm:text-3xl lg:text-4xl font-bold text-[#163767]"
@@ -107,14 +153,14 @@ const InternshipSettings = () => {
       {loading || !internshipSettings ? (
         <div>Loading...</div>
       ) : (
-        <div className="flex flex-row space-x-2 mt-[100px]">
+        <div className="flex flex-row mt-[80px] border-t-[#939393] border-t border-opacity-20">
           <div className="parameters">
-            <p className="text-lg font-bold py-2">Parametres</p>
-            <div className="flex flex-col gap-2 justify-center h-full">
+            <div className="flex w-full pl-5 my-3 border-b-[#939393] border-b border-opacity-20">
+              <p className="text-xl font-bold pb-3">Parametres</p>
+            </div>
+            <div className="flex flex-col gap-2 h-full mt-3 space-y-4">
               <div className="parameters-element">
-                <div className="border-[#163767] bg-white border px-2 rounded-lg py-[10px] w-[170px] flex items-center justify-center">
-                  <p className="text-[#163767]">Date de fin du stage</p>
-                </div>
+                <p className="font-bold text-base">Date de fin du stage</p>
                 <input
                   type="date"
                   className="bg-white p-2 border border-slate-300 rounded-lg"
@@ -123,14 +169,19 @@ const InternshipSettings = () => {
                 />
               </div>
               <div className="parameters-element">
-                <div className="border-[#163767] bg-white border px-2 rounded-lg py-[10px] w-[170px] flex items-center justify-center">
-                  <p className="text-[#163767]">Cloturer le stage</p>
-                </div>
-                <input
+                <p className="font-bold">Cloturer le stage</p>
+                {/* <input
                   type="checkbox"
                   className="bg-white p-2 border border-slate-300 rounded-lg"
                   defaultValue={internshipSettings.isClosed}
-                  onBlur={(e) => handleChangeSettings(e, "isClosed")}
+                  onChange={(e) => handleChangeSettings(e, "isClosed")}
+                /> */}
+                <FormControlLabel
+                  checked={internshipSettings.isClosed}
+                  control={<IOSSwitch sx={{ m: 1 }} />}
+                  onChange={(e) => {
+                    handleChangeSettings(e, "isClosed");
+                  }}
                 />
               </div>
             </div>
