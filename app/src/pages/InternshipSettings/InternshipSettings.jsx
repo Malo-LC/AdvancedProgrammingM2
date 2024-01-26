@@ -154,12 +154,12 @@ const InternshipSettings = () => {
         <div>Loading...</div>
       ) : (
         <div className="flex flex-row mt-[80px] border-t-[#939393] border-t border-opacity-20">
-          <div className="parameters">
+          <div className="parameters h-full">
             <div className="flex w-full pl-5 my-3 border-b-[#939393] border-b border-opacity-20">
               <p className="text-xl font-bold pb-3">Parametres</p>
             </div>
             <div className="flex flex-col gap-2 h-full mt-3 space-y-4">
-              <div className="parameters-element">
+              <div className="parameters-element border-b-[#939393] border-b border-opacity-20 pb-6">
                 <p className="font-bold text-base">Date de fin du stage</p>
                 <input
                   type="date"
@@ -186,7 +186,7 @@ const InternshipSettings = () => {
               </div>
             </div>
           </div>
-          <div className="documents w-4/6 h-auto flex items-center">
+          <div className="documents w-full md:px-10 xl:px-20 h-auto flex items-center">
             <p className="text-lg font-bold pb-3 md:pb-5">Documents</p>
             <div className="flex w-full flex-col items-center justify-center ">
               <div className="flex w-full px-5 flex-col">
@@ -194,10 +194,10 @@ const InternshipSettings = () => {
                   <div className="w-1/2">Nom du document</div>
                   <div>Deadline</div>
                 </div>
-                <div className="flex flex-col gap-5 items-center w-full overflow-auto h-500">
+                <div className="flex flex-col gap-5 items-center w-full md:max-h-[350px] xl:max-h-[400px] overflow-auto">
                   {internshipSettings?.requiredReports?.map((report) => (
                     <div className="flex flex-row items-center bg-[#F2F4F8] border border-slate-300 p-4 w-full rounded-lg" key={report.id}>
-                      <div className="flex justify-start w-full gap-2 md:gap-0">
+                      <div className="flex justify-start w-full gap-2 md:gap-0 ">
                         <div className="w-1/2">
                           <input
                             type="text"
@@ -219,6 +219,8 @@ const InternshipSettings = () => {
                     </div>
                   ))}
                   {internshipSettings?.requiredReports?.length === 0 && <div className="text-center">Aucun rapport trouvé, veuillez en ajouter</div>}
+                </div>
+                <div className="flex flex-col w-full items-center mt-6">
                   <motion.div whileHover={{ rotate: 180 }} className="add-doc">
                     <Plus className="text-white" onClick={createNewReport} />
                   </motion.div>
