@@ -1,18 +1,17 @@
 class UserService {
-  token = null;
+  decodedToken = null;
+
   decodeToken() {
-    if (!this.token) {
-      this.token = localStorage.getItem("token");
-    }
-    if (this.token) {
+    if (!this.decodedToken) {
       try {
-        const decodedToken = JSON.parse(atob(this.token.split(".")[1]));
+        const decodedToken = JSON.parse(atob(this.decodedToken.split(".")[1]));
         return decodedToken;
       } catch (error) {
         console.error("Error decoding token:", error);
       }
+    } else {
+      return this.decodedToken;
     }
-    return null;
   }
 
   isAuthentified() {

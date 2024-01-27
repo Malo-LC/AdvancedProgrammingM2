@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import RestrictedRoute from "./RestrictedRoute";
 import Profile from "./pages/Profile/Profile";
 import Documents from "./pages/Documents/Documents";
-import Stage from "./pages/Stages/Stage";
+import Stage from "./pages/Internship/Internship.jsx";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";

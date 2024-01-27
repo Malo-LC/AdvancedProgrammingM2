@@ -5,20 +5,22 @@ import com.advancedprogramming.api.controllers.beans.StudentInternshipRequest;
 import com.advancedprogramming.api.controllers.beans.StudentInternshipResponse;
 import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.services.StudentInternshipService;
+import com.advancedprogramming.api.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import com.advancedprogramming.api.services.UserService;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -34,7 +36,7 @@ public class StudentInternshipController {
     @PostMapping("/create")
     @Operation(summary = "Create student internship")
     public ResponseEntity<MessageResponse> createStudentInternship(
-            @Valid @RequestBody StudentInternshipRequest request) throws IOException {
+        @Valid @RequestBody StudentInternshipRequest request) throws IOException {
         try {
             boolean success = studentInternshipService.createStudentInternship(request);
             String message;
@@ -47,7 +49,7 @@ public class StudentInternshipController {
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
-                    .body(new MessageResponse(e.getMessage(), false));
+                .body(new MessageResponse(e.getMessage(), false));
         }
     }
 
