@@ -7,24 +7,13 @@ import PropTypes from "prop-types";
 
 import "./demandestageelement.css";
 
-// DemandeStageElement.propTypes = {
-//   internship_name: PropTypes.string.isRequired,
-//   internship_year: PropTypes.number.isRequired,
-//   internship_status: PropTypes.bool.isRequired,
-//   internship_company_name: PropTypes.string.isRequired,
-//   internship_begin_date: PropTypes.string.isRequired,
-//   internship_end_date: PropTypes.string.isRequired,
-//   internship_id: PropTypes.number.isRequired,
-//   student_name: PropTypes.string,
-//   userRole: PropTypes.string,
-// };
+DemandeStageElement.propTypes = {
+  userRole: PropTypes.string.isRequired,
+  data: PropTypes.array.isRequired
+};
 
 function DemandeStageElement(props) {
   const userRole = props.userRole;
-  if (userRole === null) {
-    console.log("DemandeStageElement: userRole is null");
-    return (<></>);
-  }
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
@@ -65,8 +54,6 @@ function DemandeStageElement(props) {
 
     return newInternshipData;
   });
-
-  console.log("DemandeStageElement: newInternshipsList = ", newInternshipsList);
 
   return (
     <>

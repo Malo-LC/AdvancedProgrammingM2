@@ -8,14 +8,10 @@ import api from "../../utils/api";
 import DemandeStageElement from '../../components/DemandeStageElement/DemandeStageElement';
 
 
-const requestColumnNamesTutor = ["Année du Stage", "Statut", "Nom de l'étudiant", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
-const requestColumnNamesStudent = ["Année du Stage", "Statut", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
-
 function Demandes() {
   const controls = useAnimation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
-  // const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState(null);
   const [requests, setRequests] = useState([]);
 
@@ -31,14 +27,6 @@ function Demandes() {
     };
     fetchUserInfo();
   }, []);
-
-  let requestColumn;
-
-  if (userRole === "STUDENT") {
-    requestColumn = requestColumnNamesStudent;
-  } else if (userRole === "TUTOR") {
-    requestColumn = requestColumnNamesTutor;
-  }
 
   return (
     <div className={`documents ${isMobile ? "items-start" : "items-center justify-center"}`}>

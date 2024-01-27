@@ -1,6 +1,14 @@
+import PropTypes from "prop-types";
+
 import "./tablecomponent.css";
 
-function TableComponent(props /* columns, data */) {
+TableComponent.propTypes = {
+  columns: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  dataKeys: PropTypes.array.isRequired
+};
+
+function TableComponent(props /* columns, data, dataKeys */) {
   const dataKeys = props.dataKeys;
 
   return (

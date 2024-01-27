@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+import PropTypes from "prop-types";
 
-function DemandeMobileComponent(props /* columns, data, userRole, mobileElement*/) {
+DemandeMobileComponent.propTypes = {
+  data: PropTypes.array.isRequired
+};
+
+function DemandeMobileComponent(props /* data */) {
 
   const userRole = props.userRole;
   if (userRole === null) {
