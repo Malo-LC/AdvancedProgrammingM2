@@ -170,12 +170,6 @@ const InternshipSettings = () => {
               </div>
               <div className="parameters-element">
                 <p className="font-bold">Cloturer le stage</p>
-                {/* <input
-                  type="checkbox"
-                  className="bg-white p-2 border border-slate-300 rounded-lg"
-                  defaultValue={internshipSettings.isClosed}
-                  onChange={(e) => handleChangeSettings(e, "isClosed")}
-                /> */}
                 <FormControlLabel
                   checked={internshipSettings.isClosed}
                   control={<IOSSwitch sx={{ m: 1 }} />}
@@ -235,29 +229,6 @@ const InternshipSettings = () => {
               </div>
             </div>
           </div>
-          {/* <div className="flex flex-col p-3 md:p-5">
-            <p className="text-lg font-bold">Parametres</p>
-            <div className="flex flex-col gap-2 justify-start w-full">
-              <div className="flex flex-row items-center gap-4">
-                <p className="text-base w-40">Date de fin du stage</p>
-                <input
-                  type="date"
-                  className="bg-white p-2 border border-slate-300 rounded-lg"
-                  defaultValue={internshipSettings.endDate}
-                  onBlur={(e) => handleChangeSettings(e, "endDate")}
-                />
-              </div>
-              <div className="flex flex-row items-center gap-4">
-                <p className="text-base w-40">Cloturer le stage</p>
-                <input
-                  type="checkbox"
-                  className="bg-white p-2 border border-slate-300 rounded-lg"
-                  defaultValue={internshipSettings.isClosed}
-                  onBlur={(e) => handleChangeSettings(e, "isClosed")}
-                />
-              </div>
-            </div>
-          </div> */}
         </div>
       )}
     </div>
