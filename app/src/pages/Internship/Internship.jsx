@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import userService from "../../services/userService";
 
 //style
-import "./stages.css";
+import "./internship.css";
 
 function Stages() {
   const controls = useAnimation();

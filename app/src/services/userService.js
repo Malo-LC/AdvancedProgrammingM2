@@ -3,8 +3,9 @@ class UserService {
 
   decodeToken() {
     if (!this.decodedToken) {
+      const token = localStorage.getItem("token");
       try {
-        const decodedToken = JSON.parse(atob(this.decodedToken.split(".")[1]));
+        const decodedToken = JSON.parse(atob(token.split(".")[1]));
         return decodedToken;
       } catch (error) {
         console.error("Error decoding token:", error);
