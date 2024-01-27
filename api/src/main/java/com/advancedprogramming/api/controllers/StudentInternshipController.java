@@ -51,7 +51,7 @@ public class StudentInternshipController {
         }
     }
 
-    @Operation(summary = "Get all submits by user")
+    @Operation(summary = "Get all student internships by user")
     @GetMapping("/all")
     public ResponseEntity<List<StudentInternshipResponse>> getListFiles(HttpServletRequest request) throws IOException {
         try {
