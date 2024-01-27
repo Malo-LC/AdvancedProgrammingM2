@@ -8,7 +8,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import api from "./utils/api";
-import Demandes from "./pages/Demande/Demande";
+import Demandes from "./pages/Demande/Demandes.jsx";
 import InternshipSettings from "./pages/InternshipSettings/InternshipSettings";
 import TutorRegister from "./pages/Register/TutorRegister.jsx";
 import { ToastContainer } from "react-toastify";

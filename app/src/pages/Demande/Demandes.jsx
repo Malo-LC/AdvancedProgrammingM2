@@ -9,23 +9,18 @@ import DemandeStageElement from '../../components/DemandeStageElement/DemandeSta
 
 
 function Demandes() {
+
   const controls = useAnimation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
-  const [userRole, setUserRole] = useState(null);
+  const userRole = userService.getRole();
   const [requests, setRequests] = useState([]);
-
 
   useEffect(() => {
     controls.start({ y: 0 });
     api.get("studentInternship/all").then((res) => {
       setRequests(res);
     });
-    const fetchUserInfo = async () => {
-      const userRole = await userService.getRole();
-      setUserRole(userRole);
-    };
-    fetchUserInfo();
   }, []);
 
   return (
