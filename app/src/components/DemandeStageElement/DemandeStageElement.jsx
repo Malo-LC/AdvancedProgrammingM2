@@ -17,8 +17,11 @@ function DemandeStageElement(props) {
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
+  // Those names are displayed in the table
   const requestColumnNamesTutor = ["Année du Stage", "Statut", "Nom de l'étudiant", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
   const requestColumnNamesStudent = ["Année du Stage", "Statut", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
+
+  // Those keys define the order of the data in the table
   const requestKeyTutor = ["internship_year", "internship_status", "student_name", "internship_name", "company_name", "start_date", "end_date", "internship_id", "link"];
   const requestKeyStudent = ["internship_year", "internship_status", "internship_name", "company_name", "start_date", "end_date", "internship_id", "link"];
 
@@ -43,14 +46,9 @@ function DemandeStageElement(props) {
       "start_date": objet.startDate,
       "end_date": objet.endDate,
       "internship_id": objet.internshipId,
+      "student_name": `${objet.studentFirstname} ${objet.studentFirstname}`,
       "link": <a href="">Consulter</a>
     };
-    if (userRole === "TUTOR") {
-      newInternshipData = {
-        ...newInternshipData,
-        "student_name": `${objet.studentFirstname} ${objet.studentFirstname}`
-      };
-    }
 
     return newInternshipData;
   });
