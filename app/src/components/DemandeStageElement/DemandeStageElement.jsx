@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { motion, useAnimation } from "framer-motion";
-
-import ActionButton from "../BasicComponents/ActionButton/ActionButton";
 import Status from "../BasicComponents/Status/Status";
 import TableComponent from "../TableComponent/TableComponent";
 import DemandeMobileComponent from "../DemandeMobileComponent/DemandeMobileComponent";
@@ -36,26 +32,6 @@ function DemandeStageElement(props) {
   const requestColumnNamesStudent = ["Année du Stage", "Statut", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
   const requestKeyTutor = ["internship_year", "internship_status", "student_name", "internship_name", "company_name", "start_date", "end_date", "internship_id", "link"];
   const requestKeyStudent = ["internship_year", "internship_status", "internship_name", "company_name", "start_date", "end_date", "internship_id", "link"];
-  //   internship_year: 0,
-  //   internship_status: 1,
-  //   internship_name: 2,
-  //   company_name: 3,
-  //   start_date: 4,
-  //   end_date: 5,
-  //   internship_id: 6,
-  //   link: 7,
-  // };
-  // const requestMobileIndexTutor = {
-  //   "internship_year": 0,
-  //   "internship_status": 1,
-  //   "student_name": 2,
-  //   "internship_name": 3,
-  //   "company_name": 4,
-  //   "internship_begin_date": 5,
-  //   "internship_end_date": 6,
-  //   "internship_id": 7,
-  //   "link": 8,
-  // };
 
   let requestColumn;
   let requestKey;
