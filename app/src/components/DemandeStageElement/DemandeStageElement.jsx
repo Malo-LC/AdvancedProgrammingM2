@@ -3,83 +3,97 @@ import { useMediaQuery } from "react-responsive";
 import { motion, useAnimation } from "framer-motion";
 
 import ActionButton from "../BasicComponents/ActionButton/ActionButton";
+import Status from "../BasicComponents/Status/Status";
+import TableComponent from "../TableComponent/TableComponent";
+import DemandeMobileComponent from "../DemandeMobileComponent/DemandeMobileComponent";
 
 import PropTypes from "prop-types";
 
 import "./demandestageelement.css";
-import Status from "../BasicComponents/Status/Status";
 
-DemandeStageElement.propTypes = {
-  internship_name: PropTypes.string.isRequired,
-  internship_year: PropTypes.string.isRequired,
-  internship_status: PropTypes.bool.isRequired,
-  internship_company_name: PropTypes.string.isRequired,
-  internship_begin_date: PropTypes.string.isRequired,
-  internship_end_date: PropTypes.string.isRequired,
-  internship_id: PropTypes.number.isRequired,
-  student_name: PropTypes.string,
-  userRole: PropTypes.string,
-};
+// DemandeStageElement.propTypes = {
+//   internship_name: PropTypes.string.isRequired,
+//   internship_year: PropTypes.number.isRequired,
+//   internship_status: PropTypes.bool.isRequired,
+//   internship_company_name: PropTypes.string.isRequired,
+//   internship_begin_date: PropTypes.string.isRequired,
+//   internship_end_date: PropTypes.string.isRequired,
+//   internship_id: PropTypes.number.isRequired,
+//   student_name: PropTypes.string,
+//   userRole: PropTypes.string,
+// };
 
 function DemandeStageElement(props) {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const [isExpanded, setIsExpanded] = useState(false);
-  const mobileElementHeight = props.userRole === "STUDENT" ? 130 : 90;
+  const userRole = props.userRole;
+  if (userRole === null) {
+    console.log("DemandeStageElement: userRole is null");
+    return (<></>);
+  }
 
-  const handleClick = async () => {
-    setIsExpanded(!isExpanded);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  const requestColumnNamesTutor = ["Année du Stage", "Statut", "Nom de l'étudiant", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
+  const requestColumnNamesStudent = ["Année du Stage", "Statut", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
+  const requestMobileIndexStudent = {
+    internship_year: 0,
+    internship_status: 1,
+    internship_name: 2,
+    company_name: 3,
+    start_date: 4,
+    end_date: 5,
+    internship_id: 6,
+    link: 7,
+  };
+  const requestMobileIndexTutor = {
+    internship_year: 0,
+    internship_status: 1,
+    student_name: 2,
+    internship_name: 3,
+    company_name: 4,
+    internship_begin_date: 5,
+    internship_end_date: 6,
+    internship_id: 7,
+    link: 8,
   };
 
+
+  let requestColumn;
+  let requestMobileIndex;
+
+  if (userRole === "STUDENT") {
+    requestColumn = requestColumnNamesStudent;
+    requestMobileIndex = requestMobileIndexStudent;
+  } else if (userRole === "TUTOR") {
+    requestColumn = requestColumnNamesTutor;
+    requestMobileIndex = requestMobileIndexTutor;
+  }
+
+  // Convert the data to the format of the table
+  const newInternshipsList = props.data.map(objet => {
+    let newInternshipData;
+    if (userRole === "STUDENT") {
+      newInternshipData = [null, <Status status={objet.isInternshipValidated} type="demande" />, objet.mission, objet.companyName, objet.startDate, objet.endDate, <a href="">Consulter</a>];
+    } else if (userRole === "TUTOR") {
+      newInternshipData = [null, <Status status={objet.isInternshipValidated} type="demande" />, `${objet.studentFirstname} ${objet.studentFirstname}`, objet.mission, objet.companyName, objet.startDate, objet.endDate, <a href="">Consulter</a>];
+    }
+
+    if (newInternshipData.length === requestColumn.length) {
+      return newInternshipData;
+    } else {
+      return null;
+    }
+  });
 
   return (
     <>
       {isMobile ? (
-        <motion.div className="requestelement-mobile">
-          <button onClick={handleClick} className="flex flex-row justify-between w-full items-center">
-            <div className="elements text-xl">{props.internship_name}</div>
-            <div className="elements">
-              <Status status={props.internship_status} type="demande" />
-            </div>
-          </button>
-          <motion.div className="expanded-content" animate={{ opacity: isExpanded ? 1 : 0, height: isExpanded ? mobileElementHeight : 0 }}>
-            {isExpanded && (
-              <>
-                {props.userRole === "TUTOR" && (
-                  <div className="elements-hidden">
-                    <p className="mr-2">Nom étudiant :</p>
-                    <p className="font-thin">{props.student_name}</p>
-                  </div>
-                )}
-                <div className="elements-hidden">
-                  <p className="mr-2">Nom de la société :</p>
-                  <p className="font-thin">{props.internship_company_name}</p>
-                </div>
-                <div className="elements-hidden">
-                  <p className="mr-2">Date de début :</p>
-                  <p className="font-thin">{props.internship_begin_date}</p>
-                </div>
-                <div className="elements-hidden">
-                  <p className="mr-2">Date de fin :</p>
-                  <p className="font-thin">{props.internship_end_date}</p>
-                </div>
-              </>
-            )}
-          </motion.div>
-        </motion.div>
+        <>
+          <DemandeMobileComponent data={newInternshipsList} mobileIndex={requestMobileIndex} />
+        </>
       ) : (
-        <div className="flex flex-row items-center space-x-2 ">
-          <div className={`requestelement justify-between w-full `}>
-            <div className="elements">{props.internship_year}-{props.internship_year+1}</div>
-            <Status status={props.internship_status} type={"demande"} />
-            <div className="elements">{props.internship_status}</div>
-            {props.userRole === "TUTOR" && <div className="elements">{props.student_name}</div>}
-            <div className="elements">{props.internship_name}</div>
-            <div className="elements">{props.internship_company_name}</div>
-            <div className="elements">{props.internship_begin_date}</div>
-            <div className="elements">{props.internship_end_date}</div>
-            <div><a>Consulter</a></div>
-          </div>
-        </div>
+        <>
+          <TableComponent columns={requestColumnNamesStudent} data={newInternshipsList} />
+        </>
       )}
     </>
   )
