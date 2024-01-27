@@ -1,6 +1,7 @@
 import "./tablecomponent.css";
 
 function TableComponent(props /* columns, data */) {
+  const dataKeys = props.dataKeys;
 
   return (
     <>
@@ -19,9 +20,9 @@ function TableComponent(props /* columns, data */) {
             {props.data.map((val, key) => {
               return (
                 <tr className={`requestelement`} key={key}>
-                  {val && val.map((item, index) => {
+                  {dataKeys.map(dataKey => {
                     return (
-                      <td key={index}>{item}</td>
+                      <td key={dataKey}>{val[dataKey]}</td>
                     )
                   })}
                 </tr>

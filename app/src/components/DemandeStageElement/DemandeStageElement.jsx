@@ -34,65 +34,73 @@ function DemandeStageElement(props) {
 
   const requestColumnNamesTutor = ["Année du Stage", "Statut", "Nom de l'étudiant", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
   const requestColumnNamesStudent = ["Année du Stage", "Statut", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
-  const requestMobileIndexStudent = {
-    internship_year: 0,
-    internship_status: 1,
-    internship_name: 2,
-    company_name: 3,
-    start_date: 4,
-    end_date: 5,
-    internship_id: 6,
-    link: 7,
-  };
-  const requestMobileIndexTutor = {
-    internship_year: 0,
-    internship_status: 1,
-    student_name: 2,
-    internship_name: 3,
-    company_name: 4,
-    internship_begin_date: 5,
-    internship_end_date: 6,
-    internship_id: 7,
-    link: 8,
-  };
-
+  const requestKeyTutor = ["internship_year", "internship_status", "student_name", "internship_name", "company_name", "start_date", "end_date", "internship_id", "link"];
+  const requestKeyStudent = ["internship_year", "internship_status", "internship_name", "company_name", "start_date", "end_date", "internship_id", "link"];
+  //   internship_year: 0,
+  //   internship_status: 1,
+  //   internship_name: 2,
+  //   company_name: 3,
+  //   start_date: 4,
+  //   end_date: 5,
+  //   internship_id: 6,
+  //   link: 7,
+  // };
+  // const requestMobileIndexTutor = {
+  //   "internship_year": 0,
+  //   "internship_status": 1,
+  //   "student_name": 2,
+  //   "internship_name": 3,
+  //   "company_name": 4,
+  //   "internship_begin_date": 5,
+  //   "internship_end_date": 6,
+  //   "internship_id": 7,
+  //   "link": 8,
+  // };
 
   let requestColumn;
-  let requestMobileIndex;
+  let requestKey;
 
   if (userRole === "STUDENT") {
     requestColumn = requestColumnNamesStudent;
-    requestMobileIndex = requestMobileIndexStudent;
+    requestKey = requestKeyStudent;
   } else if (userRole === "TUTOR") {
     requestColumn = requestColumnNamesTutor;
-    requestMobileIndex = requestMobileIndexTutor;
+    requestKey = requestKeyTutor;
   }
 
   // Convert the data to the format of the table
   const newInternshipsList = props.data.map(objet => {
-    let newInternshipData;
-    if (userRole === "STUDENT") {
-      newInternshipData = [null, <Status status={objet.isInternshipValidated} type="demande" />, objet.mission, objet.companyName, objet.startDate, objet.endDate, <a href="">Consulter</a>];
-    } else if (userRole === "TUTOR") {
-      newInternshipData = [null, <Status status={objet.isInternshipValidated} type="demande" />, `${objet.studentFirstname} ${objet.studentFirstname}`, objet.mission, objet.companyName, objet.startDate, objet.endDate, <a href="">Consulter</a>];
+    let newInternshipData = {
+      "internship_year": objet.internshipYear,
+      "internship_status": <Status status={objet.isInternshipValidated} type="demande"/>,
+      "internship_name": objet.mission,
+      "company_name": objet.companyName,
+      "start_date": objet.startDate,
+      "end_date": objet.endDate,
+      "internship_id": objet.internshipId,
+      "link": <a href="">Consulter</a>
+    };
+    if (userRole === "TUTOR") {
+      newInternshipData = {
+        ...newInternshipData,
+        "student_name": `${objet.studentFirstname} ${objet.studentFirstname}`
+      };
     }
 
-    if (newInternshipData.length === requestColumn.length) {
-      return newInternshipData;
-    } else {
-      return null;
-    }
+    return newInternshipData;
   });
+
+  console.log("DemandeStageElement: newInternshipsList = ", newInternshipsList);
 
   return (
     <>
       {isMobile ? (
         <>
-          <DemandeMobileComponent data={newInternshipsList} mobileIndex={requestMobileIndex} />
+          <DemandeMobileComponent data={newInternshipsList} />
         </>
       ) : (
         <>
-          <TableComponent columns={requestColumnNamesStudent} data={newInternshipsList} />
+          <TableComponent columns={requestColumnNamesStudent} data={newInternshipsList} dataKeys={requestKey} />
         </>
       )}
     </>

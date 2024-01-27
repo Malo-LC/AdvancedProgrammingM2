@@ -26,9 +26,9 @@ function DemandeMobileComponent(props /* columns, data, userRole, mobileElement*
         return (
           <motion.div className="requestelement-mobile" key={key}>
             <button onClick={handleClick} className="flex flex-row justify-between w-full items-center">
-              <div className="elements text-xl">{val[mobileIndex.internship_name]}</div>
+              <div className="elements text-xl">{val.internship_name}</div>
               <div className="elements">
-                {val[mobileIndex.internship_status]}
+                {val.internship_status}
               </div>
             </button>
             <motion.div className="expanded-content" animate={{ opacity: isExpanded ? 1 : 0, height: isExpanded ? mobileElementHeight : 0 }}>
@@ -37,23 +37,23 @@ function DemandeMobileComponent(props /* columns, data, userRole, mobileElement*
                   {props.userRole === "TUTOR" && (
                     <div className="elements-hidden">
                       <p className="mr-2">Etudiant : </p>
-                      <p className="font-thin">{val[mobileIndex.student_name]}</p>
+                      <p className="font-thin">{val.student_name}</p>
                     </div>
                   )}
                   <div className="elements-hidden">
                     <p className="mr-2">Société :</p>
-                    <p className="font-thin">{val[mobileIndex.company_name]}</p>
+                    <p className="font-thin">{val.company_name}</p>
                   </div>
                   <div className="elements-hidden">
                     <p className="mr-2">Date de début :</p>
-                    <p className="font-thin">{val[mobileIndex.start_date]}</p>
+                    <p className="font-thin">{val.start_date}</p>
                   </div>
                   <div className="elements-hidden">
                     <p className="mr-2">Date de fin :</p>
-                    <p className="font-thin">{val[mobileIndex.end_date]}</p>
+                    <p className="font-thin">{val.end_date}</p>
                   </div>
                   <div className="elements-hidden">
-                    <p className="mr-2">{val[mobileIndex.link]}</p>
+                    <p className="mr-2">{val.link}</p>
                   </div>
                 </>
               )}
