@@ -34,9 +34,8 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final FileStorageService fileStorageService;
-    private final UserService userService;
 
-    public AuthenticationResponse register(RegisterRequest request) throws IOException {
+    public AuthenticationResponse register(RegisterRequest request, Boolean isTutorRegistration) throws IOException {
         // check if email is already registered
         if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new RuntimeException("Email already registered");
@@ -55,41 +54,7 @@ public class AuthenticationService {
             .lastName(request.lastName())
             .promotionYear(request.promotionYear())
             .birthDate(request.birthDate())
-            .role(RoleEnum.STUDENT)
-            .filedb(profilePicture)
-            .email(request.email())
-            .password(passwordEncoder.encode(request.password()))
-            .build();
-        Map<String, Object> extraClaims = getExtraClaims(user);
-        User savedUser = userRepository.save(user);
-        String jwtToken = jwtService.generateToken(user, extraClaims);
-        saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
-            .accessToken(jwtToken)
-            .build();
-    }
-
-    public AuthenticationResponse tutorRegistration(RegisterRequest request) throws IOException {
-
-        // check if email is already registered
-        if (userRepository.findByEmail(request.email()).isPresent()) {
-            throw new RuntimeException("Email already registered");
-        }
-
-        MultipartFile profilePictureMultipart = Base64ToMultipartFileConverter.convert(
-            request.profilePicture().base64(),
-            request.profilePicture().type(),
-            request.profilePicture().name()
-        );
-
-        Filedb profilePicture = fileStorageService.store(profilePictureMultipart);
-
-        User user = User.builder()
-            .firstName(request.firstName())
-            .lastName(request.lastName())
-            .promotionYear(request.promotionYear())
-            .birthDate(request.birthDate())
-            .role(RoleEnum.TUTOR)
+            .role(isTutorRegistration ? RoleEnum.TUTOR : RoleEnum.STUDENT)
             .filedb(profilePicture)
             .email(request.email())
             .password(passwordEncoder.encode(request.password()))
