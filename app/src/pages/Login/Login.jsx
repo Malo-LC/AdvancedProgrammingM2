@@ -11,9 +11,7 @@ import "./login.css";
 
 //assets
 import logo_efrei from "../../assets/images/logo_efrei.png";
-import mail from "../../assets/images/icons/mail.png";
-import lock from "../../assets/images/icons/lock.png";
-import EyeOff from "../../assets/images/icons/EyeOff.png";
+import { Lock, Mail } from "react-feather";
 
 function Login() {
   const navigate = useNavigate();
@@ -43,8 +41,7 @@ function Login() {
         api.setToken(res.access_token);
         navigate("/home");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         toast.error("Invalid credentials !", {
           position: "top-right",
         });
@@ -57,10 +54,10 @@ function Login() {
         <div className="login-component">
           <img src={logo_efrei} alt="efrei_logo" className="logo" />
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Input placeholder="Mail" type="text" name="email" iconLeft={mail} errors={errors} register={register} />
-            <Input placeholder="Password" type="password" name="password" iconLeft={lock} iconRight={EyeOff} errors={errors} register={register} />
+            <Input placeholder="Mail" type="text" name="email" IconLeft={<Mail />} errors={errors} register={register} />
+            <Input placeholder="Password" type="password" name="password" IconLeft={<Lock />} errors={errors} register={register} />
             <div className="button-container">
-              <input type="submit" value="Login"></input>
+              <input type="submit" value="Login" />
               <div className="no-account">
                 <p>No account?</p>
                 <Link to="/register" className="register-link ">

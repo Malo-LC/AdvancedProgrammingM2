@@ -11,7 +11,7 @@ export const menuItemsStudent = [
 
 export const menuItemsAdmin = [
   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-  { label: "Creation compte tuteur", url: "/creation-tuteur", icon: <SupervisorAccountIcon /> },
+  { label: "Creation compte tuteur", url: "/tutor-register", icon: <SupervisorAccountIcon /> },
   { label: "Demandes de stages", url: "/demandes/validation", icon: <BusinessIcon /> },
   { label: "Paramétrer les stages", url: "/parametres/stages", icon: <Settings /> },
   { label: "Liste des stages", url: "/stages", icon: <BusinessIcon /> },

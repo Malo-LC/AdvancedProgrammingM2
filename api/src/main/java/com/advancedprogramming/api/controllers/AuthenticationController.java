@@ -19,7 +19,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -46,28 +50,28 @@ public class AuthenticationController {
         if (request.profilePicture() == null) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(authService.register(request));
+        return ResponseEntity.ok(authService.register(request, false));
     }
 
     @PostMapping("/register/tutor")
     @Operation(summary = "Register a new tutor")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Tutor registered successfully", content = @Content(mediaType = "application/json")),
-            @ApiResponse(responseCode = "400", description = "Bad request")
+        @ApiResponse(responseCode = "200", description = "Tutor registered successfully", content = @Content(mediaType = "application/json")),
+        @ApiResponse(responseCode = "400", description = "Bad request")
     })
     public ResponseEntity<AuthenticationResponse> tutorRegistration(
-            @Valid @RequestBody RegisterRequest bodyRequest,
-            HttpServletRequest headerRequest
+        @Valid @RequestBody RegisterRequest bodyRequest,
+        HttpServletRequest headerRequest
     ) throws IOException {
         {
             User user = userService.getUserByFromRequest(headerRequest);
-            if (user == null || !user.getRole().equals(RoleEnum.ADMIN)) {
+            if (user == null || !RoleEnum.ADMIN.equals(user.getRole())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
             if (bodyRequest.profilePicture() == null) {
                 return ResponseEntity.badRequest().build();
             }
-            return ResponseEntity.ok(authService.tutorRegistration(bodyRequest));
+            return ResponseEntity.ok(authService.register(bodyRequest, true));
         }
     }
 

@@ -10,7 +10,6 @@ import Register from "./pages/Register/Register";
 import api from "./utils/api";
 import Demandes from "./pages/Demande/Demandes.jsx";
 import InternshipSettings from "./pages/InternshipSettings/InternshipSettings";
-import TutorRegister from "./pages/Register/TutorRegister.jsx";
 import { ToastContainer } from "react-toastify";
 
 function App() {
@@ -54,10 +53,10 @@ function App() {
           }
         />
         <Route
-          path="/creation-tuteur"
+          path="/tutor-register"
           element={
             <RestrictedRoute roles={["ADMIN"]}>
-              <TutorRegister />
+              <Register />
             </RestrictedRoute>
           }
         />

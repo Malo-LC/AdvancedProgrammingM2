@@ -60,7 +60,7 @@ class UserService {
         firstname: formatFirstName(decodedToken.firstName),
         lastname: formatLastName(decodedToken.lastName),
         email: decodedToken.email,
-        phone: decodedToken.phone,
+        phoneNumber: decodedToken.phoneNumber,
         address: decodedToken.address,
         promotionYear: decodedToken.promotionYear,
         major: decodedToken.major,
