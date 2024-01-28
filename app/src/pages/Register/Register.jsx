@@ -21,7 +21,7 @@ function Register() {
     firstname: Yup.string().required(),
     lastname: Yup.string().required(),
     profilePicture: Yup.mixed().required(),
-    phoneNumber: !isTutorRegister ? Yup.string().required() : Yup.string().notRequired(),
+    phoneNumber: !isTutorRegister ? Yup.string().min(4).max(19).required() : Yup.string().notRequired(),
     promotionYear: !isTutorRegister ? Yup.number().min(2000).max(2100).required() : Yup.number().notRequired(),
     email: Yup.string().email("Invalid email format").required(),
     password: Yup.string().required().min(4, "Password length should be at least 4 characters"),
