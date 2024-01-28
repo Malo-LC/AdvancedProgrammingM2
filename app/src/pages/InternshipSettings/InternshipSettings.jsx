@@ -24,8 +24,7 @@ const InternshipSettings = () => {
         setLoading(false);
         setSelectedInternship(res[0].id);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         toast.error("Erreur lors du chargement des stages");
       });
   }, []);

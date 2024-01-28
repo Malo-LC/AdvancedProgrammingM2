@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-    private LocalDate birthDate;
+    private String phoneNumber;
     private Integer promotionYear;
 
     @OneToMany(mappedBy = "user")
@@ -74,9 +73,10 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -53,7 +53,7 @@ public class AuthenticationService {
             .firstName(request.firstName())
             .lastName(request.lastName())
             .promotionYear(request.promotionYear())
-            .birthDate(request.birthDate())
+            .phoneNumber(request.phoneNumber())
             .role(isTutorRegistration ? RoleEnum.TUTOR : RoleEnum.STUDENT)
             .filedb(profilePicture)
             .email(request.email())
@@ -141,8 +141,8 @@ public class AuthenticationService {
             "firstName", user.getFirstName(),
             "lastName", user.getLastName()
         ));
-        if (user.getBirthDate() != null) {
-            extraClaims.put("birthDate", user.getBirthDate());
+        if (user.getPhoneNumber() != null) {
+            extraClaims.put("birthDate", user.getPhoneNumber());
         }
         if (user.getPromotionYear() != null) {
             extraClaims.put("promotionYear", user.getPromotionYear());

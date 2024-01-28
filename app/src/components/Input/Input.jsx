@@ -1,13 +1,12 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import EyeOff from "../../assets/images/icons/EyeOff.png";
 import NoAvatar from "../../assets/images/no-avatar.png";
 
 //styles
 import "./input.css";
-import { Plus } from "react-feather";
+import { Eye, EyeOff, Plus } from "react-feather";
 
-export function Input({ type, name, placeholder, iconLeft, errors, register }) {
+export function Input({ type, name, placeholder, IconLeft, errors, register }) {
   const [inputType, setInputType] = useState(type);
   const [picture, setPicture] = useState(null);
 
@@ -26,8 +25,9 @@ export function Input({ type, name, placeholder, iconLeft, errors, register }) {
             type="file"
             accept="image/*"
             name={name}
-            {...register(name)}
-            onChange={(e) => setPicture(URL.createObjectURL(e.target.files[0]))}
+            {...register(name, {
+              onChange: (e) => setPicture(URL.createObjectURL(e.target.files[0])),
+            })}
           />
           <Plus className="absolute bottom-0 right-0 z-30 bg-white rounded-full overflow-hidden" />
         </label>
@@ -38,11 +38,11 @@ export function Input({ type, name, placeholder, iconLeft, errors, register }) {
   return (
     <div className="flex flex-col">
       <div className="relative">
-        <img src={iconLeft} alt={iconLeft} className="input-icon-left" />
+        <div className="input-icon-left">{IconLeft}</div>
         <input placeholder={placeholder} type={inputType} className="input" name={name} {...register(name)} />
         {type === "password" && (
-          <button type="button" onClick={togglePasswordVisibility}>
-            <img src={EyeOff} alt="see password" className="input-icon-right" />
+          <button type="button" onClick={togglePasswordVisibility} tabIndex={-1}>
+            {inputType === "password" ? <EyeOff className="input-icon-right" /> : <Eye className="input-icon-right" />}
           </button>
         )}
       </div>
@@ -55,7 +55,7 @@ Input.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  iconLeft: PropTypes.string,
+  IconLeft: PropTypes.element,
   errors: PropTypes.object,
   register: PropTypes.func,
   picture: PropTypes.string,

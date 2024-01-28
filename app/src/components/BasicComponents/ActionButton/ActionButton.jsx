@@ -5,12 +5,12 @@ import "./actionbutton.css";
 
 function ActionButton({ status }) {
   const handleButtonClick = () => {
-    console.log("Button clicked");
     // Additional logic for the button click
   };
   return (
     <div>
       <button
+        type="button"
         onClick={(e) => {
           e.stopPropagation();
           handleButtonClick();
