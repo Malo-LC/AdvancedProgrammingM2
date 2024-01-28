@@ -14,34 +14,11 @@ import logo_efrei_white from "../../assets/images/logo_efrei_white.png";
 import { NavTab } from "../BasicComponents/NavTab/NavTab.jsx";
 import { ProfileNav } from "../ProfileNav/ProfileNav";
 
-// import BusinessIcon from "@mui/icons-material/Business";
-// import DescriptionIcon from "@mui/icons-material/Description";
-// import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-
 import { menuItemsAdmin, menuItemsStudent, menuItemsTuteur } from "../../constants/menuItems";
 import userService from "../../services/userService.js";
-import api from "../../utils/api.js";
 
 //style
 import "./navbar.css";
-
-//will be exported later probleme using MUI icon in JS file
-// const menuItemsStudent = [
-//   { label: "Faire ma demande", url: "/demandes", icon: <SupervisorAccountIcon /> },
-//   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-//   { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-// ];
-
-// const menuItemsAdmin = [
-//   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-//   { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
-//   { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-// ];
-// const menuItemsTuteur = [
-//   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
-//   { label: "Creation compte tuteur", url: "/demandes", icon: <SupervisorAccountIcon /> },
-//   { label: "Stages", url: "/stages", icon: <BusinessIcon /> },
-// ];
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -84,8 +61,8 @@ export default function Navbar() {
             <Box sx={{ width: "100%", maxWidth: 350, bgcolor: "background.paper" }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
               <nav>
                 <List disablePadding>
-                  {menuItems.map((item, index) => (
-                    <ListItem key={index}>
+                  {menuItems.map((item) => (
+                    <ListItem key={item.label}>
                       <ListItemButton onClick={() => navigate(item.url)}>
                         <ListItemIcon>{item.icon}</ListItemIcon>
                         <ListItemText primary={item.label} />
@@ -97,7 +74,7 @@ export default function Navbar() {
             </Box>
           </Drawer>
           <div onClick={() => navigate("/home")}>
-            <img src={logo_efrei_white} className="h-[30px]" />
+            <img src={logo_efrei_white} className="h-[30px]" alt="logo" />
           </div>
           {user && (
             <div className="profile">
@@ -109,12 +86,12 @@ export default function Navbar() {
         <>
           <div className="flex flex-row space-x-6 items-center">
             <div>
-              <img src={logo_efrei_white} className="h-[40px] cursor-pointer" onClick={() => navigate("/home")} />
+              <img alt="logo" src={logo_efrei_white} className="h-[40px] cursor-pointer" onClick={() => navigate("/home")} />
             </div>
           </div>
           <div className="flex flex-row space-x-3">
             {menuItems.map((item, index) => (
-              <React.Fragment key={index}>
+              <React.Fragment key={item.label}>
                 <NavTab name={item.label} url={item.url} />
                 {index < menuItems.length - 1 && <div className="tab-separator">|</div>}
               </React.Fragment>

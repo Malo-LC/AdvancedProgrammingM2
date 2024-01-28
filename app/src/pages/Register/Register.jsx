@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import api from "../../utils/api";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Input } from "../../components/Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -13,14 +13,16 @@ import logo_efrei from "../../assets/images/logo_efrei.png";
 import mail from "../../assets/images/icons/mail.png";
 import lock from "../../assets/images/icons/lock.png";
 import profile from "../../assets/images/icons/profile.png";
-import EyeOff from "../../assets/images/icons/EyeOff.png";
+import { toast } from "react-toastify";
 
 function Register() {
   const navigate = useNavigate();
+  const isTutorRegister = useLocation().pathname === "/tutor-register";
 
   const formSchema = Yup.object().shape({
     firstname: Yup.string().required(),
     lastname: Yup.string().required(),
+    profilePicture: Yup.mixed().required(),
     email: Yup.string().email("Invalid email format").required(),
     password: Yup.string().required().min(4, "Password length should be at least 4 characters"),
     cpassword: Yup.string()
@@ -49,6 +51,7 @@ function Register() {
 
   const onSubmit = async (data) => {
     const f = data.profilePicture[0];
+    if (!f) return toast.error("Please select a profile picture");
     const rawBody = await readFileAsync(f);
 
     const finalData = {
@@ -60,48 +63,42 @@ function Register() {
     };
 
     api
-      .post("auth/register", finalData)
+      .post(isTutorRegister ? "auth/register/tutor" : "auth/register", finalData)
       .then((res) => {
         console.log(res);
         if (!res.access_token) {
           return;
         }
         api.setToken(res.access_token);
-        navigate("/home");
+        !isTutorRegister ? navigate("/home") : null;
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        toast.error("An error occured, please try with another email");
       });
   };
 
   return (
-    <div className="h-screen">
-      <div className="register-page">
+    <div className={isTutorRegister ? "h-[calc(100vh-50px)]" : "h-screen"}>
+      <div className={`register-page ${isTutorRegister ? "register-page-tutor" : null}`}>
         <div className="register-component">
           <img src={logo_efrei} alt="efrei_logo" className="logo" />
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
+            <Input placeholder="Profile picture" type="file" name="profilePicture" errors={errors} register={register} />
             <Input placeholder="Firstname" type="text" name="firstname" iconLeft={profile} errors={errors} register={register} />
             <Input placeholder="Lastname" type="text" name="lastname" iconLeft={profile} errors={errors} register={register} />
             <Input placeholder="Mail" type="text" name="email" iconLeft={mail} errors={errors} register={register} />
-            <Input placeholder="Profile picture" type="file" name="profilePicture" iconLeft={mail} errors={errors} register={register} />
-            <Input placeholder="Password" type="password" name="password" iconLeft={lock} iconRight={EyeOff} errors={errors} register={register} />
-            <Input
-              placeholder="Password Confirmation"
-              type="password"
-              name="cpassword"
-              iconLeft={lock}
-              iconRight={EyeOff}
-              errors={errors}
-              register={register}
-            />
+            <Input placeholder="Password" type="password" name="password" iconLeft={lock} errors={errors} register={register} />
+            <Input placeholder="Password Confirmation" type="password" name="cpassword" iconLeft={lock} errors={errors} register={register} />
             <div className="button-container">
               <input type="submit" value="Register" />
-              <div className="no-account">
-                <p>Already an account?</p>
-                <Link to="/" className="register-link">
-                  Login
-                </Link>
-              </div>
+              {!isTutorRegister && (
+                <div className="no-account">
+                  <p>Already an account?</p>
+                  <Link to="/" className="register-link">
+                    Login
+                  </Link>
+                </div>
+              )}
             </div>
           </form>
         </div>

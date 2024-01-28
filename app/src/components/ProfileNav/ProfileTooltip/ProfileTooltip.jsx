@@ -7,9 +7,9 @@ import Tooltip from "@mui/material/Tooltip";
 import React, { useEffect } from "react";
 import api from "../../../utils/api";
 import NoAvatar from "../../../assets/images/no-avatar.png";
-
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Power, User } from "react-feather";
 
 export function ProfileTooltip({ profilePicture }) {
   const navigate = useNavigate();
@@ -67,40 +67,12 @@ export function ProfileTooltip({ profilePicture }) {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={() => navigate("/profile")} style={{ height: "25px" }}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#163767"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-user mr-2 h-5"
-          >
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
+          <User className="feather feather-user mr-2 h-5" color="#163767" />
           <p className="text-[#163767]">Profile</p>
         </MenuItem>
         <Divider />
         <MenuItem onClick={api.disconnect} style={{ height: "25px" }}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#163767"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-user mr-2 h-5"
-          >
-            <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
-            <line x1="12" y1="2" x2="12" y2="12"></line>
-          </svg>
+          <Power className="feather feather-power mr-2 h-5" color="#163767" />
           <p className="text-[#163767]">Déconnexion</p>
         </MenuItem>
       </Menu>
