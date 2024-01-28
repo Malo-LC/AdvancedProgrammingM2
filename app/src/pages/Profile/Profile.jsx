@@ -24,7 +24,7 @@ function Profile() {
 
   const userInfo = [
     { name: "Email", info: user.email },
-    { name: "Téléphone", info: user.phone },
+    { name: "Téléphone", info: user.phoneNumber },
     { name: "Adresse", info: user.address },
     { name: "Promotion", info: user.promotionYear },
     { name: "Majeur", info: user.major },
@@ -38,7 +38,7 @@ function Profile() {
       </motion.div>
       <div className={`${isMobile ? "info-container-mobile" : "info-container-desktop"}`}>
         <div className="user-info-pic">
-          <img className="rounded-full border-2 border-gray-300 h-[130px] w-[130px] mb-4" src={image || NoAvatar} />
+          <img alt="avatar" className="rounded-full border-2 border-gray-300 h-[130px] w-[130px] mb-4" src={image || NoAvatar} />
           <div className="flex flex-col text-center">
             <div className="text-lg font-semibold">{user.firstname}</div>
             <div className="text-lg font-semibold">{user.lastname}</div>

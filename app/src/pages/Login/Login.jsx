@@ -54,8 +54,8 @@ function Login() {
         <div className="login-component">
           <img src={logo_efrei} alt="efrei_logo" className="logo" />
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Input placeholder="Mail" type="text" name="email" iconLeft={<Mail />} errors={errors} register={register} />
-            <Input placeholder="Password" type="password" name="password" iconLeft={<Lock />} errors={errors} register={register} />
+            <Input placeholder="Mail" type="text" name="email" IconLeft={<Mail />} errors={errors} register={register} />
+            <Input placeholder="Password" type="password" name="password" IconLeft={<Lock />} errors={errors} register={register} />
             <div className="button-container">
               <input type="submit" value="Login" />
               <div className="no-account">

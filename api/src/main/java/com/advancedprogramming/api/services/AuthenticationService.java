@@ -142,7 +142,7 @@ public class AuthenticationService {
             "lastName", user.getLastName()
         ));
         if (user.getPhoneNumber() != null) {
-            extraClaims.put("birthDate", user.getPhoneNumber());
+            extraClaims.put("phoneNumber", user.getPhoneNumber());
         }
         if (user.getPromotionYear() != null) {
             extraClaims.put("promotionYear", user.getPromotionYear());
