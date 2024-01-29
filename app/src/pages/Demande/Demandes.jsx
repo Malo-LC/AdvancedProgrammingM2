@@ -1,15 +1,12 @@
-import React from 'react';
+import React from "react";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { motion, useAnimation } from "framer-motion";
 import userService from "../../services/userService";
 import api from "../../utils/api";
-
-import DemandeStageElement from '../../components/DemandeStageElement/DemandeStageElement';
-
+import DemandeStageElement from "../../components/DemandeStageElement/DemandeStageElement";
 
 function Demandes() {
-
   const controls = useAnimation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
@@ -34,10 +31,10 @@ function Demandes() {
         <p className="document-title">Mes Demandes de Stage</p>
       </motion.div>
       <div className="table">
-        <DemandeStageElement userRole={userRole} data={requests} />
+        <DemandeStageElement userRole={userRole} requests={requests} />
       </div>
     </div>
-  )
+  );
 }
 
 export default Demandes;

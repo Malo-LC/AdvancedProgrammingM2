@@ -9,6 +9,7 @@ import { useMediaQuery } from "react-responsive";
 import "./profile.css";
 import { Edit3, Plus } from "react-feather";
 import { toast } from "react-toastify";
+import { readFileAsync } from "../../utils/authDataService.js";
 
 function Profile() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -31,17 +32,7 @@ function Profile() {
     { name: "Promotion", info: user.promotionYear },
     { name: "Classe", info: user.class },
   ];
-  function readFileAsync(file) {
-    if (!file) {
-      return null;
-    }
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
+
   const updateProfilePicture = async (e) => {
     const f = e.target.files[0];
     const rawBody = await readFileAsync(f);

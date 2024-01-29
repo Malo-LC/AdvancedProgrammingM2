@@ -3,35 +3,19 @@ import api from "../../utils/api";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Input } from "../../components/Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-
-//styles
-import "./register.css";
-
-//assets
 import logo_efrei from "../../assets/images/logo_efrei.png";
 import { toast } from "react-toastify";
 import { Calendar, Lock, Mail, Phone, User } from "react-feather";
 import { useEffect, useState } from "react";
+import { readFileAsync, registerSchema } from "../../utils/authDataService";
+
+//styles
+import "./register.css";
 
 function Register() {
   const navigate = useNavigate();
   const [promotions, setPromotions] = useState([]);
   const isTutorRegister = useLocation().pathname === "/tutor-register";
-
-  const formSchema = Yup.object().shape({
-    firstname: Yup.string().required(),
-    lastname: Yup.string().required(),
-    profilePicture: Yup.mixed().required(),
-    phoneNumber: !isTutorRegister ? Yup.string().min(4).max(19).required() : Yup.string().notRequired(),
-    promotionId: !isTutorRegister ? Yup.number().required().nonNullable() : Yup.number().notRequired(),
-    email: Yup.string().email("Invalid email format").required(),
-    password: Yup.string().required().min(4, "Password length should be at least 4 characters"),
-    cpassword: Yup.string()
-      .required()
-      .min(4, "Password length should be at least 4 characters")
-      .oneOf([Yup.ref("password")], "Passwords do not match"),
-  });
 
   const {
     register,
@@ -40,20 +24,8 @@ function Register() {
     formState: { errors },
   } = useForm({
     mode: "onTouched",
-    resolver: yupResolver(formSchema),
+    resolver: yupResolver(registerSchema(isTutorRegister)),
   });
-
-  function readFileAsync(file) {
-    if (!file) {
-      return null;
-    }
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
 
   const onSubmit = async (data) => {
     const f = data.profilePicture[0];

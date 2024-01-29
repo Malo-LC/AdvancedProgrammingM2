@@ -5,12 +5,10 @@ import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar";
 import DocElement from "../../components/DocElement/DocElement";
 import userService from "../../services/userService";
 import api from "../../utils/api";
+import { docColumnNamesStudent, docColumnNamesTutor } from "../../constants/tableItems";
 
 //style
 import "./documents.css";
-
-const docColumnNamesTutor = ["Nom du document", "Deadline", "Nom de l'élève", "Validation", "Status"];
-const docColumnNamesStudent = ["Nom du document", "Deadline", "Intitulé du stage", "Validation", "Status", "Action"];
 
 function Documents() {
   const controls = useAnimation();

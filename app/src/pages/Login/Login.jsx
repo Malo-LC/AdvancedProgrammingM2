@@ -3,23 +3,15 @@ import api from "../../utils/api";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../components/Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import logo_efrei from "../../assets/images/logo_efrei.png";
+import { Lock, Mail } from "react-feather";
+import { loginSchema } from "../../utils/authDataService";
 //style
 import "./login.css";
 
-//assets
-import logo_efrei from "../../assets/images/logo_efrei.png";
-import { Lock, Mail } from "react-feather";
-
 function Login() {
   const navigate = useNavigate();
-
-  const formSchema = Yup.object().shape({
-    email: Yup.string().required(),
-    password: Yup.string().required(),
-  });
 
   const {
     register,
@@ -27,7 +19,7 @@ function Login() {
     formState: { errors },
   } = useForm({
     mode: "onTouched",
-    resolver: yupResolver(formSchema),
+    resolver: yupResolver(loginSchema),
   });
 
   const onSubmit = (data) => {
@@ -38,6 +30,9 @@ function Login() {
     api
       .post("auth/authenticate", finalData)
       .then((res) => {
+        if (!res.access_token) {
+          return toast.error("Invalid credentials !");
+        }
         api.setToken(res.access_token);
         navigate("/home");
       })
