@@ -24,6 +24,9 @@ function DemandeStageElement({ userRole, requests }) {
   } else if (userRole === "TUTOR") {
     requestColumn = requestColumnNamesTutor;
     requestKey = requestKeyTutor;
+  } else {
+    requestColumn = requestColumnNamesStudent;
+    requestKey = requestKeyStudent;
   }
 
   // Convert the data to the format of the table

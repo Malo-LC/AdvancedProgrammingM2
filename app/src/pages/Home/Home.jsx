@@ -35,12 +35,12 @@ function Home() {
           </motion.div>
         </motion.div>
         <motion.div>
-          <img src={homepage_img} className="h-[300px] md:h-[400px]" />
+          <img alt="home" src={homepage_img} className="h-[300px] md:h-[400px]" />
         </motion.div>
       </motion.div>
 
       <div className="absolute bottom-0 w-screen">
-        <img src={footer} className="w-full" />
+        <img alt="footer" src={footer} className="w-full" />
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import Register from "./pages/Register/Register";
 import api from "./utils/api";
 import Demandes from "./pages/Demande/Demandes.jsx";
 import InternshipSettings from "./pages/InternshipSettings/InternshipSettings";
+import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
 function App() {
