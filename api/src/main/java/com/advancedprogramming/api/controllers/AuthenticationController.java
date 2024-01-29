@@ -4,6 +4,7 @@ import com.advancedprogramming.api.config.LogoutService;
 import com.advancedprogramming.api.controllers.beans.AuthenticationRequest;
 import com.advancedprogramming.api.controllers.beans.AuthenticationResponse;
 import com.advancedprogramming.api.controllers.beans.RegisterRequest;
+import com.advancedprogramming.api.models.Promotion;
 import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.models.bean.RoleEnum;
 import com.advancedprogramming.api.services.AuthenticationService;
@@ -20,12 +21,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -63,16 +66,20 @@ public class AuthenticationController {
         @Valid @RequestBody RegisterRequest bodyRequest,
         HttpServletRequest headerRequest
     ) throws IOException {
-        {
-            User user = userService.getUserByFromRequest(headerRequest);
-            if (user == null || !RoleEnum.ADMIN.equals(user.getRole())) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-            }
-            if (bodyRequest.profilePicture() == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            return ResponseEntity.ok(authService.register(bodyRequest, true));
+        User user = userService.getUserByFromRequest(headerRequest);
+        if (user == null || !RoleEnum.ADMIN.equals(user.getRole())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
+        if (bodyRequest.profilePicture() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(authService.register(bodyRequest, true));
+    }
+
+    @GetMapping("/promotions")
+    @Operation(summary = "Get a list of available promotions")
+    public ResponseEntity<List<Promotion>> getPromotions() {
+        return ResponseEntity.ok(authService.getPromotions());
     }
 
     @Operation(summary = "Authenticate a user")

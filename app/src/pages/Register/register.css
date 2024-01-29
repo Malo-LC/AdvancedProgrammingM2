@@ -19,7 +19,7 @@
 .input {
   @apply my-3 px-10;
   @apply w-[300px] h-[30px] sm:w-[400px] sm:h-[40px] md:w-[400px] md:h-[40px] lg:w-[400px] lg:h-[40px];
-  @apply border border-gray-500 rounded-lg focus:outline-none;
+  @apply border border-gray-500 rounded-lg focus:outline-none bg-white;
 }
 
 .input-icon-left {

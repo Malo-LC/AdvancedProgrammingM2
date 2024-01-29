@@ -1,13 +1,12 @@
 package com.advancedprogramming.api.models;
 
-import com.advancedprogramming.api.models.bean.YearEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +28,6 @@ public class Internship {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Enumerated(EnumType.STRING)
-    private YearEnum year;
-    private Integer promotionYear;
     private String title;
     private Boolean isClosed = false;
     private LocalDate EndDate;
@@ -52,13 +48,9 @@ public class Internship {
         EndDate = endDate;
     }
 
-    public void setPromotionYear(Integer promotionYear) {
-        this.promotionYear = promotionYear;
-    }
-
-    public void setYear(YearEnum year) {
-        this.year = year;
-    }
+    @ManyToOne
+    @JoinColumn(name = "promotion_id")
+    private Promotion promotion;
 
     @OneToMany(mappedBy = "internship")
     @JsonIgnore

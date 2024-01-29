@@ -144,7 +144,7 @@ const InternshipSettings = () => {
         >
           {internships.map((internship) => (
             <option className="border-none bg-none text-base text-[#163767]" key={internship.id} value={internship.id}>
-              {internship.year}
+              {internship.promotion.promotionClass}
             </option>
           ))}
         </select>
@@ -164,7 +164,7 @@ const InternshipSettings = () => {
                   type="date"
                   className="bg-white p-2 border border-slate-300 rounded-lg"
                   value={internshipSettings.endDate || ""}
-                  onBlur={(e) => handleChangeSettings(e, "endDate")}
+                  onChange={(e) => handleChangeSettings(e, "endDate")}
                 />
               </div>
               <div className="parameters-element">

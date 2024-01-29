@@ -12,9 +12,11 @@ import "./register.css";
 import logo_efrei from "../../assets/images/logo_efrei.png";
 import { toast } from "react-toastify";
 import { Calendar, Lock, Mail, Phone, User } from "react-feather";
+import { useEffect, useState } from "react";
 
 function Register() {
   const navigate = useNavigate();
+  const [promotions, setPromotions] = useState([]);
   const isTutorRegister = useLocation().pathname === "/tutor-register";
 
   const formSchema = Yup.object().shape({
@@ -22,7 +24,7 @@ function Register() {
     lastname: Yup.string().required(),
     profilePicture: Yup.mixed().required(),
     phoneNumber: !isTutorRegister ? Yup.string().min(4).max(19).required() : Yup.string().notRequired(),
-    promotionYear: !isTutorRegister ? Yup.number().min(2000).max(2100).required() : Yup.number().notRequired(),
+    promotionId: !isTutorRegister ? Yup.number().required().nonNullable() : Yup.number().notRequired(),
     email: Yup.string().email("Invalid email format").required(),
     password: Yup.string().required().min(4, "Password length should be at least 4 characters"),
     cpassword: Yup.string()
@@ -62,7 +64,7 @@ function Register() {
       password: data.password?.trim(),
       profilePicture: { base64: rawBody, name: f.name, type: f.type },
       phoneNumber: data.phoneNumber,
-      promotionYear: data.promotionYear,
+      promotionId: data.promotionId,
     };
 
     api
@@ -84,6 +86,14 @@ function Register() {
       });
   };
 
+  useEffect(() => {
+    if (!isTutorRegister) {
+      api.get("auth/promotions").then((res) => {
+        setPromotions(res);
+      });
+    }
+  }, []);
+
   return (
     <div className={isTutorRegister ? "h-[calc(100vh-50px)]" : "h-screen"}>
       <div className={`register-page ${isTutorRegister ? "register-page-tutor" : null}`}>
@@ -98,7 +108,23 @@ function Register() {
               <Input placeholder="Phone" type="text" name="phoneNumber" IconLeft={<Phone />} errors={errors} register={register} />
             )}
             {!isTutorRegister && (
-              <Input placeholder="Promotion year" type="number" name="promotionYear" IconLeft={<Calendar />} errors={errors} register={register} />
+              <div className="flex flex-col">
+                <div className="relative">
+                  <div className="input-icon-left">
+                    <Calendar />
+                  </div>
+                  <select {...register("promotionId")} defaultValue="" className="input">
+                    <option disabled value="">
+                      Select your promotion
+                    </option>
+                    {promotions.map((promotion) => (
+                      <option key={promotion.id} value={promotion.id}>
+                        {promotion.promotionClass}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             )}
             <Input placeholder="Password" type="password" name="password" IconLeft={<Lock />} errors={errors} register={register} />
             <Input placeholder="Password Confirmation" type="password" name="cpassword" IconLeft={<Lock />} errors={errors} register={register} />

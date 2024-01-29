@@ -25,9 +25,7 @@ function Profile() {
   const userInfo = [
     { name: "Email", info: user.email },
     { name: "Téléphone", info: user.phoneNumber },
-    { name: "Adresse", info: user.address },
     { name: "Promotion", info: user.promotionYear },
-    { name: "Majeur", info: user.major },
     { name: "Classe", info: user.class },
   ];
 

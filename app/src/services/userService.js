@@ -61,10 +61,8 @@ class UserService {
         lastname: formatLastName(decodedToken.lastName),
         email: decodedToken.email,
         phoneNumber: decodedToken.phoneNumber,
-        address: decodedToken.address,
         promotionYear: decodedToken.promotionYear,
-        major: decodedToken.major,
-        class: decodedToken.class,
+        class: decodedToken.promotionClass,
       };
       return userProfile;
     }
