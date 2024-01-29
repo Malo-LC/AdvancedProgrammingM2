@@ -39,7 +39,7 @@ public class InternshipSettingsController {
         HttpServletRequest request
     ) {
         User user = userService.getUserByFromRequest(request);
-        if (user == null || !user.getRole().equals(RoleEnum.ADMIN)) {
+        if (user == null || !RoleEnum.ADMIN.equals(user.getRole())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
@@ -56,7 +56,7 @@ public class InternshipSettingsController {
         HttpServletRequest request
     ) {
         User user = userService.getUserByFromRequest(request);
-        if (user == null || !user.getRole().equals(RoleEnum.ADMIN)) {
+        if (user == null || !RoleEnum.ADMIN.equals(user.getRole())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
@@ -71,7 +71,7 @@ public class InternshipSettingsController {
         @RequestBody InternshipSettings internshipSettings
     ) {
         User user = userService.getUserByFromRequest(request);
-        if (user == null || !user.getRole().equals(RoleEnum.ADMIN)) {
+        if (user == null || !RoleEnum.ADMIN.equals(user.getRole())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 

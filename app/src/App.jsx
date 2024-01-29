@@ -77,7 +77,7 @@ function App() {
           }
         />
         <Route
-          path="/demandes/validation"
+          path="/demandes"
           element={
             <RestrictedRoute roles={["ADMIN", "TUTOR", "STUDENT"]}>
               <Demandes />
