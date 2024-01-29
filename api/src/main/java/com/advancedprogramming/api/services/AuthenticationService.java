@@ -25,6 +25,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -162,5 +163,9 @@ public class AuthenticationService {
             extraClaims.put("profilePicture", profilePictureUri);
         }
         return extraClaims;
+    }
+
+    public List<Promotion> getPromotions() {
+        return promotionRepository.findAll();
     }
 }
