@@ -44,6 +44,9 @@ function Register() {
   });
 
   function readFileAsync(file) {
+    if (!file) {
+      return null;
+    }
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
@@ -54,7 +57,6 @@ function Register() {
 
   const onSubmit = async (data) => {
     const f = data.profilePicture[0];
-    if (!f) return toast.error("Please select a profile picture");
     const rawBody = await readFileAsync(f);
 
     const finalData = {
@@ -62,7 +64,7 @@ function Register() {
       lastName: data.lastname?.trim(),
       email: data.email?.trim(),
       password: data.password?.trim(),
-      profilePicture: { base64: rawBody, name: f.name, type: f.type },
+      profilePicture: rawBody ? { base64: rawBody, name: f.name, type: f.type } : null,
       phoneNumber: data.phoneNumber,
       promotionId: data.promotionId,
     };

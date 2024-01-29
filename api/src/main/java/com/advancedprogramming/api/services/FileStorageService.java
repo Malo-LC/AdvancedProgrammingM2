@@ -19,7 +19,7 @@ public class FileStorageService {
 
     public Filedb store(MultipartFile file) throws IOException {
         if (file == null) {
-            throw new IOException("File is null");
+            return null;
         }
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         Filedb FileDB = new Filedb(fileName, file.getContentType(), file.getBytes());

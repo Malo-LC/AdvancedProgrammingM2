@@ -7,13 +7,17 @@ import { useMediaQuery } from "react-responsive";
 
 //style
 import "./profile.css";
+import { Plus } from "react-feather";
+import { toast } from "react-toastify";
 
 function Profile() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const user = userService.getUserProfile();
   const [image, setImage] = useState(null);
+  const [picture, setPicture] = useState(null);
 
   const fetchUserInfo = async () => {
+    if (!user.profilePictureUri) return;
     const profilePic = await api.getPfp(user.profilePictureUri);
     setImage(profilePic);
   };
@@ -28,6 +32,30 @@ function Profile() {
     { name: "Promotion", info: user.promotionYear },
     { name: "Classe", info: user.class },
   ];
+  function readFileAsync(file) {
+    if (!file) {
+      return null;
+    }
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+  const updateProfilePicture = async (e) => {
+    const f = e.target.files[0];
+    const rawBody = await readFileAsync(f);
+    const profilePicture = rawBody ? { base64: rawBody, name: f.name, type: f.type } : null;
+    const token = await api.post("user/updateProfilePicture", profilePicture);
+    if (token) {
+      api.setToken(token.access_token);
+    }
+    const user = userService.getUserProfile();
+    const profilePic = await api.getPfp(user.profilePictureUri);
+    setImage(profilePic);
+    toast.success("Profile picture updated !");
+  };
 
   return (
     <div className="h-screen items-center justify-center space-y-[50px]">
@@ -36,7 +64,18 @@ function Profile() {
       </motion.div>
       <div className={`${isMobile ? "info-container-mobile" : "info-container-desktop"}`}>
         <div className="user-info-pic">
-          <img alt="avatar" className="rounded-full border-2 border-gray-300 h-[130px] w-[130px] mb-4" src={image || NoAvatar} />
+          {image ? (
+            <img alt="avatar" className="rounded-full border-2 border-gray-300 h-[130px] w-[130px] mb-4" src={image} />
+          ) : (
+            <div className="flex flex-col items-center">
+              <label htmlFor="file" className="block relative cursor-pointer">
+                <img src={picture ? picture : NoAvatar} alt="avatar" className="h-[130px] w-[130px] rounded-full overflow-hidden" />
+                <input id="file" className="hidden" type="file" accept="image/*" onChange={(e) => updateProfilePicture(e)} />
+                <Plus size={30} className="absolute bottom-0 right-0 z-30 border-2 border-black bg-white rounded-full overflow-hidden" />
+              </label>
+            </div>
+          )}
+
           <div className="flex flex-col text-center">
             <div className="text-lg font-semibold">{user.firstname}</div>
             <div className="text-lg font-semibold">{user.lastname}</div>

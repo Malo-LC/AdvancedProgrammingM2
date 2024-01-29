@@ -11,11 +11,6 @@ class CRUDApi {
     localStorage.setItem("token", token);
   }
 
-  disconnect() {
-    localStorage.removeItem("token");
-    window.location.reload();
-  }
-
   async post(resource, data) {
     const response = await fetch(`${this.baseUrl}/${resource}`, {
       method: "POST",
@@ -25,8 +20,16 @@ class CRUDApi {
       },
       body: JSON.stringify(data),
     });
+    if (response.headers.get("content-type")?.includes("application/json")) {
+      return response.json();
+    }
+    return response.text();
+  }
 
-    return response.json();
+  async disconnect() {
+    await this.post("auth/logout");
+    localStorage.removeItem("token");
+    window.location.reload();
   }
 
   async postFile(resource, data) {

@@ -3,6 +3,7 @@ package com.advancedprogramming.api.services;
 import com.advancedprogramming.api.config.JwtService;
 import com.advancedprogramming.api.controllers.beans.AuthenticationRequest;
 import com.advancedprogramming.api.controllers.beans.AuthenticationResponse;
+import com.advancedprogramming.api.controllers.beans.CustomFile;
 import com.advancedprogramming.api.controllers.beans.RegisterRequest;
 import com.advancedprogramming.api.models.Filedb;
 import com.advancedprogramming.api.models.Promotion;
@@ -45,11 +46,14 @@ public class AuthenticationService {
             throw new RuntimeException("Email already registered");
         }
 
-        MultipartFile profilePictureMultipart = Base64ToMultipartFileConverter.convert(
-            request.profilePicture().base64(),
-            request.profilePicture().type(),
-            request.profilePicture().name()
-        );
+        MultipartFile profilePictureMultipart = null;
+        if (request.profilePicture() != null) {
+            profilePictureMultipart = Base64ToMultipartFileConverter.convert(
+                request.profilePicture().base64(),
+                request.profilePicture().type(),
+                request.profilePicture().name()
+            );
+        }
 
         Filedb profilePicture = fileStorageService.store(profilePictureMultipart);
         Promotion promotion = null;
@@ -140,11 +144,6 @@ public class AuthenticationService {
     }
 
     private Map<String, Object> getExtraClaims(User user) {
-        String profilePictureUri = ServletUriComponentsBuilder
-            .fromCurrentContextPath()
-            .path("/files/")
-            .path(user.getFiledb().getId())
-            .toUriString();
         Map<String, Object> extraClaims = new HashMap<>(Map.of(
             "role", user.getRole(),
             "email", user.getEmail(),
@@ -155,11 +154,16 @@ public class AuthenticationService {
             extraClaims.put("phoneNumber", user.getPhoneNumber());
         }
         Promotion promotion = user.getPromotion();
-        if (promotion!= null) {
+        if (promotion != null) {
             extraClaims.put("promotionYear", promotion.getPromotionYear());
             extraClaims.put("promotionClass", promotion.getPromotionClass());
         }
         if (user.getFiledb() != null) {
+            String profilePictureUri = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/files/")
+                .path(user.getFiledb().getId())
+                .toUriString();
             extraClaims.put("profilePicture", profilePictureUri);
         }
         return extraClaims;
@@ -167,5 +171,23 @@ public class AuthenticationService {
 
     public List<Promotion> getPromotions() {
         return promotionRepository.findAll();
+    }
+
+    public AuthenticationResponse updateProfilePicture(CustomFile profilePicture, User user) throws IOException {
+        MultipartFile profilePictureMultipart = Base64ToMultipartFileConverter.convert(
+            profilePicture.base64(),
+            profilePicture.type(),
+            profilePicture.name()
+        );
+        Filedb profilePictureFile = fileStorageService.store(profilePictureMultipart);
+        user.setFiledb(profilePictureFile);
+        user = userRepository.save(user);
+        Map<String, Object> extraClaims = getExtraClaims(user);
+        String jwtToken = jwtService.generateToken(user, extraClaims);
+        saveUserToken(user, jwtToken);
+
+        return AuthenticationResponse.builder()
+            .accessToken(jwtToken)
+            .build();
     }
 }
