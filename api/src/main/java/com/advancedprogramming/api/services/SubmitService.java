@@ -13,6 +13,7 @@ import com.advancedprogramming.api.models.Submit;
 import com.advancedprogramming.api.models.SubmitRepository;
 import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.models.bean.RoleEnum;
+import com.advancedprogramming.api.models.bean.YearEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,7 @@ public class SubmitService {
             Map<Integer, User> getUserById = userService.getUserById();
             User tutorSchool = getUserById.get(studentInternship.getTutorSchoolUser().getId());
             User tutorCompany = getUserById.get(studentInternship.getTutorCompanyUser().getId());
+            YearEnum promotionClass = internship.getPromotion().getPromotionClass();
 
             return reports
                 .stream()
@@ -101,7 +103,7 @@ public class SubmitService {
                         submit != null ? submit.getId() : null,
                         user.getId(),
                         report.getId(),
-                        internship.getYear(),
+                        promotionClass,
                         report.getTitle(),
                         report.getDeadline(),
                         tutorSchoolSubmit,

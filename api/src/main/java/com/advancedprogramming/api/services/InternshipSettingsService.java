@@ -44,7 +44,7 @@ public class InternshipSettingsService {
 
         return new InternshipSettings(
             internship.getId(),
-            internship.getPromotionYear(),
+            internship.getPromotion().getPromotionYear(),
             internship.getTitle(),
             internship.getIsClosed(),
             internship.getEndDate(),
@@ -58,7 +58,6 @@ public class InternshipSettingsService {
             return false;
         }
         Internship internship = internshipOptional.get();
-        internship.setPromotionYear(internshipSettings.promotionYear());
         internship.setTitle(internshipSettings.title());
         internship.setIsClosed(internshipSettings.isClosed());
         internship.setEndDate(internshipSettings.endDate());
@@ -87,6 +86,7 @@ public class InternshipSettingsService {
             report.setDeadline(requiredReport.deadline());
             reportRepository.save(report);
         });
+        
         // delete reports that are not in the new list
         internshipReports.forEach(report -> {
             Optional<RequiredReport> requiredReportOptional = requiredReports
