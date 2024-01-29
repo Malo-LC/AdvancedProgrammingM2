@@ -1,22 +1,19 @@
 //style
-import search from "../../../assets/images/icons/search.png";
+import { Search } from "react-feather";
 import "./searchbar.css";
 
 import PropTypes from "prop-types";
 
 function SearchBar({ searchInput, setSearchInput }) {
-  const handleChange = (e) => {
-    const value = e.target.value;
-    e.preventDefault();
-    setSearchInput(value);
-  };
-
   return (
     <div className="searchbar">
-      <input className="input-searchbar" placeholder="Recherche de documents..." onChange={handleChange} value={searchInput} />
-      <button>
-        <img className="search-icon-right" src={search} />
-      </button>
+      <input
+        className="input-searchbar"
+        placeholder="Recherche de documents..."
+        onChange={(e) => setSearchInput(e.target.value)}
+        value={searchInput}
+      />
+      <Search className="search-icon-right" />
     </div>
   );
 }
