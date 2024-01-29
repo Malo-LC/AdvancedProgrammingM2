@@ -1,20 +1,15 @@
-import { useState } from "react";
-
 //style
 import search from "../../../assets/images/icons/search.png";
 import "./searchbar.css";
 
-function SearchBar() {
-  const [searchInput, setSearchInput] = useState("");
+import PropTypes from "prop-types";
 
+function SearchBar({ searchInput, setSearchInput }) {
   const handleChange = (e) => {
+    const value = e.target.value;
     e.preventDefault();
-    setSearchInput(e.target.value);
+    setSearchInput(value);
   };
-
-  //   if(searchInput.length > 0) {
-
-  //   }
 
   return (
     <div className="searchbar">
@@ -25,5 +20,10 @@ function SearchBar() {
     </div>
   );
 }
+
+SearchBar.propTypes = {
+  searchInput: PropTypes.string.isRequired,
+  setSearchInput: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

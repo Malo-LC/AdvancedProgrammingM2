@@ -7,7 +7,7 @@
 }
 
 .documents {
-    @apply flex flex-col;
+    @apply flex flex-col md:mx-10 xl:mx-12 2xl:mx-14;
 }
 
 .table-title {
@@ -16,7 +16,7 @@
 }
 
 .table {
-    @apply flex flex-col md:w-[850px] xl:w-[900px] 2xl:w-[950px];
+    @apply flex flex-col w-full;
 }
 
 .doc-container {

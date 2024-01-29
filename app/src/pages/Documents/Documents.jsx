@@ -1,10 +1,10 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar";
 import DocElement from "../../components/DocElement/DocElement";
 import userService from "../../services/userService";
 import api from "../../utils/api";
-import { useMediaQuery } from "react-responsive";
 
 //style
 import "./documents.css";
@@ -16,16 +16,29 @@ function Documents() {
   const controls = useAnimation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
-  // const [user, setUser] = useState(null);
   const userRole = userService.getRole();
   const [documents, setDocuments] = useState([]);
+
+  //search
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
     controls.start({ y: 0 });
     api.get("submit/all").then((res) => {
       setDocuments(res);
+      setFilteredItems(res);
     });
   }, []);
+
+  const handleInputChange = () => {
+    const filteredDocs = documents.filter((doc) => doc.reportName.toLowerCase().includes(searchInput.toLowerCase()));
+
+    const fileToReturn = searchInput.length === 0 ? documents : filteredDocs;
+    console.log(searchInput.length);
+
+    setFilteredItems(fileToReturn);
+  };
 
   let docColumn;
   if (userRole === "STUDENT") {
@@ -46,7 +59,7 @@ function Documents() {
       >
         <p className="document-title">Mes Documents</p>
         <div className="flex flex-row">
-          <Searchbar />
+          <Searchbar searchInput={searchInput} setSearchInput={setSearchInput} />
         </div>
       </motion.div>
       <div className="table">
@@ -61,27 +74,14 @@ function Documents() {
           </div>
         )}
         <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px]"}`}>
-          {documents.map((item, key) => (
-            <DocElement
-              key={key}
-              name={item.reportName}
-              internship_name={item.internshipName}
-              deadline={item.deadline}
-              student_name="test" //will be in the documents res later
-              validation="test"
-              status={item.isSubmitted}
-              userRole={userRole}
-            />
-          ))}
-          {/* <DocElement
-            name="Rapport de stage"
-            internship_name="Stage Sopra"
-            deadline="02/08/24"
-            student_name="Don Diego"
-            validation="test"
-            status="delivered"
-            userRole={userRole}
-          /> */}
+          {documents
+            .filter(
+              (doc) =>
+                doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
+            )
+            .map((item, key) => (
+              <DocElement key={key} internShip={item} student_name="test" userRole={userRole} />
+            ))}
         </div>
       </div>
     </div>
