@@ -50,9 +50,6 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
         @Valid @RequestBody RegisterRequest request
     ) throws IOException {
-        if (request.profilePicture() == null) {
-            return ResponseEntity.badRequest().build();
-        }
         return ResponseEntity.ok(authService.register(request, false));
     }
 
@@ -69,9 +66,6 @@ public class AuthenticationController {
         User user = userService.getUserByFromRequest(headerRequest);
         if (user == null || !RoleEnum.ADMIN.equals(user.getRole())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        if (bodyRequest.profilePicture() == null) {
-            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(authService.register(bodyRequest, true));
     }

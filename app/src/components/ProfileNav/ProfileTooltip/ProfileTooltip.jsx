@@ -24,6 +24,7 @@ export function ProfileTooltip({ profilePicture }) {
   };
 
   const getPfp = async () => {
+    if (!profilePicture) return;
     const res = await api.getPfp(profilePicture);
     setImage(res);
   };
@@ -71,7 +72,7 @@ export function ProfileTooltip({ profilePicture }) {
           <p className="text-[#163767]">Profile</p>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={api.disconnect} style={{ height: "25px" }}>
+        <MenuItem onClick={() => api.disconnect()} style={{ height: "25px" }}>
           <Power className="feather feather-power mr-2 h-5" color="#163767" />
           <p className="text-[#163767]">Déconnexion</p>
         </MenuItem>
