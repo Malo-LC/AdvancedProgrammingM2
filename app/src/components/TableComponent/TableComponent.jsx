@@ -4,43 +4,37 @@ import "./tablecomponent.css";
 
 TableComponent.propTypes = {
   columns: PropTypes.array.isRequired,
-  data: PropTypes.array.isRequired,
-  dataKeys: PropTypes.array.isRequired
+  internships: PropTypes.array.isRequired,
+  dataKeys: PropTypes.array.isRequired,
 };
 
-function TableComponent(props /* columns, data, dataKeys */) {
-  const dataKeys = props.dataKeys;
-
+function TableComponent({ columns, internships, dataKeys }) {
   return (
     <>
       <div className="flex flex-row items-center space-x-2 ">
         <table className="table-auto w-full text-center">
           <thead>
             <tr>
-              {props.columns.map((item, index) => {
-                return (
-                  <th key={index}>{item}</th>
-                )
+              {columns.map((item) => {
+                return <th key={item}>{item}</th>;
               })}
             </tr>
           </thead>
           <tbody>
-            {props.data.map((val, key) => {
+            {internships.map((internship) => {
               return (
-                <tr className={`requestelement`} key={key}>
-                  {dataKeys.map(dataKey => {
-                    return (
-                      <td key={dataKey}>{val[dataKey]}</td>
-                    )
+                <tr className="requestelement" key={internship.id}>
+                  {dataKeys.map((dataKey) => {
+                    return <td key={dataKey}>{internship[dataKey]}</td>;
                   })}
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
       </div>
     </>
-  )
+  );
 }
 
 export default TableComponent;

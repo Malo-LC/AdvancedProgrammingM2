@@ -1,29 +1,19 @@
+import PropTypes from "prop-types";
 import { useMediaQuery } from "react-responsive";
 import Status from "../BasicComponents/Status/Status";
 import TableComponent from "../TableComponent/TableComponent";
 import DemandeMobileComponent from "../DemandeMobileComponent/DemandeMobileComponent";
-
-import PropTypes from "prop-types";
+import { requestColumnNamesStudent, requestColumnNamesTutor, requestKeyStudent, requestKeyTutor } from "../../constants/tableItems";
 
 import "./demandestageelement.css";
 
 DemandeStageElement.propTypes = {
   userRole: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired
+  requests: PropTypes.array.isRequired,
 };
 
-function DemandeStageElement(props) {
-  const userRole = props.userRole;
-
+function DemandeStageElement({ userRole, requests }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
-
-  // Those names are displayed in the table
-  const requestColumnNamesTutor = ["Année du Stage", "Statut", "Nom de l'étudiant", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
-  const requestColumnNamesStudent = ["Année du Stage", "Statut", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
-
-  // Those keys define the order of the data in the table
-  const requestKeyTutor = ["internship_year", "internship_status", "student_name", "internship_name", "company_name", "start_date", "end_date", "internship_id", "link"];
-  const requestKeyStudent = ["internship_year", "internship_status", "internship_name", "company_name", "start_date", "end_date", "internship_id", "link"];
 
   let requestColumn;
   let requestKey;
@@ -37,35 +27,31 @@ function DemandeStageElement(props) {
   }
 
   // Convert the data to the format of the table
-  const newInternshipsList = props.data.map(objet => {
-    let newInternshipData = {
-      "internship_year": objet.internshipYear,
-      "internship_status": <Status status={objet.isInternshipValidated} type="demande"/>,
-      "internship_name": objet.mission,
-      "company_name": objet.companyName,
-      "start_date": objet.startDate,
-      "end_date": objet.endDate,
-      "internship_id": objet.internshipId,
-      "student_name": `${objet.studentFirstname} ${objet.studentFirstname}`,
-      "link": <a href="">Consulter</a>
-    };
-
-    return newInternshipData;
-  });
+  const internships = requests.map((objet) => ({
+    internship_year: objet.internshipYear,
+    internship_status: <Status status={objet.isInternshipValidated} type="demande" />,
+    internship_name: objet.mission,
+    company_name: objet.companyName,
+    start_date: objet.startDate,
+    end_date: objet.endDate,
+    internship_id: objet.internshipId,
+    student_name: `${objet.studentFirstname} ${objet.studentFirstname}`,
+    link: <>Consulter</>,
+  }));
 
   return (
     <>
       {isMobile ? (
         <>
-          <DemandeMobileComponent data={newInternshipsList} />
+          <DemandeMobileComponent data={internships} />
         </>
       ) : (
         <>
-          <TableComponent columns={requestColumnNamesStudent} data={newInternshipsList} dataKeys={requestKey} />
+          <TableComponent columns={requestColumn} internships={internships} dataKeys={requestKey} />
         </>
       )}
     </>
-  )
+  );
 }
 
 export default DemandeStageElement;
