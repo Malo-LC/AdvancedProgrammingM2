@@ -1,12 +1,12 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 import "./actionbutton.css";
 
 function ActionButton({ status }) {
   const handleButtonClick = () => {
-    // Additional logic for the button click
+    console.log("button clicked");
   };
+
   return (
     <div>
       <button
