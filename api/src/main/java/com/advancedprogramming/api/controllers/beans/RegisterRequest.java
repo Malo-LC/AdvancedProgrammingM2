@@ -5,7 +5,7 @@ public record RegisterRequest(
     String lastName,
     String email,
     String phoneNumber,
-    Integer promotionYear,
+    Integer promotionId,
     String password,
     CustomFile profilePicture
 ) {

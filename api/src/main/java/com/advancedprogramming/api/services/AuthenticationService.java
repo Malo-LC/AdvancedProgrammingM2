@@ -5,6 +5,8 @@ import com.advancedprogramming.api.controllers.beans.AuthenticationRequest;
 import com.advancedprogramming.api.controllers.beans.AuthenticationResponse;
 import com.advancedprogramming.api.controllers.beans.RegisterRequest;
 import com.advancedprogramming.api.models.Filedb;
+import com.advancedprogramming.api.models.Promotion;
+import com.advancedprogramming.api.models.PromotionRepository;
 import com.advancedprogramming.api.models.Token;
 import com.advancedprogramming.api.models.TokenRepository;
 import com.advancedprogramming.api.models.User;
@@ -34,6 +36,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final FileStorageService fileStorageService;
+    private final PromotionRepository promotionRepository;
 
     public AuthenticationResponse register(RegisterRequest request, Boolean isTutorRegistration) throws IOException {
         // check if email is already registered
@@ -48,11 +51,17 @@ public class AuthenticationService {
         );
 
         Filedb profilePicture = fileStorageService.store(profilePictureMultipart);
+        Promotion promotion = null;
+
+        if (!isTutorRegistration) {
+            promotion = promotionRepository.findById(request.promotionId())
+                .orElseThrow(() -> new RuntimeException("Promotion not found"));
+        }
 
         User user = User.builder()
             .firstName(request.firstName())
             .lastName(request.lastName())
-            .promotionYear(request.promotionYear())
+            .promotion(promotion)
             .phoneNumber(request.phoneNumber())
             .role(isTutorRegistration ? RoleEnum.TUTOR : RoleEnum.STUDENT)
             .filedb(profilePicture)
@@ -144,8 +153,10 @@ public class AuthenticationService {
         if (user.getPhoneNumber() != null) {
             extraClaims.put("phoneNumber", user.getPhoneNumber());
         }
-        if (user.getPromotionYear() != null) {
-            extraClaims.put("promotionYear", user.getPromotionYear());
+        Promotion promotion = user.getPromotion();
+        if (promotion!= null) {
+            extraClaims.put("promotionYear", promotion.getPromotionYear());
+            extraClaims.put("promotionClass", promotion.getPromotionClass());
         }
         if (user.getFiledb() != null) {
             extraClaims.put("profilePicture", profilePictureUri);

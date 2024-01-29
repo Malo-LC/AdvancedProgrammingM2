@@ -40,7 +40,6 @@ public class User implements UserDetails {
     private RoleEnum role;
 
     private String phoneNumber;
-    private Integer promotionYear;
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
@@ -48,6 +47,10 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "profile_picture_filedb_id")
     private Filedb filedb;
+
+    @ManyToOne
+    @JoinColumn(name = "promotion_id")
+    private Promotion promotion;
 
     public void setId(Integer id) {
         this.id = id;

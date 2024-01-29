@@ -44,7 +44,7 @@ public class InternshipSettingsService {
 
         return new InternshipSettings(
             internship.getId(),
-            internship.getPromotionYear(),
+            internship.getPromotion().getPromotionYear(),
             internship.getTitle(),
             internship.getIsClosed(),
             internship.getEndDate(),
@@ -58,7 +58,6 @@ public class InternshipSettingsService {
             return false;
         }
         Internship internship = internshipOptional.get();
-        internship.setPromotionYear(internshipSettings.promotionYear());
         internship.setTitle(internshipSettings.title());
         internship.setIsClosed(internshipSettings.isClosed());
         internship.setEndDate(internshipSettings.endDate());
