@@ -14,6 +14,7 @@ import com.advancedprogramming.api.models.SubmitRepository;
 import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.models.bean.RoleEnum;
 import com.advancedprogramming.api.models.bean.YearEnum;
+import com.advancedprogramming.api.services.bean.UserShort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -99,9 +100,15 @@ public class SubmitService {
                         tutorCompany.getLastName()
                     );
 
+                    UserShort userShort = new UserShort(
+                        user.getId(),
+                        user.getFirstName(),
+                        user.getLastName()
+                    );
+
                     return new SubmitResponse(
                         submit != null ? submit.getId() : null,
-                        user.getId(),
+                        userShort,
                         report.getId(),
                         promotionClass,
                         report.getTitle(),
