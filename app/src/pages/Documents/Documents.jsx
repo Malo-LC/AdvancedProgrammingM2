@@ -15,30 +15,17 @@ const docColumnNamesStudent = ["Nom du document", "Deadline", "Intitulé du stag
 function Documents() {
   const controls = useAnimation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const [documents, setDocuments] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
   const userRole = userService.getRole();
-  const [documents, setDocuments] = useState([]);
-
-  //search
-  const [searchInput, setSearchInput] = useState("");
-  const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
     controls.start({ y: 0 });
     api.get("submit/all").then((res) => {
       setDocuments(res);
-      setFilteredItems(res);
     });
   }, []);
-
-  const handleInputChange = () => {
-    const filteredDocs = documents.filter((doc) => doc.reportName.toLowerCase().includes(searchInput.toLowerCase()));
-
-    const fileToReturn = searchInput.length === 0 ? documents : filteredDocs;
-    console.log(searchInput.length);
-
-    setFilteredItems(fileToReturn);
-  };
 
   let docColumn;
   if (userRole === "STUDENT") {
@@ -65,12 +52,11 @@ function Documents() {
       <div className="table">
         {isMobile === false && (
           <div className="table-title">
-            {userRole &&
-              docColumn.map((item, index) => (
-                <div className="font-semibold text-center" key={index}>
-                  {item}
-                </div>
-              ))}
+            {docColumn.map((item) => (
+              <div className="font-semibold text-center" key={item}>
+                {item}
+              </div>
+            ))}
           </div>
         )}
         <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px]"}`}>
@@ -79,8 +65,8 @@ function Documents() {
               (doc) =>
                 doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
             )
-            .map((item, key) => (
-              <DocElement key={key} internShip={item} student_name="test" userRole={userRole} />
+            .map((item) => (
+              <DocElement key={item.reportId} internShip={item} student_name="test" userRole={userRole} />
             ))}
         </div>
       </div>
