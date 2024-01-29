@@ -86,6 +86,7 @@ public class InternshipSettingsService {
             report.setDeadline(requiredReport.deadline());
             reportRepository.save(report);
         });
+        
         // delete reports that are not in the new list
         internshipReports.forEach(report -> {
             Optional<RequiredReport> requiredReportOptional = requiredReports
