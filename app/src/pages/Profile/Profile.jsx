@@ -7,14 +7,13 @@ import { useMediaQuery } from "react-responsive";
 
 //style
 import "./profile.css";
-import { Plus } from "react-feather";
+import { Edit3, Plus } from "react-feather";
 import { toast } from "react-toastify";
 
 function Profile() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const user = userService.getUserProfile();
   const [image, setImage] = useState(null);
-  const [picture, setPicture] = useState(null);
 
   const fetchUserInfo = async () => {
     if (!user.profilePictureUri) return;
@@ -65,11 +64,17 @@ function Profile() {
       <div className={`${isMobile ? "info-container-mobile" : "info-container-desktop"}`}>
         <div className="user-info-pic">
           {image ? (
-            <img alt="avatar" className="rounded-full border-2 border-gray-300 h-[130px] w-[130px] mb-4" src={image} />
+            <div className="flex flex-col items-center">
+              <label htmlFor="file" className="block relative cursor-pointer">
+                <img src={image} alt="avatar" className="h-[130px] w-[130px] rounded-full overflow-hidden" />
+                <input id="file" className="hidden" type="file" accept="image/*" onChange={(e) => updateProfilePicture(e)} />
+                <Edit3 size={30} className="absolute bottom-0 right-0 p-1 z-30 border-2 border-black bg-white rounded-full overflow-hidden" />
+              </label>
+            </div>
           ) : (
             <div className="flex flex-col items-center">
               <label htmlFor="file" className="block relative cursor-pointer">
-                <img src={picture ? picture : NoAvatar} alt="avatar" className="h-[130px] w-[130px] rounded-full overflow-hidden" />
+                <img src={NoAvatar} alt="avatar" className="h-[130px] w-[130px] rounded-full overflow-hidden" />
                 <input id="file" className="hidden" type="file" accept="image/*" onChange={(e) => updateProfilePicture(e)} />
                 <Plus size={30} className="absolute bottom-0 right-0 z-30 border-2 border-black bg-white rounded-full overflow-hidden" />
               </label>
