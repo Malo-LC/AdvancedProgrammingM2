@@ -4,7 +4,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import { Settings } from "react-feather";
 
 export const menuItemsStudent = [
-  { label: "Faire ma demande", url: "/demandes/student", icon: <SupervisorAccountIcon /> },
+  { label: "Faire ma demande", url: "/demandes", icon: <SupervisorAccountIcon /> },
   { label: "Documents", url: "/documents", icon: <DescriptionIcon /> },
   { label: "Mon stages", url: "/stages", icon: <BusinessIcon /> },
 ];

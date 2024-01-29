@@ -81,7 +81,7 @@ const InternshipSettings = () => {
   };
 
   const handleChangeSettings = (e, key) => {
-    const updatedValue = e.target.checked;
+    const updatedValue = key === "isClosed" ? e.target.checked : e.target.value;
     setInternshipSettings((prev) => ({
       ...prev,
       [key]: updatedValue,
@@ -144,7 +144,7 @@ const InternshipSettings = () => {
         >
           {internships.map((internship) => (
             <option className="border-none bg-none text-base text-[#163767]" key={internship.id} value={internship.id}>
-              {internship.promotionYear}
+              {internship.year}
             </option>
           ))}
         </select>
@@ -163,7 +163,7 @@ const InternshipSettings = () => {
                 <input
                   type="date"
                   className="bg-white p-2 border border-slate-300 rounded-lg"
-                  defaultValue={internshipSettings.endDate}
+                  value={internshipSettings.endDate || ""}
                   onBlur={(e) => handleChangeSettings(e, "endDate")}
                 />
               </div>

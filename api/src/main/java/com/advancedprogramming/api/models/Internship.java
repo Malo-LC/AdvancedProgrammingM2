@@ -30,22 +30,14 @@ public class Internship {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    private YearEnum promotionYear;
-    private Integer year;
+    private YearEnum year;
+    private Integer promotionYear;
     private String title;
     private Boolean isClosed = false;
     private LocalDate EndDate;
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public void setPromotionYear(YearEnum promotionYear) {
-        this.promotionYear = promotionYear;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
     }
 
     public void setTitle(String title) {
@@ -58,6 +50,14 @@ public class Internship {
 
     public void setEndDate(LocalDate endDate) {
         EndDate = endDate;
+    }
+
+    public void setPromotionYear(Integer promotionYear) {
+        this.promotionYear = promotionYear;
+    }
+
+    public void setYear(YearEnum year) {
+        this.year = year;
     }
 
     @OneToMany(mappedBy = "internship")
