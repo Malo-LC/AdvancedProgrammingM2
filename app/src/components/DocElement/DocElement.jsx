@@ -78,7 +78,7 @@ function DocElement({ internShip, student_name, userRole }) {
             <div className="elements">{internShip.reportName}</div>
             <div className="elements font-thin">{internShip.deadline}</div>
             <div className="elements font-thin">{internShip.internship_name}</div>
-            {userRole === "TUTOR" && <div className="elements">{student_name}</div>}
+            {userRole === "TUTOR" && <div className="elements">{internShip.userId.lastName}</div>}
             <div className="elements space-x-1">
               <ValidationBubble
                 validationStatus={internShip.tutorSchool.isValidated}
@@ -97,7 +97,7 @@ function DocElement({ internShip, student_name, userRole }) {
           </div>
           {userRole === "STUDENT" && (
             <>
-              <ActionButton status={internShip.isSubmitted} />
+              <ActionButton status={internShip.isSubmitted} internShip={internShip} />
             </>
           )}
         </div>

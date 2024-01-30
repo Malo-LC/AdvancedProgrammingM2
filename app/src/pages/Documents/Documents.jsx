@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar";
 import DocElement from "../../components/DocElement/DocElement";
+import { docColumnNamesStudent, docColumnNamesTutor } from "../../constants/tableItems";
 import userService from "../../services/userService";
 import api from "../../utils/api";
-import { docColumnNamesStudent, docColumnNamesTutor } from "../../constants/tableItems";
 
 //style
+import DocViewer from "../../components/DocViewer/DocViewer";
 import "./documents.css";
 
 function Documents() {
@@ -15,6 +16,7 @@ function Documents() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [documents, setDocuments] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [isDocViewerOpen, setIsDocViewerOpen] = useState(false);
 
   const userRole = userService.getRole();
 
@@ -64,10 +66,11 @@ function Documents() {
                 doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
             )
             .map((item) => (
-              <DocElement key={item.reportId} internShip={item} student_name="test" userRole={userRole} />
+              <DocElement key={item.reportId} internShip={item} userRole={userRole} />
             ))}
         </div>
       </div>
+      {isDocViewerOpen && <DocViewer />}
     </div>
   );
 }
