@@ -1,46 +1,46 @@
 import PropTypes from "prop-types";
-
-import { useEffect, useRef } from "react";
 import api from "../../../utils/api";
+import { readFileAsync } from "../../../utils/authDataService";
 import "./actionbutton.css";
 
 function ActionButton({ status, internShip }) {
-  const fileInputRef = useRef(null);
-
-  useEffect(() => {
-    api.post(`upload/${studentInternshipId}`).then((res) => {
-      setDocuments(res);
-    });
-  }, []);
-
   const handleButtonClick = () => {
-    if (status === true) {
-      console.log("button download");
-    } else {
-      fileInputRef.current.click();
-    }
+    const fileInput = document.getElementById("fileInput");
+    fileInput.click();
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
+    const rawBody = await readFileAsync(file);
+
     if (file) {
-      console.log("test");
+      try {
+        // const base64Data = await readFileAsync(file);
+        // formData.append("base64File", base64Data);
+        const formData = {
+          file: rawBody ? { base64: rawBody, name: file.name, type: file.type } : null,
+          reportId: internShip.reportId,
+        };
+        const response = await api.post(`submit/upload/${internShip.studentInternshipId}`, formData);
+        console.log("File upload successful", response);
+      } catch (error) {
+        console.error("Error uploading file: ", error);
+      }
     }
   };
 
   return (
     <div>
       <button
-        type="button"
         onClick={(e) => {
           e.stopPropagation();
           handleButtonClick();
         }}
-        className={`action-button ${status === true ? "download" : "upload"}`}
+        className={`action-button ${status === true ? " download-button" : " upload"}`}
       >
         {status === true ? "Télécharger" : "Soumettre"}
       </button>
-      {status === false && <input ref={fileInputRef} type="file" accept=".pdf" style={{ display: "none" }} onChange={handleFileChange} />}
+      {status === false && <input id="fileInput" type="file" accept=".pdf" style={{ display: "none" }} onChange={handleFileChange} />}
     </div>
   );
 }
