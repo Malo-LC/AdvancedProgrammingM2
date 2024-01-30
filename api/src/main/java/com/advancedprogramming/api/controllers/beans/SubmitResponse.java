@@ -14,6 +14,7 @@ public record SubmitResponse(
     LocalDate deadline,
     SubmitTutor tutorSchool,
     SubmitTutor tutorInternship,
-    Boolean isSubmitted
+    Boolean isSubmitted,
+    Integer studentInternshipId
 ) {
 }
