@@ -1,0 +1,4 @@
+.viewer-button {
+    @apply cursor-pointer;
+    @apply hover:scale-105 duration-75
+}

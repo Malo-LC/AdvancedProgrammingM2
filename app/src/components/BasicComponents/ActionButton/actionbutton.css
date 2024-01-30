@@ -4,7 +4,7 @@
     @apply transition  duration-100;
 }
 
-.download {
+.download-button {
     @apply bg-[#163767] text-white border border-white;
 }
 

@@ -6,15 +6,23 @@ import Status from "../BasicComponents/Status/Status";
 import ValidationBubble from "../BasicComponents/ValidationBubble/ValidationBubble";
 
 //style
+import fileText from "../../assets/images/icons/file-text.svg";
 import "./docelement.css";
 
-function DocElement({ internShip, student_name, userRole }) {
+//testPdf
+import testPdf from "../../assets/test.pdf";
+
+function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
   const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
 
   const handleClick = async () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleClickDoc = () => {
+    onOpenViewer(testPdf);
   };
 
   return (
@@ -61,7 +69,12 @@ function DocElement({ internShip, student_name, userRole }) {
                     />
                   </div>
                 </div>
-                <div className="w-full flex justify-center mt-2">
+                <div className="w-full flex justify-center mt-2 space-x-3">
+                  {internShip.isSubmitted && (
+                    <button onClick={handleClickDoc} className="px-2 bg-[#163767] rounded-lg">
+                      <img src={fileText} />
+                    </button>
+                  )}
                   {userRole === "STUDENT" && (
                     <>
                       <ActionButton status={internShip.isSubmitted} />
@@ -75,10 +88,17 @@ function DocElement({ internShip, student_name, userRole }) {
       ) : (
         <div className="flex flex-row items-center space-x-2 px-2">
           <div className={`docelement justify-between w-full `}>
-            <div className="elements">{internShip.reportName}</div>
+            <div className="flex flex-row items-center space-x-2">
+              <p>{internShip.reportName}</p>
+              {internShip.isSubmitted && (
+                <button onClick={handleClickDoc} className="p-1 bg-[#163767] rounded-lg">
+                  <img src={fileText} />
+                </button>
+              )}
+            </div>
             <div className="elements font-thin">{internShip.deadline}</div>
             <div className="elements font-thin">{internShip.internship_name}</div>
-            {userRole === "TUTOR" && <div className="elements">{student_name}</div>}
+            {userRole === "TUTOR" && <div className="elements">{internShip.userId.lastName}</div>}
             <div className="elements space-x-1">
               <ValidationBubble
                 validationStatus={internShip.tutorSchool.isValidated}
@@ -97,7 +117,7 @@ function DocElement({ internShip, student_name, userRole }) {
           </div>
           {userRole === "STUDENT" && (
             <>
-              <ActionButton status={internShip.isSubmitted} />
+              <ActionButton status={internShip.isSubmitted} internShip={internShip} />
             </>
           )}
         </div>
@@ -112,6 +132,7 @@ DocElement.propTypes = {
   student_name: PropTypes.string,
   userRole: PropTypes.string.isRequired,
   internShip: PropTypes.object.isRequired,
+  onOpenViewer: PropTypes.func.isRequired,
 };
 
 export default DocElement;
