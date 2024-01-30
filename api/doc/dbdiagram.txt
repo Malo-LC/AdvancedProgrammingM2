@@ -11,6 +11,36 @@ Table user {
   email varchar
 }
 
+Table form {
+  id integer [primary key]
+  title string
+}
+
+Table user_form {
+  id integer [primary key]
+  user_id integer [ref: < user.id]
+  form_id integer [ref: < form.id]
+  isCompleted boolean
+  isSignedByTutorSchool boolean
+  isSignedByTutorCompany boolean
+  isSignedByStudent boolean
+}
+
+Table answer {
+  id integer
+  question_id integer [ref: < question.id]
+  user_form_id integer [ref: < user_form.id]
+  text string
+}
+
+
+Table question {
+  id integer [primary key]
+  form_id integer [ref: < form.id]
+  title string
+  type enum
+}
+
 Table internship {
   id integer [primary key]
   year varchar
