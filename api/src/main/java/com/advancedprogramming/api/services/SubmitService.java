@@ -115,7 +115,8 @@ public class SubmitService {
                         report.getDeadline(),
                         tutorSchoolSubmit,
                         tutorCompanySubmit,
-                        submit != null
+                        submit != null,
+                        studentInternship.getId()
                     );
                 })
                 .toList();
