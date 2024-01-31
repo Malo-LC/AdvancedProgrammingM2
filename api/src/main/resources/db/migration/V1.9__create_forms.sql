@@ -14,7 +14,7 @@ create table question
     foreign key (form_id) references form (id)
 );
 
-create table user_form
+create table student_internship_form
 (
     id                         int primary key auto_increment,
     student_internship_id      int,
@@ -29,10 +29,10 @@ create table user_form
 
 create table answer
 (
-    id           int primary key auto_increment,
-    question_id  int,
-    user_form_id int,
-    value        varchar(1000),
-    foreign key (user_form_id) references user_form (id),
+    id                         int primary key auto_increment,
+    question_id                int,
+    student_internship_form_id int,
+    value                      varchar(1000),
+    foreign key (student_internship_form_id) references student_internship_form (id),
     foreign key (question_id) references question (id)
 );

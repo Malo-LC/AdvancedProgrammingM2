@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Getter
-@Table(name = "user_form")
-public class UserForm {
+@Table(name = "student_internship_form")
+public class StudentInternshipForm {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Boolean isCompleted;
-    private Boolean isSignedByStudent;
-    private Boolean isSignedByTutorSchool;
-    private Boolean isSignedByTutorCompany;
+    private Boolean isCompleted = false;
+    private Boolean isSignedByStudent = false;
+    private Boolean isSignedByTutorSchool = false;
+    private Boolean isSignedByTutorCompany = false;
 
     @ManyToOne
     private Form form;
