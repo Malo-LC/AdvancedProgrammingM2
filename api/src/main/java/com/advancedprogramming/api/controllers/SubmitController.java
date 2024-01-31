@@ -85,4 +85,14 @@ public class SubmitController {
         List<SubmitResponse> submits = submitService.getSubmitsByUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(submits);
     }
+
+    @GetMapping("/download/{submitId}")
+    public ResponseEntity<String> getFile(@PathVariable Integer submitId, HttpServletRequest request) {
+        User user = userService.getUserByFromRequest(request);
+        String file = submitService.downloadSubmit(submitId, user);
+        if (file == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(file);
+    }
 }

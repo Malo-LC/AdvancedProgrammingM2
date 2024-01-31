@@ -9,12 +9,14 @@ public record SubmitResponse(
     Integer submitId,
     UserShort userId,
     Integer reportId,
-    YearEnum internshipName,
+    YearEnum year,
+    String internshipName,
     String reportName,
     LocalDate deadline,
     SubmitTutor tutorSchool,
     SubmitTutor tutorInternship,
     Boolean isSubmitted,
-    Integer studentInternshipId
+    Integer studentInternshipId,
+    String companyName
 ) {
 }

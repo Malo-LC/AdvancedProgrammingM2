@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +71,9 @@ public class SubmitService {
         if (studentInternships.isPresent()) {
             StudentInternship studentInternship = studentInternships.get();
             Internship internship = studentInternship.getInternship();
-            List<Submit> submits = studentInternship.getSubmits();
+            Map<Integer,Submit> submitsById = studentInternship.getSubmits()
+                .stream()
+                .collect(Collectors.toMap(Submit::getId, submit -> submit));
             List<Report> reports = internship.getReports();
             Map<Integer, User> getUserById = userService.getUserById();
             User tutorSchool = getUserById.get(studentInternship.getTutorSchoolUser().getId());
@@ -80,11 +83,7 @@ public class SubmitService {
             return reports
                 .stream()
                 .map(report -> {
-                    Submit submit = submits
-                        .stream()
-                        .filter(s -> s.getReport().getId().equals(report.getId()))
-                        .findFirst()
-                        .orElse(null);
+                    Submit submit = submitsById.getOrDefault(report.getId(), null);
 
                     SubmitTutor tutorSchoolSubmit = new SubmitTutor(
                         tutorSchool.getId(),
@@ -111,12 +110,14 @@ public class SubmitService {
                         userShort,
                         report.getId(),
                         promotionClass,
+                        internship.getTitle(),
                         report.getTitle(),
                         report.getDeadline(),
                         tutorSchoolSubmit,
                         tutorCompanySubmit,
                         submit != null,
-                        studentInternship.getId()
+                        studentInternship.getId(),
+                        studentInternship.getCompanyName()
                     );
                 })
                 .toList();
@@ -202,6 +203,28 @@ public class SubmitService {
         } else {
             log.warn("Submit not found with id {}", submitId);
             return false;
+        }
+    }
+
+    public String downloadSubmit(Integer submitId, User user) {
+        Optional<Submit> optionalSubmit = submitRepository.findById(submitId);
+        if (optionalSubmit.isPresent()) {
+            Submit submit = optionalSubmit.get();
+            Integer userId = submit.getStudentInternship().getUser().getId();
+            List<Integer> tutorsIds = List.of(
+                submit.getStudentInternship().getTutorCompanyUser().getId(),
+                submit.getStudentInternship().getTutorSchoolUser().getId()
+            );
+            if (Objects.equals(userId, user.getId()) || tutorsIds.contains(user.getId())) {
+                Filedb filedb = submit.getFiledb();
+                return new String(filedb.getData());
+            } else {
+                log.warn("User {} is not allowed to download submit {}", user.getId(), submitId);
+                return null;
+            }
+        } else {
+            log.warn("Submit not found with id {}", submitId);
+            return null;
         }
     }
 }
