@@ -71,9 +71,9 @@ public class SubmitService {
         if (studentInternships.isPresent()) {
             StudentInternship studentInternship = studentInternships.get();
             Internship internship = studentInternship.getInternship();
-            Map<Integer,Submit> submitsById = studentInternship.getSubmits()
+            Map<Integer, Submit> submitsByReportId = studentInternship.getSubmits()
                 .stream()
-                .collect(Collectors.toMap(Submit::getId, submit -> submit));
+                .collect(Collectors.toMap(o -> o.getReport().getId(), submit -> submit));
             List<Report> reports = internship.getReports();
             Map<Integer, User> getUserById = userService.getUserById();
             User tutorSchool = getUserById.get(studentInternship.getTutorSchoolUser().getId());
@@ -83,7 +83,7 @@ public class SubmitService {
             return reports
                 .stream()
                 .map(report -> {
-                    Submit submit = submitsById.getOrDefault(report.getId(), null);
+                    Submit submit = submitsByReportId.getOrDefault(report.getId(), null);
 
                     SubmitTutor tutorSchoolSubmit = new SubmitTutor(
                         tutorSchool.getId(),
@@ -139,14 +139,13 @@ public class SubmitService {
                 return false;
             }
 
-            List<Submit> submits = studentInternship.getSubmits();
-
-            Optional<Submit> optionalSubmit = submits
+            Map<Integer, Submit> submitsByReportId = studentInternship.getSubmits()
                 .stream()
-                .filter(s -> s.getReport().getId().equals(body.reportId()))
-                .findFirst();
+                .collect(Collectors.toMap(o -> o.getReport().getId(), submit -> submit));
 
-            if (optionalSubmit.isEmpty()) {
+            Submit submit = submitsByReportId.getOrDefault(body.reportId(), null);
+
+            if (submit == null) {
                 // No submit found, create a new one
                 MultipartFile file = Base64ToMultipartFileConverter.convert(
                     body.file().base64(),
@@ -164,7 +163,6 @@ public class SubmitService {
             }
             log.warn("Submit already exists for student internship {}", studentInternshipId);
             // Submit found, update it only if it is not approved
-            Submit submit = optionalSubmit.get();
             if (Boolean.FALSE.equals(submit.getIsApprovedByCompany()) || Boolean.FALSE.equals(submit.getIsApprovedBySchool())) {
                 MultipartFile file = Base64ToMultipartFileConverter.convert(
                     body.file().base64(),
