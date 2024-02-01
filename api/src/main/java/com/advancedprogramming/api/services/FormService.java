@@ -52,7 +52,7 @@ public class FormService {
     }
 
     public List<Form> getAllForms() {
-        return (List<Form>) formRepository.findAll();
+        return formRepository.findAll();
     }
 
     public Form getFormById(Integer id) {
@@ -99,10 +99,15 @@ public class FormService {
             }
         });
         // Delete questions
-        List<Integer> questionIds = formRequest.questions()
+        List<Integer> questionIds = new ArrayList<>(formRequest.questions()
             .stream()
             .map(QuestionRequest::id)
+            .toList());
+        List<Integer> newQuestionIds = newQuestions
+            .stream()
+            .map(Question::getId)
             .toList();
+        questionIds.addAll(newQuestionIds);
         List<Question> questionsToDelete = form.getQuestions()
             .stream()
             .filter(question -> !questionIds.contains(question.getId()))

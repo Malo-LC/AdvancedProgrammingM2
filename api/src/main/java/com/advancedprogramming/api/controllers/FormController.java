@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/forms")
+@RequestMapping("/form")
 @CrossOrigin(origins = "*")
 @Tag(name = "Forms")
 @RequiredArgsConstructor
@@ -55,7 +54,8 @@ public class FormController {
         if (!RoleEnum.ADMIN.equals(user.getRole())) {
             return ResponseEntity.status(403).body(null);
         }
-        return ResponseEntity.ok().body(formService.getAllForms());
+        List<Form> forms = formService.getAllForms();
+        return ResponseEntity.ok().body(forms);
     }
 
     @Operation(summary = "Get a form by id")
@@ -75,7 +75,7 @@ public class FormController {
         return ResponseEntity.ok().body(new MessageResponse("Form deleted successfully", true));
     }
 
-    @PutMapping
+    @PostMapping("/update")
     @Operation(summary = "Update a form by id")
     public ResponseEntity<MessageResponse> updateFormById(@RequestBody FormRequest formRequest, HttpServletRequest httpRequest) {
         User user = userService.getUserByFromRequest(httpRequest);

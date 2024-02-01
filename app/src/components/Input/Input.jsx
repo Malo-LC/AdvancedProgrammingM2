@@ -35,6 +35,17 @@ export function Input({ type, name, placeholder, IconLeft, errors, register }) {
       </div>
     );
 
+  if (type === "textarea")
+    return (
+      <div className="flex flex-col">
+        <div className="relative">
+          <div className="input-icon-left">{IconLeft}</div>
+          <textarea placeholder={placeholder} className="input" name={name} {...register(name)} />
+        </div>
+        {errors?.[name] && <span className="error-message">{errors[name].message}</span>}
+      </div>
+    );
+
   return (
     <div className="flex flex-col">
       <div className="relative">

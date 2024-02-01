@@ -1,6 +1,7 @@
 package com.advancedprogramming.api.models;
 
 import com.advancedprogramming.api.models.bean.QuestionTypeEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -31,5 +32,6 @@ public class Question {
     private QuestionTypeEnum type;
 
     @ManyToOne
+    @JsonIgnore
     private Form form;
 }
