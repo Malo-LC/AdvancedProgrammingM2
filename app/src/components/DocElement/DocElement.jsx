@@ -24,9 +24,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
         setPdf(res);
       });
     }
-
-    console.log(pdf);
-  });
+  }, [internShip.submitId]);
 
   const handleClick = async () => {
     setIsExpanded(!isExpanded);
@@ -88,7 +86,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
                   )}
                   {userRole === "STUDENT" && (
                     <>
-                      <ActionButton status={internShip.isSubmitted} />
+                      <ActionButton status={internShip.isSubmitted} file={pdf} />
                     </>
                   )}
                 </div>
@@ -128,7 +126,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
           </div>
           {userRole === "STUDENT" && (
             <>
-              <ActionButton status={internShip.isSubmitted} internShip={internShip} />
+              <ActionButton status={internShip.isSubmitted} internShip={internShip} file={pdf} />
             </>
           )}
         </div>

@@ -30,9 +30,9 @@ function DocViewer({ file, onCloseViewer }) {
   return (
     <div className="">
       <button className="viewer-button" onClick={onCloseViewer}>
-        <img src={xCircle} className="bg-white" />
+        <img src={xCircle} className="" />
       </button>
-      <Document file={file} onLoadSuccess={onDocumentLoadSuccess} onLoadError={console.error}>
+      <Document className="pdf-container" file={file} onLoadSuccess={onDocumentLoadSuccess} onLoadError={console.error}>
         <Page pageNumber={pageNumber} />
       </Document>
       <div className="flex flex-row justify-between items-center">
@@ -41,10 +41,10 @@ function DocViewer({ file, onCloseViewer }) {
         </p>
         <div className="flex flex-row space-x-2">
           <button onClick={goToPreviousPage} disabled={pageNumber <= 1} className="viewer-button">
-            <img src={arrowLeft} className="bg-white" />
+            <img src={arrowLeft} className="" />
           </button>
           <button onClick={goToNextPage} disabled={pageNumber >= numPages} className="viewer-button">
-            <img src={arrowRight} className="bg-white fill-red-500" />
+            <img src={arrowRight} className="b" />
           </button>
         </div>
       </div>
