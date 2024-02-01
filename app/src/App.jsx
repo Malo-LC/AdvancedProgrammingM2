@@ -12,6 +12,8 @@ import Demandes from "./pages/Demande/Demandes.jsx";
 import InternshipSettings from "./pages/InternshipSettings/InternshipSettings";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import ListForm from "./pages/Form/ListForm.jsx";
+import CreateForm from "./pages/Form/CreateForm.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -90,6 +92,30 @@ function App() {
           element={
             <RestrictedRoute roles={["ADMIN"]}>
               <InternshipSettings />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/parametres/form"
+          element={
+            <RestrictedRoute roles={["ADMIN"]}>
+              <ListForm />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/parametres/form/create"
+          element={
+            <RestrictedRoute roles={["ADMIN"]}>
+              <CreateForm />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/parametres/form/edit/:id"
+          element={
+            <RestrictedRoute roles={["ADMIN"]}>
+              <CreateForm />
             </RestrictedRoute>
           }
         />
