@@ -9,9 +9,6 @@ import ValidationBubble from "../BasicComponents/ValidationBubble/ValidationBubb
 import fileText from "../../assets/images/icons/file-text.svg";
 import "./docelement.css";
 
-//testPdf
-// import testPdf from "../../assets/test.pdf";
-
 function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
