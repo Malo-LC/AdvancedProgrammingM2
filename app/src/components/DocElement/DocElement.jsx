@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import ActionButton from "../BasicComponents/ActionButton/ActionButton";
 import Status from "../BasicComponents/Status/Status";
@@ -10,19 +10,30 @@ import fileText from "../../assets/images/icons/file-text.svg";
 import "./docelement.css";
 
 //testPdf
-import testPdf from "../../assets/test.pdf";
+// import testPdf from "../../assets/test.pdf";
 
 function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
   const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
+  const [pdf, setPdf] = useState(null);
+
+  useEffect(() => {
+    if (internShip.submitId != null) {
+      api.get(`submit/download/${internShip.submitId}`).then((res) => {
+        setPdf(res);
+      });
+    }
+
+    console.log(pdf);
+  });
 
   const handleClick = async () => {
     setIsExpanded(!isExpanded);
   };
 
   const handleClickDoc = () => {
-    onOpenViewer(testPdf);
+    onOpenViewer(pdf);
   };
 
   return (
@@ -127,6 +138,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
 }
 
 import PropTypes from "prop-types";
+import api from "../../utils/api";
 
 DocElement.propTypes = {
   student_name: PropTypes.string,
