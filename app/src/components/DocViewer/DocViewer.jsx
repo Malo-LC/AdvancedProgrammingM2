@@ -41,10 +41,10 @@ function DocViewer({ file, onCloseViewer }) {
         </p>
         <div className="flex flex-row space-x-2">
           <button onClick={goToPreviousPage} disabled={pageNumber <= 1} className="viewer-button">
-            <img src={arrowLeft} className="" />
+            <img src={arrowLeft} className={`${pageNumber === 1 && "pointer-event-none opacity-30"}`} />
           </button>
           <button onClick={goToNextPage} disabled={pageNumber >= numPages} className="viewer-button">
-            <img src={arrowRight} className="b" />
+            <img src={arrowRight} className={`${pageNumber === numPages && "pointer-event-none opacity-30"}`} />
           </button>
         </div>
       </div>
