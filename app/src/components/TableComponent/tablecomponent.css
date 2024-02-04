@@ -1,8 +1,9 @@
-.requestelement {
+/* .requestelement {
     @apply px-6 py-3 my-2 border rounded-lg;
-    @apply bg-[#F2F4F8];
-}
+    @apply bg-[#F2F4F8] ;
 
-.elements {
-    @apply flex  items-center ;
+} */
+
+.requestelement {
+    @apply rounded-lg border flex;
 }
