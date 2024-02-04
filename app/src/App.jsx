@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ListForm from "./pages/Form/ListForm.jsx";
 import CreateForm from "./pages/Form/CreateForm.jsx";
+import Soumission from "./pages/Soumission/Soumission.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -116,6 +117,14 @@ function App() {
           element={
             <RestrictedRoute roles={["ADMIN"]}>
               <CreateForm />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/soumettre"
+          element={
+            <RestrictedRoute roles={["STUDENT"]}>
+              <Soumission/>
             </RestrictedRoute>
           }
         />
