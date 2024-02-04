@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 
+import Status from "../BasicComponents/Status/Status";
 import "./tablecomponent.css";
 
 TableComponent.propTypes = {
@@ -11,26 +12,38 @@ TableComponent.propTypes = {
 function TableComponent({ columns, internships, dataKeys }) {
   return (
     <>
-      <div className="flex flex-row items-center space-x-2 ">
-        <table className="table-auto w-full text-center">
-          <thead>
-            <tr>
-              {columns.map((item) => {
-                return <th key={item}>{item}</th>;
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {internships.map((internship) => {
+      <div className="items-center space-x-2 ">
+        <table className="table-auto w-full text-center ">
+          <tr>
+            {columns.map((item) => {
               return (
-                <tr className="requestelement" key={internship.id}>
-                  {dataKeys.map((dataKey) => {
-                    return <td key={dataKey}>{internship[dataKey]}</td>;
-                  })}
-                </tr>
+                <th className="" key={item}>
+                  {item}
+                </th>
               );
             })}
-          </tbody>
+          </tr>
+
+          {internships.map((internship) => {
+            return (
+              <tr className="border" key={internship.id}>
+                <td>2020</td>
+                <td className="flex items-center justify-center">
+                  <Status status={true} type="demande" />
+                </td>
+                <td>2020</td>
+                <td>2020</td>
+                <td>2020</td>
+                <td>2020</td>
+                <td>2020</td>
+                {/* {dataKeys.map((dataKey) => (
+                  <td className="bg-blue-200 flex items-center justify-center" key={dataKey}>
+                    {internship[dataKey]}
+                  </td>
+                ))} */}
+              </tr>
+            );
+          })}
         </table>
       </div>
     </>

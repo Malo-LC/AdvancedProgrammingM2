@@ -9,7 +9,7 @@ import ValidationBubble from "../BasicComponents/ValidationBubble/ValidationBubb
 import fileText from "../../assets/images/icons/file-text.svg";
 import "./docelement.css";
 
-function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
+function DocElement({ internShip, userRole, onOpenViewer }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
   const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
@@ -47,7 +47,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
                 {userRole === "TUTOR" && (
                   <div className="elements-hidden">
                     <p className="mr-2">Nom étudiant :</p>
-                    <p className="font-thin">{student_name}</p>
+                    <p className="font-thin">{internShip.userId.lastName}</p>
                   </div>
                 )}
                 <div className="elements-hidden">
@@ -57,7 +57,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
                 {userRole === "STUDENT" && (
                   <div className="elements-hidden">
                     <p className="mr-2">Nom du stage :</p>
-                    <p className="font-thin">{internShip.internship_name}</p>
+                    <p className="font-thin">{internShip.internshipName}</p>
                   </div>
                 )}
                 <div className="elements-hidden space-x-1 mt-1">
@@ -103,7 +103,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
               )}
             </div>
             <div className="elements font-thin">{internShip.deadline}</div>
-            <div className="elements font-thin">{internShip.internship_name}</div>
+            <div className="elements font-thin">{internShip.internshipName}</div>
             {userRole === "TUTOR" && <div className="elements">{internShip.userId.lastName}</div>}
             <div className="elements space-x-1">
               <ValidationBubble
