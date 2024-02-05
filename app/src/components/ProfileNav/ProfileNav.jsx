@@ -7,8 +7,13 @@ import api from "../../utils/api";
 //style
 import "./profilenav.css";
 
-export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
-  const [notifications, setNotifications] = useState(null);
+export function ProfileNav({ profilePicture, firstname, lastname, isMobile, userRole }) {
+  const [requestNotifications, setRequestNotifications] = useState([]);
+  const [docs, setDocs] = useState([]);
+
+  const numberOfDocToSend = docs.filter((item) => {
+    return item.tutorSchool.isValidated === false || item.tutorInternship.isValidated === false || item.isSubmitted === false;
+  }).length;
 
   useEffect(() => {
     fetchNotifications();
@@ -16,8 +21,13 @@ export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
 
   const fetchNotifications = async () => {
     try {
-      const response = await api.get("submit/all");
-      setNotifications(response || []);
+      if (userRole === "TUTOR" || userRole === "ADMIN") {
+        const res1 = await api.get("submit/to-validate");
+        setRequestNotifications(res1 || []);
+      } else {
+        const response = await api.get("submit/all");
+        setDocs(response || []);
+      }
     } catch (error) {
       console.error("Error fetching documents:", error);
     }
@@ -27,12 +37,15 @@ export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
     <div className="profile">
       {isMobile ? (
         <>
-          <Notification notificationNumber={4} />
-          <ProfileTooltip profilePicture={profilePicture} />
+          <Notification notificationNumber={userRole === "TUTOR" || userRole === "ADMIN" ? requestNotifications.length : numberOfDocToSend} />
+          <ProfileTooltip profilePicture={profilePicture} userRole={userRole} />
         </>
       ) : (
         <>
-          <Notification notificationNumber={4} />
+          <Notification
+            notificationNumber={userRole === "TUTOR" || userRole === "ADMIN" ? requestNotifications.length : numberOfDocToSend}
+            userRole={userRole}
+          />
           <div className="flex flex-row space-x-1">
             <p>{firstname}</p>
             <p>{lastname}</p>
@@ -49,4 +62,5 @@ ProfileNav.propTypes = {
   firstname: PropTypes.string.isRequired,
   lastname: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
+  userRole: PropTypes.string.isRequired,
 };
