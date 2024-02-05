@@ -171,6 +171,8 @@ public class SubmitService {
                 );
                 Filedb filedb = fileStorageService.store(file);
                 submit.setFiledb(filedb);
+                submit.setIsApprovedBySchool(null);
+                submit.setIsApprovedByCompany(null);
                 submitRepository.save(submit);
                 return true;
             } else {
