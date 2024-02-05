@@ -6,6 +6,7 @@ import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.models.UserRepository;
 import com.advancedprogramming.api.services.AuthenticationService;
 import com.advancedprogramming.api.services.UserService;
+import com.advancedprogramming.api.services.bean.UserShort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -32,8 +34,14 @@ public class UserController {
 
     @Operation(summary = "Get all users")
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+    public @ResponseBody List<UserShort> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @Operation(summary = "Get all users")
+    @GetMapping(path = "/tutors")
+    public @ResponseBody List<UserShort> getAllTutors() {
+        return userService.getAllTutors();
     }
 
     @Operation(summary = "Update profile picture")

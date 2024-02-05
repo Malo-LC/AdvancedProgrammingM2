@@ -86,6 +86,14 @@ public class SubmitController {
         return ResponseEntity.status(HttpStatus.OK).body(submits);
     }
 
+    @Operation(summary = "Get submits to validate by tutor")
+    @GetMapping("/to-validate")
+    public ResponseEntity<List<SubmitResponse>> getListFilesOfTutor(HttpServletRequest request) {
+        User user = userService.getUserByFromRequest(request);
+        List<SubmitResponse> submits = submitService.getSubmitToValidate(user);
+        return ResponseEntity.status(HttpStatus.OK).body(submits);
+    }
+
     @GetMapping("/download/{submitId}")
     public ResponseEntity<String> getFile(@PathVariable Integer submitId, HttpServletRequest request) {
         User user = userService.getUserByFromRequest(request);

@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import RestrictedRoute from "./RestrictedRoute";
 import Profile from "./pages/Profile/Profile";
 import Documents from "./pages/Documents/Documents";
-import Stage from "./pages/Internship/Internship.jsx";
+import Internship from "./pages/Internship/Internship.jsx";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -14,7 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ListForm from "./pages/Form/ListForm.jsx";
 import CreateForm from "./pages/Form/CreateForm.jsx";
+import ListFormStudent from "./pages/Form/ListFormStudent.jsx";
 import Soumission from "./pages/Soumission/Soumission.jsx";
+import InternshipList from "./pages/Internship/InternshipList.jsx";
 import DocumentValidation from "./pages/Documents/DocumentValidation/DocumentValidation.jsx";
 
 function App() {
@@ -77,7 +79,15 @@ function App() {
           path="/stages"
           element={
             <RestrictedRoute roles={["TUTOR", "STUDENT", "ADMIN"]}>
-              <Stage />
+              <Internship />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/stages/liste"
+          element={
+            <RestrictedRoute roles={["ADMIN"]}>
+              <InternshipList />
             </RestrictedRoute>
           }
         />
@@ -126,6 +136,14 @@ function App() {
           element={
             <RestrictedRoute roles={["ADMIN"]}>
               <CreateForm />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/form"
+          element={
+            <RestrictedRoute roles={["STUDENT"]}>
+              <ListFormStudent />
             </RestrictedRoute>
           }
         />

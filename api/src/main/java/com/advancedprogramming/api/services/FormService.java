@@ -172,4 +172,12 @@ public class FormService {
         studentInternshipFormRepository.save(studentInternshipForm);
         return true;
     }
+
+    public List<StudentInternshipForm> getFormByUser(User user) {
+        return studentInternshipFormRepository.findAll()
+            .stream()
+            .filter(form -> form.getStudentInternship().getUser().getId() == user.getId())
+            .toList();
+
+    }
 }

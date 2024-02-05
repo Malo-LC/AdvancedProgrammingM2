@@ -1,8 +1,13 @@
 package com.advancedprogramming.api.controllers.beans;
 
+import com.advancedprogramming.api.models.Promotion;
+import com.advancedprogramming.api.models.StudentInternshipForm;
+import com.advancedprogramming.api.services.bean.UserShort;
+
 import java.time.LocalDate;
 
-public record StudentInternshipResponse (
+public record StudentInternshipResponse(
+    Integer id,
     Boolean isInternshipValidated,
     String companyName,
     String companyAddress,
@@ -13,11 +18,10 @@ public record StudentInternshipResponse (
     LocalDate startDate,
     LocalDate endDate,
     Integer wage,
-    String studentFirstname,
-    String studentLastname,
-    String tutorSchoolFirstname,
-    String tutorSchoolLastname,
-    String tutorCompanyFirstname,
-    String tutorCompanyLastname   
+    UserShort student,
+    UserShort tutorSchool,
+    UserShort tutorCompany,
+    Promotion promotion,
+    StudentInternshipForm form
 ) {
 }
