@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar";
 import DocElement from "../../components/DocElement/DocElement";
+import EmptyState from "../../components/EmptyState/EmptyState.jsx";
 import { docColumnNamesStudent, docColumnNamesTutor } from "../../constants/tableItems";
 import userService from "../../services/userService";
 import api from "../../utils/api";
@@ -23,10 +24,14 @@ function Documents() {
 
   useEffect(() => {
     controls.start({ y: 0 });
+    getDocs();
+  }, []);
+
+  const getDocs = () => {
     api.get("submit/all").then((res) => {
       setDocuments(res);
     });
-  }, []);
+  };
 
   const handleOpenViewer = (selectedDoc) => {
     setPdfSelected(selectedDoc);
@@ -66,13 +71,21 @@ function Documents() {
           </div>
         )}
         <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px]"}`}>
+          {documents.filter(
+            (doc) =>
+              doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
+          ).length === 0 && (
+            <div className="text-center">
+              <EmptyState type="document" />
+            </div>
+          )}
           {documents
             .filter(
               (doc) =>
                 doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
             )
             .map((item) => (
-              <DocElement key={item.reportId} internShip={item} userRole={userRole} onOpenViewer={handleOpenViewer} />
+              <DocElement onDone={getDocs} key={item.reportId} internShip={item} userRole={userRole} onOpenViewer={handleOpenViewer} />
             ))}
         </div>
       </div>

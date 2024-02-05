@@ -78,7 +78,13 @@ export default function Navbar() {
           </div>
           {user && (
             <div className="profile">
-              <ProfileNav isMobile={isMobile} firstname={user.firstname} lastname={user.lastname} profilePicture={user.profilePictureUri} />
+              <ProfileNav
+                isMobile={isMobile}
+                firstname={user.firstname}
+                lastname={user.lastname}
+                profilePicture={user.profilePictureUri}
+                userRole={userRole}
+              />
             </div>
           )}
         </>
@@ -100,7 +106,13 @@ export default function Navbar() {
           <div className="flex-none">
             {user && (
               <div className="profile">
-                <ProfileNav profilePicture={user.profilePictureUri} isMobile={isMobile} firstname={user?.firstname} lastname={user?.lastname} />
+                <ProfileNav
+                  profilePicture={user.profilePictureUri}
+                  isMobile={isMobile}
+                  firstname={user?.firstname}
+                  lastname={user?.lastname}
+                  userRole={userRole}
+                />
               </div>
             )}
           </div>

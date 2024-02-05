@@ -3,6 +3,7 @@ package com.advancedprogramming.api.controllers;
 import com.advancedprogramming.api.controllers.beans.MessageResponse;
 import com.advancedprogramming.api.controllers.beans.StudentInternshipFormRequest;
 import com.advancedprogramming.api.models.Form;
+import com.advancedprogramming.api.models.StudentInternshipForm;
 import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.models.bean.RoleEnum;
 import com.advancedprogramming.api.services.FormService;
@@ -64,6 +65,13 @@ public class FormController {
         return ResponseEntity.ok().body(formService.getFormById(id));
     }
 
+    @Operation(summary = "Get all forms of a user")
+    @GetMapping("/user")
+    public ResponseEntity<List<StudentInternshipForm>> getFormsOfUser(HttpServletRequest httpRequest) {
+        User user = userService.getUserByFromRequest(httpRequest);
+        return ResponseEntity.ok().body(formService.getFormByUser(user));
+    }
+
     @Operation(summary = "Delete a form by id")
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteFormById(@PathVariable Integer id, HttpServletRequest httpRequest) {
@@ -89,6 +97,7 @@ public class FormController {
         return ResponseEntity.status(404).body(new MessageResponse("Form not found or Error", false));
     }
 
+    @Operation(summary = "Create a student internship form")
     @PostMapping("/student-internship-form")
     public ResponseEntity<MessageResponse> createUserForm(@RequestBody StudentInternshipFormRequest request, HttpServletRequest httpRequest) {
         User user = userService.getUserByFromRequest(httpRequest);
@@ -102,6 +111,7 @@ public class FormController {
         return ResponseEntity.status(404).body(new MessageResponse("Form not found or Error", false));
     }
 
+    @Operation(summary = "Answer a student internship form")
     @PostMapping("/answer/{studentInternshipFormId}")
     public ResponseEntity<MessageResponse> answerForm(@PathVariable Integer studentInternshipFormId, @RequestBody List<AnswerType> answers, HttpServletRequest httpRequest) {
         User user = userService.getUserByFromRequest(httpRequest);
@@ -112,6 +122,7 @@ public class FormController {
         return ResponseEntity.status(404).body(new MessageResponse("Form not found or Error", false));
     }
 
+    @Operation(summary = "Sign a student internship form")
     @PostMapping("/sign/{studentInternshipFormId}")
     public Boolean signForm(@PathVariable Integer studentInternshipFormId, HttpServletRequest httpRequest) {
         User user = userService.getUserByFromRequest(httpRequest);

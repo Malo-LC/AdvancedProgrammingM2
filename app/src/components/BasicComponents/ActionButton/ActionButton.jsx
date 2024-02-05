@@ -2,10 +2,11 @@ import PropTypes from "prop-types";
 import api from "../../../utils/api";
 import { readFileAsync } from "../../../utils/authDataService";
 import "./actionbutton.css";
+import { toast } from "react-toastify";
 
-function ActionButton({ status, internShip, file }) {
+function ActionButton({ status, internShip, file, onDone, disabled }) {
   const handleButtonClick = () => {
-    if (!file) {
+    if (!file || internShip.tutorInternship.isValidated === false || !internShip.tutorSchool.isValidated === false) {
       const fileInput = document.getElementById("fileInput");
       fileInput.click();
     } else {
@@ -33,9 +34,14 @@ function ActionButton({ status, internShip, file }) {
           reportId: internShip.reportId,
         };
         const response = await api.post(`submit/upload/${internShip.studentInternshipId}`, formData);
-        console.log("File upload successful", response);
+        if (response.ok) {
+          toast.success("Fichier soumis");
+          onDone();
+          return;
+        }
+        toast.error("Erreur lors de la soumission du fichier");
       } catch (error) {
-        console.error("Error uploading file: ", error);
+        toast.error("Erreur lors de la soumission du fichier");
       }
     }
   };
@@ -43,15 +49,24 @@ function ActionButton({ status, internShip, file }) {
   return (
     <div>
       <button
+        disabled={disabled}
         onClick={(e) => {
           e.stopPropagation();
           handleButtonClick();
         }}
-        className={`action-button ${status === true ? " download-button" : " upload"}`}
+        className={`action-button disabled:cursor-not-allowed ${
+          status === false || internShip.tutorInternship.isValidated === false || internShip.tutorSchool.isValidated === false
+            ? " upload"
+            : " download-button"
+        }`}
       >
-        {status === true ? "Télécharger" : "Soumettre"}
+        {status === false || internShip.tutorInternship.isValidated === false || internShip.tutorSchool.isValidated === false
+          ? "Soumettre"
+          : "Telecharger"}
       </button>
-      {!file && <input id="fileInput" type="file" accept=".pdf" style={{ display: "none" }} onChange={handleFileChange} />}
+      {(!file || internShip.tutorInternship.isValidated === false || internShip.tutorSchool.isValidated === false) && (
+        <input id="fileInput" type="file" accept=".pdf" style={{ display: "none" }} onChange={(e) => handleFileChange(e)} />
+      )}
     </div>
   );
 }
@@ -60,6 +75,8 @@ ActionButton.propTypes = {
   status: PropTypes.bool.isRequired,
   internShip: PropTypes.object.isRequired,
   file: PropTypes.string,
+  onDone: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default ActionButton;

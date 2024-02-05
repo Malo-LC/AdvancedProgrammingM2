@@ -11,10 +11,10 @@ import api from "../../utils/api";
 import fileText from "../../assets/images/icons/file-text.svg";
 import "./docelement.css";
 
-function DocElement({ internShip, userRole, onOpenViewer }) {
+function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
-  const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
+  const mobileElementHeight = userRole === "STUDENT" ? 130 : 120;
   const [pdf, setPdf] = useState(null);
 
   useEffect(() => {
@@ -103,7 +103,7 @@ function DocElement({ internShip, userRole, onOpenViewer }) {
             <div className="flex flex-row items-center space-x-2">
               <p>{internShip.reportName}</p>
               {internShip.isSubmitted && (
-                <button onClick={handleClickDoc} className="p-1 bg-[#163767] rounded-lg">
+                <button onClick={handleClickDoc} className="px-1 py-2 bg-[#163767] rounded-lg">
                   <img src={fileText} />
                 </button>
               )}
@@ -112,16 +112,20 @@ function DocElement({ internShip, userRole, onOpenViewer }) {
             <div className="elements font-thin">{internShip.internshipName}</div>
             {userRole === "TUTOR" && <div className="elements">{internShip.userId.lastName}</div>}
             <div className="elements space-x-1">
-              <ValidationBubble
-                validationStatus={internShip.tutorSchool.isValidated}
-                firstname={internShip.tutorSchool.firstName.toUpperCase()}
-                lastname={internShip.tutorSchool.lastName.toUpperCase()}
-              />
-              <ValidationBubble
-                validationStatus={internShip.tutorInternship.isValidated}
-                firstname={internShip.tutorInternship.firstName.toUpperCase()}
-                lastname={internShip.tutorInternship.lastName.toUpperCase()}
-              />
+              {internShip.tutorSchool !== null && (
+                <ValidationBubble
+                  validationStatus={internShip.tutorSchool.isValidated}
+                  firstname={internShip.tutorSchool.firstName.toUpperCase()}
+                  lastname={internShip.tutorSchool.lastName.toUpperCase()}
+                />
+              )}
+              {internShip.tutorInternship && (
+                <ValidationBubble
+                  validationStatus={internShip.tutorInternship.isValidated}
+                  firstname={internShip.tutorInternship.firstName.toUpperCase()}
+                  lastname={internShip.tutorInternship.lastName.toUpperCase()}
+                />
+              )}
             </div>
             <div className="elements">
               <Status status={internShip.isSubmitted} type="document" />
@@ -129,7 +133,13 @@ function DocElement({ internShip, userRole, onOpenViewer }) {
           </div>
           {userRole === "STUDENT" && (
             <>
-              <ActionButton status={internShip.isSubmitted} internShip={internShip} file={pdf} />
+              <ActionButton
+                disabled={!internShip.tutorSchool || !internShip.tutorInternship}
+                onDone={onDone}
+                status={internShip.isSubmitted}
+                internShip={internShip}
+                file={pdf}
+              />
             </>
           )}
         </div>
@@ -143,6 +153,7 @@ DocElement.propTypes = {
   userRole: PropTypes.string.isRequired,
   internShip: PropTypes.object.isRequired,
   onOpenViewer: PropTypes.func.isRequired,
+  onDone: PropTypes.func,
 };
 
 export default DocElement;

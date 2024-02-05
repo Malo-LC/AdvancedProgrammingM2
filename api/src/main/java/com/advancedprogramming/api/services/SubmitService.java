@@ -76,8 +76,8 @@ public class SubmitService {
                 .collect(Collectors.toMap(o -> o.getReport().getId(), submit -> submit));
             List<Report> reports = internship.getReports();
             Map<Integer, User> getUserById = userService.getUserById();
-            User tutorSchool = getUserById.get(studentInternship.getTutorSchoolUser().getId());
-            User tutorCompany = getUserById.get(studentInternship.getTutorCompanyUser().getId());
+            User tutorSchool = studentInternship.getTutorSchoolUser() != null ? getUserById.get(studentInternship.getTutorSchoolUser().getId()) : null;
+            User tutorCompany = studentInternship.getTutorCompanyUser() != null ? getUserById.get(studentInternship.getTutorCompanyUser().getId()) : null;
             YearEnum promotionClass = internship.getPromotion().getPromotionClass();
 
             return reports
@@ -85,19 +85,19 @@ public class SubmitService {
                 .map(report -> {
                     Submit submit = submitsByReportId.getOrDefault(report.getId(), null);
 
-                    SubmitTutor tutorSchoolSubmit = new SubmitTutor(
+                    SubmitTutor tutorSchoolSubmit = tutorSchool != null ? new SubmitTutor(
                         tutorSchool.getId(),
                         submit != null ? submit.getIsApprovedBySchool() : null,
                         tutorSchool.getFirstName(),
                         tutorSchool.getLastName()
-                    );
+                    ) : null;
 
-                    SubmitTutor tutorCompanySubmit = new SubmitTutor(
+                    SubmitTutor tutorCompanySubmit = tutorCompany != null ? new SubmitTutor(
                         tutorCompany.getId(),
                         submit != null ? submit.getIsApprovedByCompany() : null,
                         tutorCompany.getFirstName(),
                         tutorCompany.getLastName()
-                    );
+                    ) : null;
 
                     UserShort userShort = new UserShort(
                         user.getId(),
@@ -171,6 +171,8 @@ public class SubmitService {
                 );
                 Filedb filedb = fileStorageService.store(file);
                 submit.setFiledb(filedb);
+                submit.setIsApprovedBySchool(null);
+                submit.setIsApprovedByCompany(null);
                 submitRepository.save(submit);
                 return true;
             } else {
@@ -224,5 +226,18 @@ public class SubmitService {
             log.warn("Submit not found with id {}", submitId);
             return null;
         }
+    }
+
+    public List<SubmitResponse> getSubmitToValidate(User tutor) {
+        List<User> students = findStudentIdsOfTutor(tutor);
+        List<SubmitResponse> submits = new ArrayList<>();
+        for (User student : students) {
+            submits.addAll(getSubmitStudent(student));
+        }
+        return submits
+            .stream()
+            .filter(submitResponse -> submitResponse.tutorSchool().userId().equals(tutor.getId()) ? submitResponse.tutorSchool().isValidated() == null : submitResponse.tutorInternship().isValidated() == null)
+            .filter(SubmitResponse::isSubmitted)
+            .toList();
     }
 }

@@ -15,7 +15,6 @@ public record StudentInternshipRequest(
     LocalDate startDate,
     LocalDate endDate,
     Integer wage,
-    Integer user_id,
     Integer internship_id
 ) {
 }

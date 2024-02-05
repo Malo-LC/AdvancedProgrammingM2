@@ -3,6 +3,8 @@ package com.advancedprogramming.api.services;
 import com.advancedprogramming.api.config.JwtService;
 import com.advancedprogramming.api.models.User;
 import com.advancedprogramming.api.models.UserRepository;
+import com.advancedprogramming.api.models.bean.RoleEnum;
+import com.advancedprogramming.api.services.bean.UserShort;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +19,13 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
+
+    public List<UserShort> getAllUsers() {
+        return userRepository.findAll()
+            .stream()
+            .map(user -> new UserShort(user.getId(), user.getFirstName(), user.getLastName()))
+            .toList();
+    }
 
     public User getUserByToken(String token) {
         String userEmail = jwtService.extractEmail(token);
@@ -37,7 +46,14 @@ public class UserService {
     }
 
     public Map<Integer, User> getUserById() {
-        List<User> users = (List<User>) userRepository.findAll();
+        List<User> users = userRepository.findAll();
         return users.stream().collect(Collectors.toMap(User::getId, user -> user));
+    }
+
+    public List<UserShort> getAllTutors() {
+        return userRepository.findAll().stream()
+            .filter(user -> RoleEnum.TUTOR.equals(user.getRole()))
+            .map(user -> new UserShort(user.getId(), user.getFirstName(), user.getLastName()))
+            .toList();
     }
 }
