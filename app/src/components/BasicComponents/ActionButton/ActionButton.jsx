@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 function ActionButton({ status, internShip, file, onDone, disabled }) {
   const handleButtonClick = () => {
-    if (!file) {
+    if (!file || internShip.tutorInternship.isValidated === false || !internShip.tutorSchool.isValidated === false) {
       const fileInput = document.getElementById("fileInput");
       fileInput.click();
     } else {
@@ -54,11 +54,19 @@ function ActionButton({ status, internShip, file, onDone, disabled }) {
           e.stopPropagation();
           handleButtonClick();
         }}
-        className={`action-button disabled:cursor-not-allowed ${status === true ? " download-button" : " upload"}`}
+        className={`action-button disabled:cursor-not-allowed ${
+          status === false || internShip.tutorInternship.isValidated === false || internShip.tutorSchool.isValidated === false
+            ? " upload"
+            : " download-button"
+        }`}
       >
-        {status === true ? "Télécharger" : "Soumettre"}
+        {status === false || internShip.tutorInternship.isValidated === false || internShip.tutorSchool.isValidated === false
+          ? "Soumettre"
+          : "Telecharger"}
       </button>
-      {!file && <input id="fileInput" type="file" accept=".pdf" style={{ display: "none" }} onChange={handleFileChange} />}
+      {(!file || !internShip.tutorInternship.isValidated || !internShip.tutorSchool.isValidated) && (
+        <input id="fileInput" type="file" accept=".pdf" style={{ display: "none" }} onChange={handleFileChange} />
+      )}
     </div>
   );
 }
