@@ -71,10 +71,7 @@ function Documents() {
           </div>
         )}
         <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px]"}`}>
-          {documents.filter(
-            (doc) =>
-              doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
-          ).length === 0 && (
+          {documents.length === 0 && (
             <div className="text-center">
               <EmptyState type="document" />
             </div>
@@ -82,7 +79,10 @@ function Documents() {
           {documents
             .filter(
               (doc) =>
-                doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
+                doc.reportName?.toLowerCase().includes(searchInput.toLowerCase()) ||
+                doc.deadline?.toLowerCase().includes(searchInput.toLowerCase()) ||
+                doc.userId?.firstName?.toLowerCase().includes(searchInput.toLowerCase()) ||
+                doc.userId.lastName?.toLowerCase().includes(searchInput.toLowerCase()),
             )
             .map((item) => (
               <DocElement onDone={getDocs} key={item.reportId} internShip={item} userRole={userRole} onOpenViewer={handleOpenViewer} />
