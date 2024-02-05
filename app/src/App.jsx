@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import ListForm from "./pages/Form/ListForm.jsx";
 import CreateForm from "./pages/Form/CreateForm.jsx";
 import Soumission from "./pages/Soumission/Soumission.jsx";
+import DocumentValidation from "./pages/Documents/DocumentValidation/DocumentValidation.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -89,6 +90,14 @@ function App() {
           }
         />
         <Route
+          path="/document-validation"
+          element={
+            <RestrictedRoute roles={["ADMIN", "TUTOR"]}>
+              <DocumentValidation />
+            </RestrictedRoute>
+          }
+        />
+        <Route
           path="/parametres/stages"
           element={
             <RestrictedRoute roles={["ADMIN"]}>
@@ -124,7 +133,7 @@ function App() {
           path="/soumettre"
           element={
             <RestrictedRoute roles={["STUDENT"]}>
-              <Soumission/>
+              <Soumission />
             </RestrictedRoute>
           }
         />

@@ -4,6 +4,8 @@ import { useMediaQuery } from "react-responsive";
 import ActionButton from "../BasicComponents/ActionButton/ActionButton";
 import Status from "../BasicComponents/Status/Status";
 import ValidationBubble from "../BasicComponents/ValidationBubble/ValidationBubble";
+import PropTypes from "prop-types";
+import api from "../../utils/api";
 
 //style
 import fileText from "../../assets/images/icons/file-text.svg";
@@ -131,9 +133,6 @@ function DocElement({ internShip, userRole, onOpenViewer }) {
     </>
   );
 }
-
-import PropTypes from "prop-types";
-import api from "../../utils/api";
 
 DocElement.propTypes = {
   student_name: PropTypes.string,
