@@ -22,7 +22,7 @@ VALUES (4, 'bob.miller@example.com', 'Bob', 'Miller', '$2a$10$djuA4wLmIP/I7DJNae
 INSERT INTO user (id, email, first_name, last_name, password, role, profile_picture_filedb_id, phone_number,
                   promotion_id)
 VALUES (5, 'emma.wilson@example.com', 'Emma', 'Wilson', '$2a$10$djuA4wLmIP/I7DJNaeo.4.BgitdBRlsVpJ3mj5NmZumwptVrXGOgK',
-        'TUTOR', null, '+777888999', null);
+        'STUDENT', null, '+777888999', null);
 
 INSERT INTO form (id, title, deadline)
 VALUES (1, 'Formulaire web', '2024-04-04');

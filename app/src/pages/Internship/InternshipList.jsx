@@ -57,6 +57,7 @@ function InternshipList() {
     api.post(`studentInternship/approve/${id}?isApproved=${approve}`).then((response) => {
       if (response.ok) {
         toast.success("Stage accepté");
+        getForms();
         return;
       }
       toast.error("Erreur lors de l'acceptation du stage");

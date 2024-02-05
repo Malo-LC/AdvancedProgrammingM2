@@ -171,6 +171,8 @@ public class SubmitService {
                 );
                 Filedb filedb = fileStorageService.store(file);
                 submit.setFiledb(filedb);
+                submit.setIsApprovedBySchool(null);
+                submit.setIsApprovedByCompany(null);
                 submitRepository.save(submit);
                 return true;
             } else {
@@ -235,6 +237,7 @@ public class SubmitService {
         return submits
             .stream()
             .filter(submitResponse -> submitResponse.tutorSchool().userId().equals(tutor.getId()) ? submitResponse.tutorSchool().isValidated() == null : submitResponse.tutorInternship().isValidated() == null)
+            .filter(SubmitResponse::isSubmitted)
             .toList();
     }
 }
