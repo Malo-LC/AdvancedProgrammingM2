@@ -1,0 +1,11 @@
+.accept-button {
+    @apply p-2 w-[90px] bg-white text-green-500 font-light;
+    @apply border border-green-500 rounded-md;
+    @apply hover:scale-105 duration-75;
+}
+
+.decline-button {
+    @apply p-2 w-[90px]  bg-white text-red-500 font-light;
+    @apply border border-red-500 rounded-md;
+    @apply hover:scale-105 duration-75;
+}

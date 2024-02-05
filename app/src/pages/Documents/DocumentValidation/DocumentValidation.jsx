@@ -1,13 +1,16 @@
-import React from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import api from "../../../utils/api";
+import ValidationElement from "../../../components/ValidationElement/ValidationElement.jsx";
+import DocViewer from "../../../components/DocViewer/DocViewer";
 
 function DocumentValidation() {
   const controls = useAnimation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [documents, setDocuments] = useState([]);
+  const [isDocViewerOpen, setIsDocViewerOpen] = useState(false);
+  const [pdfSelected, setPdfSelected] = useState("");
 
   useEffect(() => {
     controls.start({ y: 0 });
@@ -23,7 +26,7 @@ function DocumentValidation() {
     }
   };
 
-  const handleApproval = async (submitId) => {
+  const handleAccept = async (submitId) => {
     try {
       const response = await api.put(`submit/approve/${submitId}`, { isApproved: true });
       console.log(response);
@@ -33,13 +36,18 @@ function DocumentValidation() {
     }
   };
 
-  const handleRejection = async (submitId) => {
+  const handleDecline = async (submitId) => {
     try {
       const response = await api.put(`submit/approve/${submitId}`, { isApproved: false });
       console.log(response);
     } catch (error) {
       console.error("Error rejecting document:", error);
     }
+  };
+
+  const handleOpenViewer = (selectedDoc) => {
+    setPdfSelected(selectedDoc);
+    setIsDocViewerOpen(true);
   };
 
   return (
@@ -52,23 +60,19 @@ function DocumentValidation() {
       >
         <p className="document-title">Mes demandes de validation</p>
       </motion.div>
-      <div className="flex flex-col space-y-4">
-        {documents.map((item, index) => (
-          <div key={index} className="flex flex-row space-x-4">
-            <p>{item.reportName}</p>
-            <p>tutor school validation:</p>
-            <p>tutor company validation: {item.tutorInternship.isValidated === null ? "not treated" : "treated"}</p>
-            <div className="flex flex-row space-x-2 ">
-              <button onClick={() => handleApproval(item.submitId)} className="border border-gray-200 bg-green-200 p-1">
-                accepter
-              </button>
-              <button onClick={() => handleRejection(item.submitId)} className="border border-gray-200 bg-red-200 p-1">
-                refuser
-              </button>
-            </div>
-          </div>
-        ))}
+      <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px] w-full"}`}>
+        {document.isValidated != null &&
+          documents.map((item, index) => (
+            <ValidationElement key={index} document={item} onOpenViewer={handleOpenViewer} onAccept={handleAccept} onDecline={handleDecline} />
+          ))}
       </div>
+      {isDocViewerOpen && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="border-4 border-slate-200 p-1 rounded-lg">
+            <DocViewer file={pdfSelected} onCloseViewer={() => setIsDocViewerOpen(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

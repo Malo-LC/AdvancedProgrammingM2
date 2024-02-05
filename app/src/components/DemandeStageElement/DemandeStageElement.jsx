@@ -4,40 +4,13 @@ import { useMediaQuery } from "react-responsive";
 import Status from "../BasicComponents/Status/Status";
 
 import { useState } from "react";
-import ActionButton from "../BasicComponents/ActionButton/ActionButton";
+// import ActionButton from "../BasicComponents/ActionButton/ActionButton";
 import "./demandestageelement.css";
 
 function DemandeStageElement({ internShip, userRole }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
   const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
-
-  // let requestColumn;
-  // let requestKey;
-
-  // if (userRole === "STUDENT") {
-  //   requestColumn = requestColumnNamesStudent;
-  //   requestKey = requestKeyStudent;
-  // } else if (userRole === "TUTOR") {
-  //   requestColumn = requestColumnNamesTutor;
-  //   requestKey = requestKeyTutor;
-  // } else {
-  //   requestColumn = requestColumnNamesStudent;
-  //   requestKey = requestKeyStudent;
-  // }
-
-  // Convert the data to the format of the table
-  // const internships = requests.map((objet) => ({
-  //   internship_year: objet.internshipYear,
-  //   internship_status: <Status status={objet.isInternshipValidated} type="demande" />,
-  //   internship_name: objet.mission,
-  //   company_name: objet.companyName,
-  //   start_date: objet.startDate,
-  //   end_date: objet.endDate,
-  //   internship_id: objet.internshipId,
-  //   student_name: `${objet.studentFirstname} ${objet.studentFirstname}`,
-  //   link: `${objet.isInternshipValidated ? "consulter" : "demander"}`,
-  // }));
 
   const handleClick = async () => {
     setIsExpanded(!isExpanded);
