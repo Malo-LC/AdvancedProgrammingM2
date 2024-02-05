@@ -61,10 +61,9 @@ function DocumentValidation() {
         <p className="document-title">Mes demandes de validation</p>
       </motion.div>
       <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px] w-full"}`}>
-        {document.isValidated != null &&
-          documents.map((item, index) => (
-            <ValidationElement key={index} document={item} onOpenViewer={handleOpenViewer} onAccept={handleAccept} onDecline={handleDecline} />
-          ))}
+        {documents.map((item, index) => (
+          <ValidationElement key={index} document={item} onOpenViewer={handleOpenViewer} onAccept={handleAccept} onDecline={handleDecline} />
+        ))}
       </div>
       {isDocViewerOpen && (
         <div className="absolute inset-0 flex items-center justify-center">
