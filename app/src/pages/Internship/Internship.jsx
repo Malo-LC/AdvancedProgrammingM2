@@ -47,7 +47,7 @@ function Internship() {
                 </div>
             )}
             <div className={`internship-container  ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px] w-full"}`}>
-                {requests > 0 && <InternshipElement internShip={requests[0]} userRole={userRole} key={index} />}
+                {requests > 0 && <InternshipElement internShip={requests[0]} userRole={userRole}/>}
             </div>
         </div>
     );
