@@ -5,3 +5,15 @@
 .notification-number {
     @apply absolute
 }
+
+.notification-header {
+    @apply font-bold text-[#163767];
+}
+
+.notification-precision {
+    @apply font-light text-[14px] text-[#163767] text-center;
+}
+
+.notification-tooltip {
+    @apply py-1 px-2 w-[200px] flex flex-col justify-center items-center;
+}

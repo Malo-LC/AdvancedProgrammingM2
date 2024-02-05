@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar";
 import DocElement from "../../components/DocElement/DocElement";
+import EmptyState from "../../components/EmptyState/EmptyState.jsx";
 import { docColumnNamesStudent, docColumnNamesTutor } from "../../constants/tableItems";
 import userService from "../../services/userService";
 import api from "../../utils/api";
@@ -73,7 +74,11 @@ function Documents() {
           {documents.filter(
             (doc) =>
               doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
-          ).length === 0 && <div className="text-center">Aucun documents</div>}
+          ).length === 0 && (
+            <div className="text-center">
+              <EmptyState type="document" />
+            </div>
+          )}
           {documents
             .filter(
               (doc) =>
