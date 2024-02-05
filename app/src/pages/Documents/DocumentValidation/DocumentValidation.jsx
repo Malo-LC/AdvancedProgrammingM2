@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import api from "../../../utils/api";
 import ValidationElement from "../../../components/ValidationElement/ValidationElement.jsx";
 import DocViewer from "../../../components/DocViewer/DocViewer";
+import EmptyState from "../../../components/EmptyState/EmptyState.jsx";
 import { toast } from "react-toastify";
 
 function DocumentValidation() {
@@ -63,7 +64,11 @@ function DocumentValidation() {
         <p className="document-title">Mes demandes de validation</p>
       </motion.div>
       <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px] w-full"}`}>
-        {documents.length === 0 && <div className="text-center">Aucun document à valider</div>}
+        {documents.length === 0 && (
+          <div className="text-center">
+            <EmptyState />
+          </div>
+        )}
         {documents.map((item, index) => (
           <ValidationElement key={index} document={item} onOpenViewer={handleOpenViewer} onAccept={handleAccept} onDecline={handleDecline} />
         ))}
