@@ -4,7 +4,6 @@ import { useMediaQuery } from "react-responsive";
 import Status from "../BasicComponents/Status/Status";
 
 import { useState } from "react";
-// import ActionButton from "../BasicComponents/ActionButton/ActionButton";
 import "./demandestageelement.css";
 
 function DemandeStageElement({ internShip, userRole }) {
