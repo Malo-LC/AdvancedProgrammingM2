@@ -3,10 +3,23 @@ import api from "../../../utils/api";
 import { readFileAsync } from "../../../utils/authDataService";
 import "./actionbutton.css";
 
-function ActionButton({ status, internShip }) {
+function ActionButton({ status, internShip, file }) {
   const handleButtonClick = () => {
-    const fileInput = document.getElementById("fileInput");
-    fileInput.click();
+    if (!file) {
+      const fileInput = document.getElementById("fileInput");
+      fileInput.click();
+    } else {
+      handleDownload();
+    }
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = file;
+    link.download = internShip.reportName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleFileChange = async (e) => {
@@ -15,8 +28,6 @@ function ActionButton({ status, internShip }) {
 
     if (file) {
       try {
-        // const base64Data = await readFileAsync(file);
-        // formData.append("base64File", base64Data);
         const formData = {
           file: rawBody ? { base64: rawBody, name: file.name, type: file.type } : null,
           reportId: internShip.reportId,
@@ -40,7 +51,7 @@ function ActionButton({ status, internShip }) {
       >
         {status === true ? "Télécharger" : "Soumettre"}
       </button>
-      {status === false && <input id="fileInput" type="file" accept=".pdf" style={{ display: "none" }} onChange={handleFileChange} />}
+      {!file && <input id="fileInput" type="file" accept=".pdf" style={{ display: "none" }} onChange={handleFileChange} />}
     </div>
   );
 }
@@ -48,6 +59,7 @@ function ActionButton({ status, internShip }) {
 ActionButton.propTypes = {
   status: PropTypes.bool.isRequired,
   internShip: PropTypes.object.isRequired,
+  file: PropTypes.string,
 };
 
 export default ActionButton;

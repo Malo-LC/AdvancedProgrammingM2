@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import ActionButton from "../BasicComponents/ActionButton/ActionButton";
 import Status from "../BasicComponents/Status/Status";
@@ -9,20 +9,26 @@ import ValidationBubble from "../BasicComponents/ValidationBubble/ValidationBubb
 import fileText from "../../assets/images/icons/file-text.svg";
 import "./docelement.css";
 
-//testPdf
-import testPdf from "../../assets/test.pdf";
-
-function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
+function DocElement({ internShip, userRole, onOpenViewer }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
   const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
+  const [pdf, setPdf] = useState(null);
+
+  useEffect(() => {
+    if (internShip.submitId != null) {
+      api.get(`submit/download/${internShip.submitId}`).then((res) => {
+        setPdf(res);
+      });
+    }
+  }, [internShip.submitId]);
 
   const handleClick = async () => {
     setIsExpanded(!isExpanded);
   };
 
   const handleClickDoc = () => {
-    onOpenViewer(testPdf);
+    onOpenViewer(pdf);
   };
 
   return (
@@ -41,7 +47,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
                 {userRole === "TUTOR" && (
                   <div className="elements-hidden">
                     <p className="mr-2">Nom étudiant :</p>
-                    <p className="font-thin">{student_name}</p>
+                    <p className="font-thin">{internShip.userId.lastName}</p>
                   </div>
                 )}
                 <div className="elements-hidden">
@@ -51,7 +57,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
                 {userRole === "STUDENT" && (
                   <div className="elements-hidden">
                     <p className="mr-2">Nom du stage :</p>
-                    <p className="font-thin">{internShip.internship_name}</p>
+                    <p className="font-thin">{internShip.internshipName}</p>
                   </div>
                 )}
                 <div className="elements-hidden space-x-1 mt-1">
@@ -77,7 +83,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
                   )}
                   {userRole === "STUDENT" && (
                     <>
-                      <ActionButton status={internShip.isSubmitted} />
+                      <ActionButton status={internShip.isSubmitted} file={pdf} />
                     </>
                   )}
                 </div>
@@ -97,7 +103,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
               )}
             </div>
             <div className="elements font-thin">{internShip.deadline}</div>
-            <div className="elements font-thin">{internShip.internship_name}</div>
+            <div className="elements font-thin">{internShip.internshipName}</div>
             {userRole === "TUTOR" && <div className="elements">{internShip.userId.lastName}</div>}
             <div className="elements space-x-1">
               <ValidationBubble
@@ -117,7 +123,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
           </div>
           {userRole === "STUDENT" && (
             <>
-              <ActionButton status={internShip.isSubmitted} internShip={internShip} />
+              <ActionButton status={internShip.isSubmitted} internShip={internShip} file={pdf} />
             </>
           )}
         </div>
@@ -127,6 +133,7 @@ function DocElement({ internShip, student_name, userRole, onOpenViewer }) {
 }
 
 import PropTypes from "prop-types";
+import api from "../../utils/api";
 
 DocElement.propTypes = {
   student_name: PropTypes.string,
