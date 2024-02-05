@@ -64,8 +64,8 @@ function ActionButton({ status, internShip, file, onDone, disabled }) {
           ? "Soumettre"
           : "Telecharger"}
       </button>
-      {(!file || !internShip.tutorInternship.isValidated || !internShip.tutorSchool.isValidated) && (
-        <input id="fileInput" type="file" accept=".pdf" style={{ display: "none" }} onChange={handleFileChange} />
+      {(!file || internShip.tutorInternship.isValidated === false || internShip.tutorSchool.isValidated === false) && (
+        <input id="fileInput" type="file" accept=".pdf" style={{ display: "none" }} onChange={(e) => handleFileChange(e)} />
       )}
     </div>
   );
