@@ -1,12 +1,28 @@
 import PropTypes from "prop-types";
 import { Notification } from "../BasicComponents/Notification/Notification";
-
+import { useEffect, useState } from "react";
 import { ProfileTooltip } from "./ProfileTooltip/ProfileTooltip";
+import api from "../../utils/api";
 
 //style
 import "./profilenav.css";
 
 export function ProfileNav({ profilePicture, firstname, lastname, isMobile }) {
+  const [notifications, setNotifications] = useState(null);
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await api.get("submit/all");
+      setNotifications(response || []);
+    } catch (error) {
+      console.error("Error fetching documents:", error);
+    }
+  };
+
   return (
     <div className="profile">
       {isMobile ? (
