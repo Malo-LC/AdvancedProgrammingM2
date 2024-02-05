@@ -11,7 +11,7 @@ import arrowLeft from "../../assets/images/icons/arrow-left-circle.svg";
 import arrowRight from "../../assets/images/icons/arrow-right-circle.svg";
 import xCircle from "../../assets/images/icons/x-circle.svg";
 import "./docviewer.css";
-function DocViewer({ file, onCloseViewer }) {
+function DocViewer({ file, onCloseViewer, isMobile }) {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -28,33 +28,60 @@ function DocViewer({ file, onCloseViewer }) {
   };
 
   return (
-    <div className="">
-      <button className="viewer-button" onClick={onCloseViewer}>
-        <img src={xCircle} className="" />
-      </button>
-      <Document className="pdf-container" file={file} onLoadSuccess={onDocumentLoadSuccess} onLoadError={console.error}>
-        <Page pageNumber={pageNumber} />
-      </Document>
-      <div className="flex flex-row justify-between items-center">
-        <p className="border border-[#163767] rounded-lg p-1">
-          Page {pageNumber} of {numPages}
-        </p>
-        <div className="flex flex-row space-x-2">
-          <button onClick={goToPreviousPage} disabled={pageNumber <= 1} className="viewer-button">
-            <img src={arrowLeft} className={`${pageNumber === 1 && "pointer-event-none opacity-30"}`} />
+    <>
+      {isMobile ? (
+        <div className="bg-slate-100 py-1">
+          <button className="viewer-button" onClick={onCloseViewer}>
+            <img src={xCircle} className="" />
           </button>
-          <button onClick={goToNextPage} disabled={pageNumber >= numPages} className="viewer-button">
-            <img src={arrowRight} className={`${pageNumber === numPages && "pointer-event-none opacity-30"}`} />
-          </button>
+          <Document className="pdf-container" file={file} onLoadSuccess={onDocumentLoadSuccess} onLoadError={console.error}>
+            <Page pageNumber={pageNumber} />
+          </Document>
+          <div className="flex flex-row justify-between items-center">
+            <p className="border border-[#163767] rounded-lg p-1 mt-1">
+              Page {pageNumber} of {numPages}
+            </p>
+            <div className="flex flex-row space-x-2">
+              <button onClick={goToPreviousPage} disabled={pageNumber <= 1} className="viewer-button">
+                <img src={arrowLeft} className={`${pageNumber === 1 && "pointer-event-none opacity-30"}`} />
+              </button>
+              <button onClick={goToNextPage} disabled={pageNumber >= numPages} className="viewer-button">
+                <img src={arrowRight} className={`${pageNumber === numPages && "pointer-event-none opacity-30"}`} />
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <>
+          <button className="viewer-button" onClick={onCloseViewer}>
+            <img src={xCircle} className="" />
+          </button>
+          <Document className="pdf-container" file={file} onLoadSuccess={onDocumentLoadSuccess} onLoadError={console.error}>
+            <Page pageNumber={pageNumber} />
+          </Document>
+          <div className="flex flex-row justify-between items-center">
+            <p className="border border-[#163767] rounded-lg p-1">
+              Page {pageNumber} of {numPages}
+            </p>
+            <div className="flex flex-row space-x-2">
+              <button onClick={goToPreviousPage} disabled={pageNumber <= 1} className="viewer-button">
+                <img src={arrowLeft} className={`${pageNumber === 1 && "pointer-event-none opacity-30"}`} />
+              </button>
+              <button onClick={goToNextPage} disabled={pageNumber >= numPages} className="viewer-button">
+                <img src={arrowRight} className={`${pageNumber === numPages && "pointer-event-none opacity-30"}`} />
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 }
 
 DocViewer.propTypes = {
   file: PropTypes.string.isRequired,
   onCloseViewer: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired,
 };
 
 export default DocViewer;

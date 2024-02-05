@@ -82,7 +82,7 @@ function Documents() {
                 doc.reportName?.toLowerCase().includes(searchInput.toLowerCase()) ||
                 doc.deadline?.toLowerCase().includes(searchInput.toLowerCase()) ||
                 doc.userId?.firstName?.toLowerCase().includes(searchInput.toLowerCase()) ||
-                doc.userId.lastName?.toLowerCase().includes(searchInput.toLowerCase()),
+                doc.userId?.lastName?.toLowerCase().includes(searchInput.toLowerCase()),
             )
             .map((item) => (
               <DocElement onDone={getDocs} key={item.reportId} internShip={item} userRole={userRole} onOpenViewer={handleOpenViewer} />
@@ -92,7 +92,7 @@ function Documents() {
       {isDocViewerOpen && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="border-4 border-slate-200 p-1 rounded-lg">
-            <DocViewer file={pdfSelected} onCloseViewer={() => setIsDocViewerOpen(false)} />
+            <DocViewer file={pdfSelected} onCloseViewer={() => setIsDocViewerOpen(false)} isMobile={isMobile} />
           </div>
         </div>
       )}
