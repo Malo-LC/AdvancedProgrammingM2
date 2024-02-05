@@ -40,3 +40,10 @@ npm run dev
 ### Routes :
 
 Go to : http://localhost:8080/swagger-ui/index.html#/
+
+### Things we did not have time to do :
+
+Send an emails to the user to notify him the validation of documents or the creation of his account for example.
+A search engine for the documents using keywords.
+Restrict the confidentiality of the documents depending on the validation status.
+Have a list of all the interns for a sepcific year.
