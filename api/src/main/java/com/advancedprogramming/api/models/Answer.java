@@ -1,5 +1,6 @@
 package com.advancedprogramming.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,5 +30,6 @@ public class Answer {
     private Question question;
 
     @ManyToOne
+    @JsonIgnore
     private StudentInternshipForm studentInternshipForm;
 }
