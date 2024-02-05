@@ -1,45 +1,70 @@
+import { motion } from "framer-motion";
+import PropTypes from "prop-types";
 import { useMediaQuery } from "react-responsive";
 import Status from "../BasicComponents/Status/Status";
-import TableComponent from "../TableComponent/TableComponent";
 
+import { useState } from "react";
 import "./internshipelement.css";
+//["Intitulé du stage", "Date du début", "Date de fin", "Société", "Action", "Status"];
 
-function InternshipElement(props) {
-    const userRole = props.userRole;
-
+function InternshipElement({ internShip, userRole }) {
     const isMobile = useMediaQuery({ maxWidth: 767 });
+    const [isExpanded, setIsExpanded] = useState(false);
+    const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
 
-    // Those names are displayed in the table
-    let internshipColumn= ["Intitulé du stage", "Date du début", "Date de fin", "Société", "Action", "Status"];
-
-    // Those keys define the order of the data in the table
-    const internshipKey = ["internship_year", "internship_status", "internship_name", "company_name", "start_date", "end_date", "internship_id", "link"];
-
-    // Convert the data to the format of the table
-    const newInternshipsList = props.data.map(objet => {
-        let newInternshipData = {
-            "mission": objet.mission,
-            "start_date": objet.startDate,
-            "end_date": objet.endDate,
-            "company_name": objet.companyName,
-            "link": <a href="">Consulter</a>,
-            "internship_status": <Status status={objet.isInternshipValidated} type="demande"/>
-        };
-
-        return newInternshipData;
-    });
+    const handleClick = async () => {
+        setIsExpanded(!isExpanded);
+    };
 
     return (
         <>
-            <TableComponent columns={internshipColumn} data={newInternshipsList} dataKeys={internshipKey} />
-        </>
-    )
-}
+            {isMobile ? (
+                <motion.div className="internshipelement-mobile">
+                    <motion.div className="expanded-content" animate={{ opacity: isExpanded ? 1 : 0, height: isExpanded ? mobileElementHeight : 0 }}>
+                        {isExpanded && (
+                            <>
+                                <div className="elements">{internShip.mission}</div>
+                                <div className="elements ">{internShip.startDate}</div>
+                                <div className="elements">{internShip.endDate}</div>
+                                <div className="flex flex-row items-center space-x-2">
+                                    <p>{internShip.companyName}</p>
+                                </div>
+                                <div className="elements">
+                                    todo
+                                </div>
+                                <div className="elements">
+                                    <Status status={internShip.isInternshipValidated} type="document"/>
+                                </div>
+                            </>
+                        )}
+                    </motion.div>
+                </motion.div>
+            ) : (
+                <div className="flex flex-row items-center space-x-2 px-2">
+                    <div className={`docelement justify-between w-full `}>
 
-import PropTypes from "prop-types";
+                        <div className="elements">{internShip.mission}</div>
+                        <div className="elements ">{internShip.startDate}</div>
+                        <div className="elements">{internShip.endDate}</div>
+                        <div className="flex flex-row items-center space-x-2">
+                            <p>{internShip.companyName}</p>
+                        </div>
+                        <div className="elements">
+                            todo
+                        </div>
+                        <div className="elements">
+                            <Status status={internShip.isInternshipValidated} type="document"/>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+}
 
 InternshipElement.propTypes = {
     userRole: PropTypes.string.isRequired,
-    data: PropTypes.array.isRequired
+    internShip: PropTypes.object.isRequired,
 };
+
 export default InternshipElement;
