@@ -1,0 +1,24 @@
+.internshipelement {
+    @apply flex flex-row items-center;
+    @apply px-6 py-3 my-2 border rounded-lg;
+    @apply bg-[#F2F4F8];
+}
+
+.internshipelement-mobile {
+    @apply flex flex-col w-full;
+    @apply px-6 py-3 my-2;
+    @apply border rounded-lg;
+    @apply bg-[#F2F4F8];
+}
+
+.elements {
+    @apply flex  items-center ;
+}
+
+.expanded-content {
+    @apply flex flex-col w-full;
+}
+
+.elements-hidden {
+    @apply flex flex-row w-full justify-between;
+}

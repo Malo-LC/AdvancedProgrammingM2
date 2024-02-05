@@ -1,28 +1,56 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
 import userService from "../../services/userService";
-
-//style
+import api from "../../utils/api";
+import InternshipElement from "../../components/InternshipElement/InternshipElement.jsx";
 import "./internship.css";
+import DemandeStageElement from "../../components/DemandeStageElement/DemandeStageElement.jsx";
+import Searchbar from "../../components/BasicComponents/SearchBar/SearchBar.jsx";
+import DocElement from "../../components/DocElement/DocElement.jsx";
+import DocViewer from "../../components/DocViewer/DocViewer.jsx";
+function Internship() {
 
-function Stages() {
-  const controls = useAnimation();
+    const controls = useAnimation();
+    const isMobile = useMediaQuery({ maxWidth: 767 });
 
-  const user = userService.getUserInfo();
-  const userRole = userService.getRole();
+    const userRole = userService.getUserInfo();
+    const [requests, setRequests] = useState([]);
+    let internshipColumn= ["Intitulé du stage", "Date du début", "Date de fin", "Société", "Action", "Status"];
 
-  useEffect(() => {
-    controls.start({ y: 0 });
-  }, []);
+    useEffect(() => {
+        controls.start({ y: 0 });
+        api.get("studentInternship/all").then((res) => {
+            setRequests(res);
+        });
+    }, []);
 
-  return (
-    <div className="stages">
-      <motion.div initial={{ x: "-300%" }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 120, damping: 14 }} className="stage-title">
-        <p>Mes stages</p>
-      </motion.div>
-      <motion.div className="metric-container">{userRole === "" && <div className=""></div>}</motion.div>
-    </div>
-  );
+    return (
+        <div className={`internship ${isMobile ? "items-start" : "items-center justify-center"}`}>
+            <motion.div
+                className={`internship-header ${isMobile ? "flex-col" : "flex-row"}`}
+                initial={{ x: "-300%" }}
+                animate={{ x: 0 }}
+                transition={{ type: "spring", stiffness: 120, damping: 14 }}
+            >
+                <p className="internship-title">Mon Stage</p>
+            </motion.div>
+            {isMobile === false && (
+                <div className="table-title">
+                    {internshipColumn.map((item) => (
+                        <div className="font-semibold text-center" key={item}>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+            )}
+            <div className={`internship-container  ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px] w-full"}`}>
+                {requests > 0 && <InternshipElement internShip={requests[0]} userRole={userRole} key={index} />}
+            </div>
+        </div>
+    );
 }
 
-export default Stages;
+export default Internship;

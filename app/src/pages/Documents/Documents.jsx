@@ -77,8 +77,10 @@ function Documents() {
         </div>
       </div>
       {isDocViewerOpen && (
-        <div className="absolute border-4 border-slate-200 p-1 rounded-lg">
-          <DocViewer file={pdfSelected} onCloseViewer={() => setIsDocViewerOpen(false)} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="border-4 border-slate-200 p-1 rounded-lg">
+            <DocViewer file={pdfSelected} onCloseViewer={() => setIsDocViewerOpen(false)} />
+          </div>
         </div>
       )}
     </div>

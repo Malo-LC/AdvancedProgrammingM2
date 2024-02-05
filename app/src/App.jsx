@@ -17,6 +17,7 @@ import CreateForm from "./pages/Form/CreateForm.jsx";
 import ListFormStudent from "./pages/Form/ListFormStudent.jsx";
 import Soumission from "./pages/Soumission/Soumission.jsx";
 import InternshipList from "./pages/Internship/InternshipList.jsx";
+import DocumentValidation from "./pages/Documents/DocumentValidation/DocumentValidation.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -95,6 +96,14 @@ function App() {
           element={
             <RestrictedRoute roles={["ADMIN", "TUTOR", "STUDENT"]}>
               <Demandes />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/document-validation"
+          element={
+            <RestrictedRoute roles={["ADMIN", "TUTOR"]}>
+              <DocumentValidation />
             </RestrictedRoute>
           }
         />
