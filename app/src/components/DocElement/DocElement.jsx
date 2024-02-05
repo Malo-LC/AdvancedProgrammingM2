@@ -14,7 +14,7 @@ import "./docelement.css";
 function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
-  const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
+  const mobileElementHeight = userRole === "STUDENT" ? 130 : 120;
   const [pdf, setPdf] = useState(null);
 
   useEffect(() => {
@@ -103,7 +103,7 @@ function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
             <div className="flex flex-row items-center space-x-2">
               <p>{internShip.reportName}</p>
               {internShip.isSubmitted && (
-                <button onClick={handleClickDoc} className="p-1 bg-[#163767] rounded-lg">
+                <button onClick={handleClickDoc} className="px-1 py-2 bg-[#163767] rounded-lg">
                   <img src={fileText} />
                 </button>
               )}
