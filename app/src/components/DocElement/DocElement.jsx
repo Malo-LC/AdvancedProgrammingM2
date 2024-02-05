@@ -65,16 +65,20 @@ function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
                 <div className="elements-hidden space-x-1 mt-1">
                   <p className="mr-2">Validations :</p>
                   <div className="flex flex-row space-x-2">
-                    <ValidationBubble
-                      validationStatus={internShip.tutorSchool.isValidated}
-                      firstname={internShip.tutorSchool.firstName.toUpperCase()}
-                      lastname={internShip.tutorSchool.lastName.toUpperCase()}
-                    />
-                    <ValidationBubble
-                      validationStatus={internShip.tutorInternship.isValidated}
-                      firstname={internShip.tutorInternship.firstName.toUpperCase()}
-                      lastname={internShip.tutorInternship.lastName.toUpperCase()}
-                    />
+                    {internShip.tutorSchool != null && (
+                      <ValidationBubble
+                        validationStatus={internShip.tutorSchool.isValidated}
+                        firstname={internShip.tutorSchool.firstName.toUpperCase()}
+                        lastname={internShip.tutorSchool.lastName.toUpperCase()}
+                      />
+                    )}
+                    {internShip.tutorInternship != null && (
+                      <ValidationBubble
+                        validationStatus={internShip.tutorInternship.isValidated}
+                        firstname={internShip.tutorInternship.firstName.toUpperCase()}
+                        lastname={internShip.tutorInternship.lastName.toUpperCase()}
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="w-full flex justify-center mt-2 space-x-3">
