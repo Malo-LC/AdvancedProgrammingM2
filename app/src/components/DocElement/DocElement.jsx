@@ -14,7 +14,7 @@ import "./docelement.css";
 function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
-  const mobileElementHeight = userRole === "STUDENT" ? 130 : 120;
+  const mobileElementHeight = userRole === "STUDENT" ? 130 : 130;
   const [pdf, setPdf] = useState(null);
 
   useEffect(() => {
@@ -82,11 +82,12 @@ function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
                   </div>
                 </div>
                 <div className="w-full flex justify-center mt-2 space-x-3">
-                  {internShip.isSubmitted && (
-                    <button onClick={handleClickDoc} className="px-2 bg-[#163767] rounded-lg">
-                      <img src={fileText} />
-                    </button>
-                  )}
+                  <button
+                    onClick={handleClickDoc}
+                    className={`px-1 py-2 bg-[#163767] rounded-lg ${!internShip.isSubmitted && "opacity-20  pointer-events-none"}`}
+                  >
+                    <img src={fileText} />
+                  </button>
                   {userRole === "STUDENT" && (
                     <>
                       <ActionButton status={internShip.isSubmitted} file={pdf} />
@@ -100,16 +101,20 @@ function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
       ) : (
         <div className="flex flex-row items-center space-x-2 px-2">
           <div className={`docelement justify-between w-full `}>
-            <div className="flex flex-row items-center space-x-2">
-              <p>{internShip.reportName}</p>
-              {internShip.isSubmitted && (
-                <button onClick={handleClickDoc} className="px-1 py-2 bg-[#163767] rounded-lg">
+            <div className="flex flex-row items-center w-[200px] ">
+              <p className="w-2/3">{internShip.reportName}</p>
+              <div className="w-1/3 justify-end flex">
+                <button
+                  onClick={handleClickDoc}
+                  className={`px-1 py-2 bg-[#163767] rounded-lg ${!internShip.isSubmitted && "opacity-20  pointer-events-none"}`}
+                >
                   <img src={fileText} />
                 </button>
-              )}
+              </div>
             </div>
             <div className="elements font-thin">{internShip.deadline}</div>
-            <div className="elements font-thin">{internShip.internshipName}</div>
+            {userRole === "STUDENT" && <div className="elements font-thin">{internShip.internshipName}</div>}
+
             {userRole === "TUTOR" && <div className="elements">{internShip.userId.lastName}</div>}
             <div className="elements space-x-1">
               {internShip.tutorSchool !== null && (
