@@ -11,7 +11,7 @@ import api from "../../utils/api";
 import fileText from "../../assets/images/icons/file-text.svg";
 import "./docelement.css";
 
-function DocElement({ internShip, userRole, onOpenViewer }) {
+function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isExpanded, setIsExpanded] = useState(false);
   const mobileElementHeight = userRole === "STUDENT" ? 130 : 90;
@@ -125,7 +125,7 @@ function DocElement({ internShip, userRole, onOpenViewer }) {
           </div>
           {userRole === "STUDENT" && (
             <>
-              <ActionButton status={internShip.isSubmitted} internShip={internShip} file={pdf} />
+              <ActionButton onDone={onDone} status={internShip.isSubmitted} internShip={internShip} file={pdf} />
             </>
           )}
         </div>
@@ -139,6 +139,7 @@ DocElement.propTypes = {
   userRole: PropTypes.string.isRequired,
   internShip: PropTypes.object.isRequired,
   onOpenViewer: PropTypes.func.isRequired,
+  onDone: PropTypes.func,
 };
 
 export default DocElement;

@@ -36,3 +36,4 @@ export const requestKeyStudent = [
 
 export const docColumnNamesTutor = ["Nom du document", "Deadline", "Nom de l'élève", "Validation", "Status"];
 export const docColumnNamesStudent = ["Nom du document", "Deadline", "Intitulé du stage", "Validation", "Status", "Action"];
+export const internshipColumn = ["Intitulé du stage", "Date du début", "Date de fin", "Société", "Action", "Status"];

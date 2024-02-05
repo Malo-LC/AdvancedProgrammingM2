@@ -23,10 +23,14 @@ function Documents() {
 
   useEffect(() => {
     controls.start({ y: 0 });
+    getDocs();
+  }, []);
+
+  const getDocs = () => {
     api.get("submit/all").then((res) => {
       setDocuments(res);
     });
-  }, []);
+  };
 
   const handleOpenViewer = (selectedDoc) => {
     setPdfSelected(selectedDoc);
@@ -72,7 +76,7 @@ function Documents() {
                 doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
             )
             .map((item) => (
-              <DocElement key={item.reportId} internShip={item} userRole={userRole} onOpenViewer={handleOpenViewer} />
+              <DocElement onDone={getDocs} key={item.reportId} internShip={item} userRole={userRole} onOpenViewer={handleOpenViewer} />
             ))}
         </div>
       </div>

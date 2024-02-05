@@ -2,8 +2,9 @@ import PropTypes from "prop-types";
 import api from "../../../utils/api";
 import { readFileAsync } from "../../../utils/authDataService";
 import "./actionbutton.css";
+import { toast } from "react-toastify";
 
-function ActionButton({ status, internShip, file }) {
+function ActionButton({ status, internShip, file, onDone }) {
   const handleButtonClick = () => {
     if (!file) {
       const fileInput = document.getElementById("fileInput");
@@ -33,9 +34,14 @@ function ActionButton({ status, internShip, file }) {
           reportId: internShip.reportId,
         };
         const response = await api.post(`submit/upload/${internShip.studentInternshipId}`, formData);
-        console.log("File upload successful", response);
+        if (response.ok) {
+          toast.success("Fichier soumis");
+          onDone();
+          return;
+        }
+        toast.error("Erreur lors de la soumission du fichier");
       } catch (error) {
-        console.error("Error uploading file: ", error);
+        toast.error("Erreur lors de la soumission du fichier");
       }
     }
   };
@@ -60,6 +66,7 @@ ActionButton.propTypes = {
   status: PropTypes.bool.isRequired,
   internShip: PropTypes.object.isRequired,
   file: PropTypes.string,
+  onDone: PropTypes.func,
 };
 
 export default ActionButton;
