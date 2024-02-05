@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import api from "../../../utils/api";
 import ValidationElement from "../../../components/ValidationElement/ValidationElement.jsx";
 import DocViewer from "../../../components/DocViewer/DocViewer";
+import { toast } from "react-toastify";
 
 function DocumentValidation() {
   const controls = useAnimation();
@@ -19,7 +20,7 @@ function DocumentValidation() {
 
   const fetchDocuments = async () => {
     try {
-      const response = await api.get("submit/all");
+      const response = await api.get("submit/to-validate");
       setDocuments(response || []);
     } catch (error) {
       console.error("Error fetching documents:", error);
@@ -30,6 +31,7 @@ function DocumentValidation() {
     try {
       const response = await api.put(`submit/approve/${submitId}`, { isApproved: true });
       console.log(response);
+      toast.success("Document approuvé");
       fetchDocuments();
     } catch (error) {
       console.error("Error approving document:", error);
@@ -40,6 +42,8 @@ function DocumentValidation() {
     try {
       const response = await api.put(`submit/approve/${submitId}`, { isApproved: false });
       console.log(response);
+      toast.success("Document refusé");
+      fetchDocuments();
     } catch (error) {
       console.error("Error rejecting document:", error);
     }
@@ -61,6 +65,7 @@ function DocumentValidation() {
         <p className="document-title">Mes demandes de validation</p>
       </motion.div>
       <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px] w-full"}`}>
+        {documents.length === 0 && <div className="text-center">Aucun document à valider</div>}
         {documents.map((item, index) => (
           <ValidationElement key={index} document={item} onOpenViewer={handleOpenViewer} onAccept={handleAccept} onDecline={handleDecline} />
         ))}

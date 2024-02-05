@@ -225,4 +225,16 @@ public class SubmitService {
             return null;
         }
     }
+
+    public List<SubmitResponse> getSubmitToValidate(User tutor) {
+        List<User> students = findStudentIdsOfTutor(tutor);
+        List<SubmitResponse> submits = new ArrayList<>();
+        for (User student : students) {
+            submits.addAll(getSubmitStudent(student));
+        }
+        return submits
+            .stream()
+            .filter(submitResponse -> submitResponse.tutorSchool().userId().equals(tutor.getId()) ? submitResponse.tutorSchool().isValidated() == null : submitResponse.tutorInternship().isValidated() == null)
+            .toList();
+    }
 }
