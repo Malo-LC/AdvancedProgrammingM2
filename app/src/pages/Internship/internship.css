@@ -1,8 +1,7 @@
 .stage-title {
-    @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-[#163767] mt-2 justify-start;
+  @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-[#163767] mt-2 justify-start;
 }
 
 .stages {
-    @apply flex w-full h-screen flex-col;
-    /* @apply mx-[30px] sm:mx-[90px] lg:mx-[150px] my-[30px] sm:my-[40px] lg:my-[40px]; */
+  @apply flex w-full flex-col;
 }

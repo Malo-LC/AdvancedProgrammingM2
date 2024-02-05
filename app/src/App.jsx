@@ -16,6 +16,7 @@ import ListForm from "./pages/Form/ListForm.jsx";
 import CreateForm from "./pages/Form/CreateForm.jsx";
 import ListFormStudent from "./pages/Form/ListFormStudent.jsx";
 import Soumission from "./pages/Soumission/Soumission.jsx";
+import InternshipList from "./pages/Internship/InternshipList.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -78,6 +79,14 @@ function App() {
           element={
             <RestrictedRoute roles={["TUTOR", "STUDENT", "ADMIN"]}>
               <Stage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/stages/liste"
+          element={
+            <RestrictedRoute roles={["ADMIN"]}>
+              <InternshipList />
             </RestrictedRoute>
           }
         />
