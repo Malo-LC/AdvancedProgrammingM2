@@ -57,7 +57,7 @@ function CreateForm() {
         <Link to="/parametres/form" className="hover:scale-125 transform transition-all duration-300">
           <ChevronLeft className="text-[#163767] w-10 h-10" />
         </Link>
-        <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#163767] pb-1">Create form</h1>
+        <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold text-[#163767] pb-1">{id ? "Modify" : "Create"} a form</h1>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col items-center">
         <div className="flex flex-row gap-4">

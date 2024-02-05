@@ -30,7 +30,6 @@ function DocumentValidation() {
   const handleAccept = async (submitId) => {
     try {
       const response = await api.put(`submit/approve/${submitId}`, { isApproved: true });
-      console.log(response);
       toast.success("Document approuvé");
       fetchDocuments();
     } catch (error) {
@@ -41,7 +40,6 @@ function DocumentValidation() {
   const handleDecline = async (submitId) => {
     try {
       const response = await api.put(`submit/approve/${submitId}`, { isApproved: false });
-      console.log(response);
       toast.success("Document refusé");
       fetchDocuments();
     } catch (error) {

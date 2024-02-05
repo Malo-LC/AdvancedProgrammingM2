@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
 import { Calendar } from "react-feather";
+import { Link, useNavigate } from "react-router-dom";
 
 const Soumission = () => {
+  const navigate = useNavigate();
   const [internships, setInternships] = useState([]);
   const [selectedInternshipId, setSelectedInternshipId] = useState("");
   const [formData, setFormData] = useState({
@@ -50,12 +52,12 @@ const Soumission = () => {
       ...formData,
       internship_id: selectedInternshipId,
     };
-    console.log(selectedInternshipId, completeFormData);
 
     try {
       const response = await api.post("studentInternship/create", completeFormData);
       if (response.ok) {
-        toast.success("Stage mis à jour avec succès");
+        toast.success("Stage créé");
+        navigate("/demandes");
       } else {
         toast.error("Échec de la mise à jour du stage");
       }
@@ -66,7 +68,7 @@ const Soumission = () => {
   return (
     <div>
       <div className="p-10 text-center w-full ">
-        <h1 className="font-bold text-3xl text-[#163767] mb-4 ml-6">Stage Technique</h1>
+        <h1 className="font-bold text-3xl text-[#163767] mb-4 ml-6">Demande de stage</h1>
       </div>
       <form className="body mx-80 text-[#163767] flex flex-col" method="POST" onSubmit={handleSubmit}>
         <div className="flex flex-col">
@@ -84,9 +86,9 @@ const Soumission = () => {
           </div>
         </div>
         <div className="back-stage ml-3 flex justify-end gap-1 ">
-          <a href="#" className="text-[#163767]">
+          <Link to="/demandes" className="text-[#163767]">
             Retour à la liste des stages
-          </a>
+          </Link>
         </div>
         <div>
           <div className="relative bg-white border rounded-xl p-4 pt-6 mt-4 md:p-5 border-[#163767]">

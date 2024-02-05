@@ -9,7 +9,7 @@ export const requestColumnNamesTutor = [
   "Fin",
   "Action",
 ];
-export const requestColumnNamesStudent = ["Année du Stage", "Statut", "Intitulé du Stage", "Nom de la société", "Début", "Fin", "Action"];
+export const requestColumnNamesStudent = ["Statut", "Intitulé du Stage", "Mission", "Début", "Fin"];
 
 // Those keys define the order of the data in the table
 export const requestKeyTutor = [

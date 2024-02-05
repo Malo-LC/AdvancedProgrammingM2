@@ -70,6 +70,10 @@ function Documents() {
           </div>
         )}
         <div className={`doc-container ${isMobile ? "w-screen items-center px-10 h-[700px]" : "h-[550px]"}`}>
+          {documents.filter(
+            (doc) =>
+              doc.reportName.toLowerCase().includes(searchInput.toLowerCase()) || doc.deadline.toLowerCase().includes(searchInput.toLowerCase()),
+          ).length === 0 && <div className="text-center">Aucun documents</div>}
           {documents
             .filter(
               (doc) =>

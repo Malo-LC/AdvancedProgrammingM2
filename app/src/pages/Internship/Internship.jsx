@@ -44,7 +44,7 @@ function Internship() {
         {requests.map((request, index) => (
           <InternshipElement internShip={request} userRole={userRole} key={index} />
         ))}
-        {requests.length === 0 && <div className="text-center">Aucun stages</div>}
+        {requests.length === 0 && <div className="text-center">Aucun stage</div>}
       </div>
     </div>
   );

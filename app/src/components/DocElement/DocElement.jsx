@@ -112,16 +112,20 @@ function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
             <div className="elements font-thin">{internShip.internshipName}</div>
             {userRole === "TUTOR" && <div className="elements">{internShip.userId.lastName}</div>}
             <div className="elements space-x-1">
-              <ValidationBubble
-                validationStatus={internShip.tutorSchool.isValidated}
-                firstname={internShip.tutorSchool.firstName.toUpperCase()}
-                lastname={internShip.tutorSchool.lastName.toUpperCase()}
-              />
-              <ValidationBubble
-                validationStatus={internShip.tutorInternship.isValidated}
-                firstname={internShip.tutorInternship.firstName.toUpperCase()}
-                lastname={internShip.tutorInternship.lastName.toUpperCase()}
-              />
+              {internShip.tutorSchool !== null && (
+                <ValidationBubble
+                  validationStatus={internShip.tutorSchool.isValidated}
+                  firstname={internShip.tutorSchool.firstName.toUpperCase()}
+                  lastname={internShip.tutorSchool.lastName.toUpperCase()}
+                />
+              )}
+              {internShip.tutorInternship && (
+                <ValidationBubble
+                  validationStatus={internShip.tutorInternship.isValidated}
+                  firstname={internShip.tutorInternship.firstName.toUpperCase()}
+                  lastname={internShip.tutorInternship.lastName.toUpperCase()}
+                />
+              )}
             </div>
             <div className="elements">
               <Status status={internShip.isSubmitted} type="document" />
@@ -129,7 +133,13 @@ function DocElement({ internShip, userRole, onOpenViewer, onDone }) {
           </div>
           {userRole === "STUDENT" && (
             <>
-              <ActionButton onDone={onDone} status={internShip.isSubmitted} internShip={internShip} file={pdf} />
+              <ActionButton
+                disabled={!internShip.tutorSchool || !internShip.tutorInternship}
+                onDone={onDone}
+                status={internShip.isSubmitted}
+                internShip={internShip}
+                file={pdf}
+              />
             </>
           )}
         </div>

@@ -69,6 +69,7 @@ function InternshipList() {
         <p>Liste des stages</p>
       </motion.div>
       <div className="flex flex-col">
+        {internships.length === 0 && <p className="w-full text-center text-xl">Aucun stage</p>}
         {internships.map((internship) => (
           <div key={internship.id} className="flex flex-row gap-4 items-center ">
             <div className="flex flex-row gap-4">

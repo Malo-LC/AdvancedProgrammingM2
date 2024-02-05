@@ -4,7 +4,7 @@ import { readFileAsync } from "../../../utils/authDataService";
 import "./actionbutton.css";
 import { toast } from "react-toastify";
 
-function ActionButton({ status, internShip, file, onDone }) {
+function ActionButton({ status, internShip, file, onDone, disabled }) {
   const handleButtonClick = () => {
     if (!file) {
       const fileInput = document.getElementById("fileInput");
@@ -49,11 +49,12 @@ function ActionButton({ status, internShip, file, onDone }) {
   return (
     <div>
       <button
+        disabled={disabled}
         onClick={(e) => {
           e.stopPropagation();
           handleButtonClick();
         }}
-        className={`action-button ${status === true ? " download-button" : " upload"}`}
+        className={`action-button disabled:cursor-not-allowed ${status === true ? " download-button" : " upload"}`}
       >
         {status === true ? "Télécharger" : "Soumettre"}
       </button>
@@ -67,6 +68,7 @@ ActionButton.propTypes = {
   internShip: PropTypes.object.isRequired,
   file: PropTypes.string,
   onDone: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default ActionButton;
