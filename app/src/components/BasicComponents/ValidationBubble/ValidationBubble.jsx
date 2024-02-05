@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import "./validationbubble.css";
 
 function ValidationBubble({ firstname, lastname, validationStatus }) {
-  const firstInitial = firstname ? firstname.charAt(0) : "";
-  const lastInitial = lastname ? lastname.charAt(0) : "";
+  const firstInitial = firstname ? firstname.charAt(0) : "N";
+  const lastInitial = lastname ? lastname.charAt(0) : "A";
 
   let bubbleStyle = "w-8 h-8 rounded-full flex flex-row justify-center items-center border-2 text-sm";
 
@@ -35,8 +35,8 @@ function ValidationBubble({ firstname, lastname, validationStatus }) {
 }
 
 ValidationBubble.propTypes = {
-  firstname: PropTypes.string.isRequired,
-  lastname: PropTypes.string.isRequired,
+  firstname: PropTypes.string,
+  lastname: PropTypes.string,
   validationStatus: PropTypes.bool,
 };
 
