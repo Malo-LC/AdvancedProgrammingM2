@@ -1,0 +1,11 @@
+.empty-state {
+    @apply flex flex-col justify-center items-center xl:mt-[100px] md:mt-[70px] sm:mt-[70px] mt-[200px];
+}
+
+.empty-text-container {
+    @apply flex flex-col space-y-2;
+}
+
+.no-doc-image {
+    @apply flex h-[250px] w-[350px] object-contain;
+}
