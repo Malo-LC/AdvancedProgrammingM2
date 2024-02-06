@@ -3,7 +3,7 @@ import api from "../../utils/api";
 import { toast } from "react-toastify";
 import { Calendar } from "react-feather";
 import { Link, useNavigate } from "react-router-dom";
-
+import './soumission.css';
 const Soumission = () => {
   const navigate = useNavigate();
   const [internships, setInternships] = useState([]);

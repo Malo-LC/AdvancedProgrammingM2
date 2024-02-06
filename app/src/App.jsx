@@ -33,9 +33,9 @@ function App() {
     setLoading(false);
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <>
@@ -152,7 +152,7 @@ function App() {
           element={
             <RestrictedRoute roles={["STUDENT"]}>
               <Soumission />
-            </RestrictedRoute>
+              </RestrictedRoute>
           }
         />
       </Routes>

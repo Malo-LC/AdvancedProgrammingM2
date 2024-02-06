@@ -1,0 +1,47 @@
+@media (max-width: 1077px) {
+    .body {
+        margin: 20px;
+    }
+
+    .input-icon-left {
+        position: absolute;
+        left: 10px;
+        top: calc(50% - 12px); 
+    }
+
+    .input {
+        padding-left: 40px; 
+    }
+
+    .back-stage {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .flex-col .md\\:flex-row {
+        flex-direction: column !important;
+    }
+
+    
+}
+
+@media (max-width: 766px) {
+    .mx-80 {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .text-center {
+        text-align: left;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; 
+    }
+
+    .input,
+    label {
+        width: 100%; 
+    }
+}
